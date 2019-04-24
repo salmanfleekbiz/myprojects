@@ -1,0 +1,15 @@
+[31-Jul-2017 18:14:44 Asia/Karachi] PHP Fatal error:  Class 'Illuminate\Foundation\ProviderRepository' not found in /home/craftedi/public_html/propertymatch/vendor/laravel/framework/src/Illuminate/Foundation/Application.php on line 506
+[07-Aug-2017 12:04:47 Asia/Karachi] PHP Parse error:  syntax error, unexpected '<' in /home/craftedxyz/propertimatch.craftedium.xyz/storage/framework/views/f0782dc67bede81304487ab422057e69 on line 447
+[09-Aug-2017 16:31:21 Asia/Karachi] PHP Parse error:  syntax error, unexpected '}' in /home/craftedxyz/propertimatch.craftedium.xyz/storage/framework/views/0c11206422f4f3e8a152c4dc4fa84a16 on line 96
+[09-Aug-2017 16:51:31 Asia/Karachi] PHP Parse error:  syntax error, unexpected '}' in /home/craftedxyz/propertimatch.craftedium.xyz/storage/framework/views/0c11206422f4f3e8a152c4dc4fa84a16 on line 109
+[09-Aug-2017 16:52:40 Asia/Karachi] PHP Parse error:  syntax error, unexpected '}' in /home/craftedxyz/propertimatch.craftedium.xyz/storage/framework/views/0c11206422f4f3e8a152c4dc4fa84a16 on line 109
+[09-Aug-2017 16:53:26 Asia/Karachi] PHP Parse error:  syntax error, unexpected '}' in /home/craftedxyz/propertimatch.craftedium.xyz/storage/framework/views/0c11206422f4f3e8a152c4dc4fa84a16 on line 109
+[09-Aug-2017 16:57:35 Asia/Karachi] PHP Parse error:  syntax error, unexpected '=', expecting ',' or ';' in /home/craftedxyz/propertimatch.craftedium.xyz/storage/framework/views/0c11206422f4f3e8a152c4dc4fa84a16 on line 96
+[14-Sep-2017 16:02:18 Asia/Karachi] PHP Parse error:  syntax error, unexpected '<' in /home/craftedxyz/propertimatch.craftedium.xyz/storage/framework/views/0c11206422f4f3e8a152c4dc4fa84a16 on line 139
+[21-Sep-2017 17:07:18 Asia/Karachi] PHP Parse error:  syntax error, unexpected 'isset' (T_ISSET), expecting '(' in /home/craftedxyz/propertimatch.craftedium.xyz/storage/framework/views/b0d499e696ec93f917445a35169202af on line 53
+[28-Sep-2017 18:36:13 Asia/Karachi] PHP Parse error:  syntax error, unexpected '?>' in /home/craftedxyz/propertimatch.craftedium.xyz/storage/framework/views/873053b838c0deb2f55a344a4155039e on line 152
+[26-Oct-2017 13:36:12 Asia/Karachi] PHP Fatal error:  Cannot use object of type stdClass as array in /home/craftedxyz/propertimatch.craftedium.xyz/app/Http/Controllers/PagesController.php on line 604
+[26-Oct-2017 14:06:24 Asia/Karachi] PHP Fatal error:  Class 'App\Http\Controllers\Crypt' not found in /home/craftedxyz/propertimatch.craftedium.xyz/app/Http/Controllers/PagesController.php on line 604
+[08-Nov-2017 17:42:25 Asia/Karachi] PHP Parse error:  syntax error, unexpected '.' in /home/craftedxyz/propertimatch.craftedium.xyz/storage/framework/views/03d630966c8b1317e5599eacc87e22a4 on line 111
+[08-Nov-2017 17:42:29 Asia/Karachi] PHP Parse error:  syntax error, unexpected '.' in /home/craftedxyz/propertimatch.craftedium.xyz/storage/framework/views/03d630966c8b1317e5599eacc87e22a4 on line 111
+[08-Nov-2017 17:42:38 Asia/Karachi] PHP Parse error:  syntax error, unexpected '.' in /home/craftedxyz/propertimatch.craftedium.xyz/storage/framework/views/03d630966c8b1317e5599eacc87e22a4 on line 111

@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <?php require_once("head.inc.php"); ?>
+</head>
+<body class="header" style="overflow-x:hidden; overflow-y:hidden;">
+<!--header-->
+<div class="header2">
+    <div class="header-top">
+        <div class="social-icons">
+
+            <img src="<?php echo base_url(); ?>images/logo.png" alt="">
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="banner-center">
+        <div class="container">
+            <div class="logo">
+                <h1><img src="<?php echo base_url(); ?>images/lo.png" alt=""></h1>
+            </div>
+
+        </div>
+    </div>
+    <!--services-->
+    <div class="content">
+        <div class="service">
+            <div class="container">
+                <h2></h2>
+                <div class="service-grids">
+                <a href="checkinmember/">
+                    <div class="col-md-3 service-grid bg">
+                        <h4><span class="glyphicon" aria-hidden="true"></span>Check-In Member</h4>
+                        <span class="img-icon"><img src="<?php echo base_url(); ?>images/right-icon.png" class="img-responsive" alt="music theme"></span>
+                        <p><img src="<?php echo base_url(); ?>images/icon.png" class="img-responsive img" alt="music theme"></p>
+
+                    </div></a>
+                    <a href="shooting_lounge/">
+                    <div class="col-md-3 service-grid bg ">
+                        <h4><span class="glyphicon" aria-hidden="true"></span>Wait List</h4>
+                        <span class="img-icon"><img src="<?php echo base_url(); ?>images/left-icon.png" class="img-responsive" alt="music theme"></span>
+                        <p><img src="<?php echo base_url(); ?>images/icon.png" class="img-responsive img" alt="music theme"> </p>
+                    </div></a>
+                    <a href="assign/">
+                    <div class="col-md-3 service-grid bg">
+                        <h4><span class="glyphicon" aria-hidden="true"></span>Shooting Lounges</h4>
+                        <span class="img-icon"><img src="<?php echo base_url(); ?>images/left-icon.png" class="img-responsive" alt="music theme"></span>
+                        <p><img src="<?php echo base_url(); ?>images/icon.png" class="img-responsive img" alt="music theme"></p>
+                    </div></a>
+                    <a href="">
+                    <div class="col-md-3 service-grid bg">
+                        <h4><span class="glyphicon" aria-hidden="true"></span>Admin</h4>
+                        <span class="img-icon"><img src="<?php echo base_url(); ?>images/right-icon.png" class="img-responsive" alt="music theme"></span>
+                        <p><img src="<?php echo base_url(); ?>images/icon.png" class="img-responsive img" alt="music theme"></p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+        </div>
+        <!--services-->
+    </div>
+
+</div>
+<!--header-->
+
+</body>
+</html>

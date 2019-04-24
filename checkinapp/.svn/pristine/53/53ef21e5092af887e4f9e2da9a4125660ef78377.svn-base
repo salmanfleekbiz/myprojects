@@ -1,0 +1,509 @@
+
+// Color definitions
+
+@color_black:  #444444;
+@color_blue:   #0087bd;
+@color_gray:   #888888;
+@color_green:  #009f6b;
+@color_orange: #e37d00;
+@color_red:    #c40233;
+@color_violet: #6400c2;
+@color_yellow: #ffd300;
+
+@color_black_element_background:  mix( @color_black,  #fff, 3% );
+@color_blue_element_background:   mix( @color_blue,   #fff, 3% );
+@color_gray_element_background:   mix( @color_gray,   #fff, 3% );
+@color_green_element_background:  mix( @color_green,  #fff, 3% );
+@color_orange_element_background: mix( @color_orange, #fff, 3% );
+@color_red_element_background:    mix( @color_red,    #fff, 3% );
+@color_violet_element_background: mix( @color_violet, #fff, 3% );
+@color_yellow_element_background: mix( @color_yellow, #fff, 3% );
+
+@color_black_element_border:  mix( @color_black,  #eee, 20% );
+@color_blue_element_border:   mix( @color_blue,   #eee, 20% );
+@color_gray_element_border:   mix( @color_gray,   #eee, 20% );
+@color_green_element_border:  mix( @color_green,  #eee, 20% );
+@color_orange_element_border: mix( @color_orange, #eee, 20% );
+@color_red_element_border:    mix( @color_red,    #eee, 20% );
+@color_violet_element_border: mix( @color_violet, #eee, 20% );
+@color_yellow_element_border: mix( @color_yellow, #eee, 20% );
+
+@color_black_element_highlight:  mix( @color_black,  #fff, 40% );
+@color_blue_element_highlight:   mix( @color_blue,   #fff, 40% );
+@color_gray_element_highlight:   mix( @color_gray,   #fff, 40% );
+@color_green_element_highlight:  mix( @color_green,  #fff, 40% );
+@color_orange_element_highlight: mix( @color_orange, #fff, 40% );
+@color_red_element_highlight:    mix( @color_red,    #fff, 40% );
+@color_violet_element_highlight: mix( @color_violet, #fff, 40% );
+@color_yellow_element_highlight: mix( @color_yellow, #fff, 50% );
+
+@color_black_element_text:  darken( @color_black,  4% );
+@color_blue_element_text:   darken( @color_blue,   4% );
+@color_gray_element_text:   darken( @color_gray,   4% );
+@color_green_element_text:  darken( @color_green,  4% );
+@color_orange_element_text: darken( @color_orange, 4% );
+@color_red_element_text:    darken( @color_red,    4% );
+@color_violet_element_text: darken( @color_violet, 4% );
+@color_yellow_element_text: darken( @color_yellow, 10% );
+
+@color_element_background:   #fdfdfd;
+@color_element_border:       #d8d8d8;
+@color_ui_background:        #f2f2f2;
+@color_ui_background_active: #e9e9e9;
+
+// Responsive breakpoint
+
+@mobile: ~"( max-width: 768px )";
+
+
+/* Accordions */
+
+.wpcmsdev-accordion {
+	border: 1px solid @color_element_border;
+	border-bottom: 0;
+	border-radius: 0.25em;
+	margin: 1.5em 0;
+	overflow: hidden;
+	background-color: @color_element_background;
+
+	.accordion-item {
+
+		&.active .accordion-item-title {
+			background-color: @color_ui_background_active;
+
+			.icon-for-active { display: inline-block; }
+			.icon-for-inactive { display: none; }
+		}
+	}
+
+	.accordion-item-title {
+		border-bottom: 1px solid @color_element_border;
+		margin: 0 !important;
+		font-size: 1em;
+		font-weight: inherit;
+
+		a {
+			display: block;
+			border: 0;
+			padding: 0.8em 1.5em;
+			background-color: @color_ui_background;
+			background-image: linear-gradient( rgba(255, 255, 255, 0.9), transparent );
+			text-decoration: none;
+
+			&:active,
+			&:focus,
+			&:hover {
+				border: 0;
+				background-color: @color_ui_background_active;
+			}
+		}
+
+		.fa {
+			margin-right: 0.6em;
+			opacity: 0.8;
+
+			&.icon-for-active { display: none; }
+		}
+	}
+
+	.accordion-item-content {
+		border-bottom: 1px solid @color_element_border;
+		padding: 1.5em;
+
+		> :first-child {
+			margin-top: 0 !important;
+		}
+
+		> :last-child {
+			margin-bottom: 0 !important;
+		}
+	}
+}
+
+/* Alerts */
+
+.wpcmsdev-alert {
+	border: 1px solid @color_element_border;
+	margin: 1.5em 0;
+	padding: 1em 1.5em;
+	background-color: @color_element_background;
+
+	&.has-icon {
+		position: relative;
+		padding-left: 3.75em;
+
+		> .fa {
+			position: absolute;
+			top: 50%;
+			left: 1em;
+			margin-top: -0.5em;
+			font-size: 1.5em;
+			opacity: 0.8;
+		}
+	}
+
+	&.color-black  { border-color: @color_black_element_border;  background-color: @color_black_element_background;  color: @color_black_element_text;  }
+	&.color-blue   { border-color: @color_blue_element_border;   background-color: @color_blue_element_background;   color: @color_blue_element_text;   }
+	&.color-gray   { border-color: @color_gray_element_border;   background-color: @color_gray_element_background;   color: @color_gray_element_text;   }
+	&.color-green  { border-color: @color_green_element_border;  background-color: @color_green_element_background;  color: @color_green_element_text;  }
+	&.color-orange { border-color: @color_orange_element_border; background-color: @color_orange_element_background; color: @color_orange_element_text; }
+	&.color-red    { border-color: @color_red_element_border;    background-color: @color_red_element_background;    color: @color_red_element_text;    }
+	&.color-violet { border-color: @color_violet_element_border; background-color: @color_violet_element_background; color: @color_violet_element_text; }
+	&.color-yellow { border-color: @color_yellow_element_border; background-color: @color_yellow_element_background; color: @color_yellow_element_text; }
+
+	.alert-content {
+
+		> :first-child {
+			margin-top: 0 !important;
+		}
+
+		> :last-child {
+			margin-bottom: 0 !important;
+		}
+	}
+}
+
+/* Boxes */
+
+.wpcmsdev-box {
+	border: 1px solid @color_element_border;
+	background-color: @color_element_background;
+	margin: 1.5em 0;
+
+	.box-title {
+		border-bottom: 1px solid @color_element_border;
+		margin: 0 !important;
+		padding: 0.8em 1.5em;
+		background-color: @color_ui_background;
+		font-size: 1em;
+	}
+
+	.box-content {
+		padding: 1.5em;
+
+		> :first-child {
+			margin-top: 0 !important;
+		}
+
+		> :last-child {
+			margin-bottom: 0 !important;
+		}
+	}
+}
+
+/* Buttons */
+
+.wpcmsdev-button {
+	display: inline-block;
+	border: 1px solid rgba(0, 0, 0, 0.25) !important;
+	border-radius: 0.25em;
+	min-width: 7em;
+	background-color: @color_black;
+	background-image: linear-gradient( rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.15) );
+	text-align: center;
+	text-decoration: none !important;
+	vertical-align: bottom;
+
+	span {
+		display: block;
+		padding: 0.5em 1.25em;
+		color: #eee;
+		transition: background-color 0.2s, color 0.2s;
+	}
+
+	&:active,
+	&:focus,
+	&:hover {
+
+		span {
+			background-color: rgba(0, 0, 0, 0.15);
+			color: #ddd;
+		}
+	}
+
+	&.color-blue   { background-color: @color_blue;   }
+	&.color-gray   { background-color: @color_gray;   }
+	&.color-green  { background-color: @color_green;  }
+	&.color-orange { background-color: @color_orange; }
+	&.color-red    { background-color: @color_red;    }
+	&.color-violet { background-color: @color_violet; }
+	&.color-yellow { background-color: @color_yellow; }
+}
+
+/* Call-to-action */
+
+.wpcmsdev-call-to-action {
+	margin: 1.5em 0;
+	padding: 1.5em;
+	background-color: @color_element_background;
+	border: 1px solid @color_element_border;
+
+	&.color-black  { border-color: @color_black_element_border;  background-color: @color_black_element_background;  color: @color_black_element_text;  }
+	&.color-blue   { border-color: @color_blue_element_border;   background-color: @color_blue_element_background;   color: @color_blue_element_text;   }
+	&.color-gray   { border-color: @color_gray_element_border;   background-color: @color_gray_element_background;   color: @color_gray_element_text;   }
+	&.color-green  { border-color: @color_green_element_border;  background-color: @color_green_element_background;  color: @color_green_element_text;  }
+	&.color-orange { border-color: @color_orange_element_border; background-color: @color_orange_element_background; color: @color_orange_element_text; }
+	&.color-red    { border-color: @color_red_element_border;    background-color: @color_red_element_background;    color: @color_red_element_text;    }
+	&.color-violet { border-color: @color_violet_element_border; background-color: @color_violet_element_background; color: @color_violet_element_text; }
+	&.color-yellow { border-color: @color_yellow_element_border; background-color: @color_yellow_element_background; color: @color_yellow_element_text; }
+
+	.call-to-action-content {
+
+		> :first-child {
+			margin-top: 0 !important;
+		}
+
+		> :last-child {
+			margin-bottom: 0 !important;
+		}
+
+		@media @mobile {
+			text-align: center;
+		}
+	}
+
+	.call-to-action-button {
+		text-align: center;
+
+		@media @mobile {
+			margin-top: 1.5em;
+
+			.wpcmsdev-button {
+				width: 100%;
+			}
+		}
+	}
+
+	&.layout-horizontal {
+
+		.call-to-action-button .wpcmsdev-button {
+			width: 100%;
+		}
+	}
+
+	&.layout-vertical {
+
+		.call-to-action-content {
+			text-align: center;
+		}
+
+		.call-to-action-button {
+			margin-top: 1.5em;
+
+			.wpcmsdev-button {
+				min-width: 12em;
+			}
+		}
+	}
+}
+
+/* Clear floats */
+
+.wpcmsdev-clear-floats {
+	clear: both;
+}
+
+/* Columns */
+
+.wpcmsdev-columns {
+
+	&:before,
+	&:after {
+		display: table;
+		content: "";
+	}
+
+	&:after {
+		clear: both;
+	}
+
+	.column {
+		float: left;
+		margin-right: 4%;
+
+		&.column-width-one-half      { width: 48%; }
+		&.column-width-one-third     { width: 30.666667%; }
+		&.column-width-two-thirds    { width: 65.333334%; }
+		&.column-width-one-fourth    { width: 22%; }
+		&.column-width-three-fourths { width: 74%; }
+		&.column-width-one-fifth     { width: 16.8%; }
+		&.column-width-two-fifths    { width: 37.6%; }
+		&.column-width-three-fifths  { width: 58.4%; }
+		&.column-width-four-fifths   { width: 79.2%; }
+
+		&:last-child {
+			margin-right: 0 !important;
+		}
+
+		@media @mobile {
+			width: 100% !important;
+		}
+	}
+}
+
+/* Highlights */
+
+.wpcmsdev-highlight {
+	padding: 0 0.2em 0 0.25em;
+	border-radius: 2px;
+
+	&.color-blue   { background-color: @color_blue_element_highlight;   }
+	&.color-gray   { background-color: @color_gray_element_highlight;   }
+	&.color-green  { background-color: @color_green_element_highlight;  }
+	&.color-orange { background-color: @color_orange_element_highlight; }
+	&.color-red    { background-color: @color_red_element_highlight;    }
+	&.color-violet { background-color: @color_violet_element_highlight; }
+	&.color-yellow { background-color: @color_yellow_element_highlight; }
+
+	&.text-color-blue   { color: @color_blue_element_text;   }
+	&.text-color-gray   { color: @color_gray_element_text;   }
+	&.text-color-green  { color: @color_green_element_text;  }
+	&.text-color-orange { color: @color_orange_element_text; }
+	&.text-color-red    { color: @color_red_element_text;    }
+	&.text-color-violet { color: @color_violet_element_text; }
+	&.text-color-yellow { color: @color_yellow_element_text; }
+}
+
+/* Icons */
+
+.wpcmsdev-icon {
+
+	&.color-blue   { color: @color_blue;   }
+	&.color-gray   { color: @color_gray;   }
+	&.color-green  { color: @color_green;  }
+	&.color-orange { color: @color_orange; }
+	&.color-red    { color: @color_red;    }
+	&.color-violet { color: @color_violet; }
+	&.color-yellow { color: @color_yellow; }
+}
+
+/* Tabs */
+
+.wpcmsdev-tabs {
+	margin: 1.5em 0;
+	padding-top: 0.2em;
+
+	.headings {
+		float: left;
+		width: 100%;
+
+		a {
+			display: block;
+			float: left;
+			border: 1px solid @color_element_border;
+			margin-bottom: -1px;
+			padding: 0.6em 1.5em;
+			background-color: @color_ui_background;
+			background-image: linear-gradient( rgba(255, 255, 255, 0.9), transparent );
+			text-decoration: none;
+			outline: 0;
+			transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+
+			& + a {
+				margin-left: -1px;
+			}
+
+			&.active,
+			&:active,
+			&:focus,
+			&:hover {
+				border-color: @color_element_border;
+				background-color: @color_ui_background_active;
+			}
+
+			&.active {
+				border-top-left-radius: 0.25em;
+				border-top-right-radius: 0.25em;
+				border-bottom-color: @color_element_background;
+				margin-top: -0.2em;
+				padding-top: 0.8em;
+				background-color: @color_element_background;
+			}
+
+			&:first-child {
+				border-top-left-radius: 0.25em;
+			}
+
+			&:last-child {
+				border-top-right-radius: 0.25em;
+			}
+		}
+	}
+
+	.tab {
+		clear: both;
+		border: 1px solid @color_element_border;
+		padding: 1.5em;
+		background-color: @color_element_background;
+
+		> :first-child {
+			margin-top: 0 !important;
+		}
+
+		> :last-child {
+			margin-bottom: 0 !important;
+		}
+	}
+}
+
+/* Toggles */
+
+.wpcmsdev-toggle {
+	border: 1px solid @color_element_border;
+	border-radius: 0.25em;
+	margin: 1.5em 0;
+	overflow: hidden;
+	background-color: @color_element_background;
+
+	& + .wpcmsdev-toggle {
+		margin-top: -0.5em;
+	}
+
+	.toggle-title {
+		margin: 0 !important;
+		font-size: 1em;
+		font-weight: inherit;
+
+		a {
+			display: block;
+			border: 0;
+			padding: 0.8em 1em;
+			background-color: @color_ui_background;
+			background-image: linear-gradient( rgba(255, 255, 255, 0.9), transparent );
+			text-decoration: none;
+
+			&:active,
+			&:focus,
+			&:hover {
+				background-color: @color_ui_background_active;
+				border: 0;
+			}
+
+			&.active {
+
+				.icon-for-active { display: inline-block; }
+				.icon-for-inactive { display: none; }
+			}
+		}
+
+		.fa {
+			margin-right: 0.6em;
+			opacity: 0.8;
+
+			&.icon-for-active { display: none; }
+		}
+	}
+
+	.toggle-content {
+		border-top: 1px solid @color_element_border;
+		padding: 1.5em;
+
+		> :first-child {
+			margin-top: 0 !important;
+		}
+
+		> :last-child {
+			margin-bottom: 0 !important;
+		}
+	}
+}

@@ -1,0 +1,246 @@
+	
+@media screen and (max-width: 800px) {
+	.service-grids {
+    left: 0.2em;
+    margin-top: 4em;
+    position: relative;
+}
+.header {
+    background: rgba(0, 0, 0, 0) url("../images/banner1.jpg") no-repeat scroll 0 0 / cover ;
+    height: 600px;
+}
+
+}
+@media (min-width: 1024px){ 
+.service-grids {
+    margin-top: 8.9em;
+    position: relative;
+}
+.checkinmemberhome {
+	left: 18em;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    width: 40%;}
+.header {
+    background: rgba(0, 0, 0, 0) url("../images/banner1.jpg") no-repeat scroll 0 0 / cover ;
+    height: 768px;
+}
+.position2 {
+    position: relative;
+    top: 153px;
+}}
+@media screen and (min-width: 1152px) {
+.service-grids {
+    /*left: 0.2em;*/
+    margin-top: 7.5em;
+    position: relative;
+}
+.header {
+    background: rgba(0, 0, 0, 0) url("../images/banner1.jpg") no-repeat scroll 0 0 / cover ;
+    height: 864px;
+}
+}
+@media (min-width: 1280px){
+.header {
+    background: rgba(0, 0, 0, 0) url("../images/banner1.jpg") no-repeat scroll 0 0 / cover ;
+    height: 1024px;
+}
+.service-grids {
+    margin-top: 13em;
+	position:relative;
+	left: 10%;
+}
+}
+@media (min-width: 1366px){
+.header {
+    background: rgba(0, 0, 0, 0) url("../images/banner1.jpg") no-repeat scroll 0 0 / cover ;
+    height: 768px;
+}
+.service-grids {
+    margin-top: 7.6em;
+	position:relative;
+	left: 10%;
+}
+}
+@media screen and (min-width: 1400px) {
+.service-grids {
+    left: 10%;
+    margin-top: 15.5em;
+    position: relative;
+}
+.header {
+    background: rgba(0, 0, 0, 0) url("../images/banner1.jpg") no-repeat scroll 0 0 / cover ;
+    height: 1050px;
+}
+}
+
+@media screen and (min-width: 1600px) {
+.service-grids {
+    left: 10%;
+    margin-top: 21.5em;
+    position: relative;
+}
+.header {
+    background: rgba(0, 0, 0, 0) url("../images/banner1.jpg") no-repeat scroll 0 0 / cover ;
+    height: 1200px;
+}
+}
+@media screen and (min-width: 1920px) {
+    .service-grids {
+    left: 10%;
+    position: relative;
+	margin-top:11.1em;
+}
+.img-icon {
+    float: right;
+    position: relative;
+    top: 39px;
+}
+.col-md-7 {
+    left: -14%;
+    position: relative;
+    width: 141%;
+}
+.table {
+    border: 2px solid #000;
+    left: -9em;
+    position: relative;
+    top: 1.5em;
+    width: 100%;
+}
+.col-md-4 {
+    width: 24.333%;
+}
+.col-md-7 {
+    left: -12%;
+    position: relative;
+    width: 141%;
+}
+#nextbtn2 {
+    background: #fff url("../images/btn_arrow.png") no-repeat scroll 91% 52%;
+    border: 2px solid #13a4be;
+    box-shadow: 0 3px 1px rgba(0, 0, 0, 0.2);
+    color: #13a4be;
+    line-height: 3em;
+    margin: 1em 0 0 -4.5em;
+    text-align: center;
+    text-decoration: none;
+    width: 12em;
+}
+.heading-waitlist {
+    color: #000;
+    font-family: latoregular;
+    font-size: 2em;
+    margin-left: -8em;
+    text-align: center;
+}
+    .tablewaitlist {
+        left: -64%;
+        position: relative;
+        top: -38em;
+        width: 64%;
+    }
+.bg {
+    background: #1599b2 none repeat scroll 0 0;
+    border: 2px solid #fff;
+    padding: 38px;
+}
+.banner-center {
+    margin-top: 17px;
+    text-align: center;
+}
+.header {
+    background: rgba(0, 0, 0, 0) url("../images/banner1.jpg") no-repeat scroll 0 0 / cover ;
+    height: 1080px;
+}
+.checkinmemberhome {
+	left: 25em;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    width: 40%;}
+.position2 {
+    position: relative;
+    top: 240px;
+}
+@media screen and (min-width: 1920px) {
+    .service-grids {
+    left: 10%;
+    position: relative;
+	margin-top:11.1em;
+}
+.img-icon {
+    float: right;
+    position: relative;
+    top: 39px;
+}
+.col-md-7 {
+    left: -14%;
+    position: relative;
+    width: 141%;
+}
+.table {
+    border: 2px solid #000;
+    left: -9em;
+    position: relative;
+    top: 1.5em;
+    width: 100%;
+}
+.col-md-4 {
+    width: 24.333%;
+}
+.col-md-7 {
+    left: -12%;
+    position: relative;
+    width: 141%;
+}
+#nextbtn2 {
+    background: #fff url("../images/btn_arrow.png") no-repeat scroll 91% 52%;
+    border: 2px solid #13a4be;
+    box-shadow: 0 3px 1px rgba(0, 0, 0, 0.2);
+    color: #13a4be;
+    line-height: 3em;
+    margin: 1em 0 0 -4.5em;
+    text-align: center;
+    text-decoration: none;
+    width: 12em;
+}
+.heading-waitlist {
+    color: #000;
+    font-family: latoregular;
+    font-size: 2em;
+    margin-left: -8em;
+    text-align: center;
+}
+    .tablewaitlist {
+        left: -64%;
+        position: relative;
+        top: -38em;
+        width: 64%;
+    }
+.bg {
+    background: #1599b2 none repeat scroll 0 0;
+    border: 2px solid #fff;
+    padding: 38px;
+}
+.banner-center {
+    margin-top: 17px;
+    text-align: center;
+}
+.header {
+    background: rgba(0, 0, 0, 0) url("../images/banner1.jpg") no-repeat scroll 0 0 / cover ;
+    height: 1080px;
+}
+}
+@media screen and (min-width: 2560px) { 
+
+				.service-grids {
+    left: 10%;
+    margin-top: 25.1em;
+    position: relative;
+}
+.header {
+    background: rgba(0, 0, 0, 0) url("../images/banner1.jpg") no-repeat scroll 0 0 / cover ;
+    height: 1600px;
+}}

@@ -1,0 +1,174 @@
+<?php 
+/*
+	Template Name: Reset Password
+*/
+
+
+get_header(); ?>
+<?php global $post; ?>
+<?php if (has_post_thumbnail( $post->ID ) ): ?>
+<?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' ); ?>
+<section id="inner-banner" class="wow fadeIn" style="background:url('<?php echo $image[0]; ?>'); background-repeat: no-repeat; background-color: #525969; background-size:100% 100%;" >
+<div class="container">
+<div class="col-sm-12 col-lg-12 headline wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+<h1><?php the_title(); ?></h1>
+</div>
+</div>
+</div>
+</section>
+<?php endif; ?>
+<?php if($_SESSION['firstname'] == ''){ ?>
+<section>
+<div class="container">
+<div class="row">
+<div class="col-sm-12 col-lg-12">
+<div class="col-md-4 col-lg-4 column wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+<div class="middle-logo"><a href="#"><img src="<?php bloginfo('template_directory'); ?>/images/logo.png"></a></div>
+<div class="quick-links">
+<a class="buttonText" id="button2" href="#">Frequently Asked Questions</a>
+<a class="buttonText" id="button2" href="#">Purchase a Gift Card</a>
+<a class="buttonText" id="button2" href="#">Return to modernround.com</a>
+</div>
+</div>
+<div class="col-lg-8 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="900ms">
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-8 col-lg-12">
+<div class="panel panel-default">
+<div class="panel-heading clearfix">
+<i class="icon-calendar"></i>
+<h3 class="panel-title"><?php the_title(); ?></h3>
+</div>
+<div class="panel-body">
+<?php if(isset($_GET['key'])){ ?>
+<script type="text/javascript">
+$( document ).ready(function() {
+$.ajax({
+url: "<?php echo $user_verifypassword_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {
+resetkey: "<?php echo $_GET['key']; ?>"
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+hide_load();	
+if(result.isactive == true){
+showFormReset();
+}else if(result.isactive == false){
+$("#haserror").html('<p>Your password reset link has already been used or has expired. Please click the Password Reset link below to request a new link.<a href="?page_id=186">Click Here Password Reset Again</a></p>');	
+}
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+});
+function showFormReset(){
+var action = 'showresetform';
+$.ajax({
+url: "<?php echo site_url(); ?>/wp-content/themes/modernround/process.php",
+data: {action:action},
+type: 'POST',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+hide_load();
+$("#showformreset").html(result);
+restFormvalid();
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+}
+</script>
+<?php }else{ ?>
+<script type="text/javascript">
+window.location.href = '<?php echo site_url(); ?>';
+</script>
+<?php } ?>
+<div class="col-md-10"><div id="hassuccess"></div></div>
+<div class="col-md-10"><div id="haserror"></div></div>
+<div class="col-md-10"><div id="haswarning"></div></div>
+<input type="hidden" name="pwdkey" id="pwdkey" value="<?php echo $_GET['key']; ?>">
+<div id="showformreset"></div>
+<script type="text/javascript">
+function restFormvalid(){
+$("#resetpassword").validate({
+rules: {
+password: {
+      required: true,
+      minlength: 8
+    },	
+confpassword: {
+	equalTo: "#password"
+}
+},
+messages: {
+	password: "Password is required minimum 8 character",
+	confpassword: "Password does not match"
+},
+submitHandler: function() {
+	resetPasswordGenerat();
+},
+success: function(label) {
+	label.remove();
+}
+});
+}
+function resetPasswordGenerat(){
+var password = $('#password').val();
+var pwdkey = $('#pwdkey').val();	
+$.ajax({
+url: "<?php echo $user_resetpassword_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {
+resetkey: pwdkey,
+password:password
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+hide_load();	
+if(result.issuccess == true){
+$("#haserror").html('');	
+$("#hassuccess").html('<p>Your new password has been updated successfully.</p>');
+window.location.href = '<?php echo site_url(); ?>/?page_id=25';
+}else if(result.issuccess == false){
+$("#hassuccess").html('');	
+$("#haserror").html('<p>Your password reset link has already been used or has expired. Please click the Password Reset link below to request a new link.<a href="?page_id=186">Click Here Password Reset Again</a></p>');	
+}
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});	
+}
+</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<?php }else{ ?>
+<script type="text/javascript">
+window.location.href = '<?php echo site_url(); ?>/?page_id=170';
+</script>
+<?php } ?>
+<?php get_footer(); ?>	

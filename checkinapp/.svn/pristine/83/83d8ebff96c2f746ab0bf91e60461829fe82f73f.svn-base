@@ -1,0 +1,143 @@
+<?php session_start(); ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="<?php bloginfo('description'); ?>">
+<meta name="author" content="">
+<title>
+<?php	     
+// Page or Single Post
+if ( is_page() or is_single() ) {
+the_title();	 
+// Category Archive
+} elseif ( is_category() ) {
+echo single_cat_title('', false);	 
+// Tag Archive
+} elseif ( function_exists('is_tag') and function_exists('single_tag_title') and is_tag() ) {
+printf( __('Tag: %s','Aqua'), single_tag_title('', false) );	 
+// General Archive
+} elseif ( is_archive() ) {
+printf( __('Archive: %s','Aqua'), wp_title('', false) );	 
+// Search Results
+} elseif ( is_search() ) {
+printf( __('Search: %s','Aqua'), get_query_var('s') );
+}	 
+// Insert separator for the titles above
+if ( !is_home() and !is_404() ) {
+echo " - ";
+}	     
+// Finally the blog name
+bloginfo('name');	 
+?>
+</title>
+<link rel="stylesheet" href="<?php bloginfo( 'stylesheet_url' ); ?>">
+<!--[if lt IE 9]>
+<script src="<?php bloginfo( 'template_url' ); ?>/js/html5shiv.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/js/respond.min.js"></script>
+<![endif]-->
+<link rel="apple-touch-icon" sizes="57x57" href="<?php bloginfo( 'template_url' ); ?>/images/fav/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="<?php bloginfo( 'template_url' ); ?>/images/fav/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="<?php bloginfo( 'template_url' ); ?>/images/fav/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="<?php bloginfo( 'template_url' ); ?>/images/fav/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="<?php bloginfo( 'template_url' ); ?>/images/fav/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="<?php bloginfo( 'template_url' ); ?>/images/fav/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="<?php bloginfo( 'template_url' ); ?>/images/fav/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="<?php bloginfo( 'template_url' ); ?>/images/fav/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="<?php bloginfo( 'template_url' ); ?>/images/fav/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="<?php bloginfo( 'template_url' ); ?>/images/fav/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="<?php bloginfo( 'template_url' ); ?>/images/fav/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="<?php bloginfo( 'template_url' ); ?>/images/fav/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="<?php bloginfo( 'template_url' ); ?>/images/fav/favicon-16x16.png">
+<meta name="msapplication-TileImage" content="<?php bloginfo( 'template_url' ); ?>/images/fav/ms-icon-144x144.png">
+<script src="<?php bloginfo( 'template_url' ); ?>/js/jquery.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/js/bootstrap.min.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/js/main.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/js/wow.min.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/js/jquery.colorbox.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/js/jquery.validate.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/js/jquery-ui.js"></script>
+<script src="<?php bloginfo('template_directory'); ?>/js/jquery.mask.min.js"></script>
+<script src="<?php bloginfo('template_directory'); ?>/js/additional-methods.js"></script>
+<script src="<?php bloginfo('template_directory'); ?>/swfobject.js"></script>
+<script src="<?php bloginfo('template_directory'); ?>/scriptcam.js"></script>
+<?php wp_head(); ?>
+<?php 
+include('api.php'); 
+$ip = $_SERVER['REMOTE_ADDR'];
+include('call_api_functions.php');
+?>
+<style type="text/css">
+#colorbox, #cboxOverlay, #cboxWrapper{position:absolute; top:0; left:0; z-index:9999; overflow:hidden;}
+#cboxWrapper {max-width:none;}
+#cboxOverlay{position:fixed; width:100%; height:100%;}
+#cboxMiddleLeft, #cboxBottomLeft{clear:left;}
+#cboxContent{position:relative;}
+#cboxLoadedContent{overflow:hidden !important; -webkit-overflow-scrolling: touch;}
+#cboxTitle{margin:0;}
+#cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute; top:0; left:0; width:100%; height:100%;}
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;}
+.cboxPhoto{float:left; margin:auto; border:0; display:block; max-width:none; -ms-interpolation-mode:bicubic;}
+.cboxIframe{width:100%; height:100%; display:block; border:0; padding:0; margin:0;}
+#colorbox, #cboxContent, #cboxLoadedContent{box-sizing:content-box; -moz-box-sizing:content-box; -webkit-box-sizing:content-box;}
+#cboxOverlay{background:url(<?php bloginfo( 'template_url' ); ?>/images/overlay.png) repeat 0 0; opacity: 0.9; filter: alpha(opacity = 90);}
+#colorbox{outline:0;}
+#cboxTopLeft{width:21px; height:21px; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) no-repeat -101px 0;}
+#cboxTopRight{width:21px; height:21px; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) no-repeat -130px 0;}
+#cboxBottomLeft{width:21px; height:21px; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) no-repeat -101px -29px;}
+#cboxBottomRight{width:21px; height:21px; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) no-repeat -130px -29px;}
+#cboxMiddleLeft{width:21px; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) left top repeat-y;}
+#cboxMiddleRight{width:21px; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) right top repeat-y;}
+#cboxTopCenter{height:21px; background:url(<?php bloginfo( 'template_url' ); ?>/images/border.png) 0 0 repeat-x;}
+#cboxBottomCenter{height:21px; background:url(<?php bloginfo( 'template_url' ); ?>/images/border.png) 0 -29px repeat-x;}
+#cboxContent{background:#fff; overflow:hidden;}
+.cboxIframe{background:#fff;}
+#cboxError{padding:50px; border:1px solid #ccc;}
+#cboxLoadedContent{margin-bottom:28px;}
+#cboxTitle{position:absolute; bottom:4px; left:0; text-align:center; width:100%; color:#949494;}
+#cboxCurrent{position:absolute; bottom:4px; left:58px; color:#949494;}
+#cboxLoadingOverlay{background:url(<?php bloginfo( 'template_url' ); ?>/images/loading_background.png) no-repeat center center;}
+#cboxLoadingGraphic{background:url(<?php bloginfo( 'template_url' ); ?>/images/loading.gif) no-repeat center center;}
+#cboxPrevious, #cboxNext, #cboxSlideshow, #cboxClose {border:0; padding:0; margin:0; overflow:visible; width:auto; background:none; }
+#cboxPrevious:active, #cboxNext:active, #cboxSlideshow:active, #cboxClose:active {outline:0;}
+#cboxSlideshow{position:absolute; bottom:4px; right:30px; color:#0092ef;}
+#cboxPrevious{position:absolute; bottom:0; left:0; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) no-repeat -75px 0; width:25px; height:25px; text-indent:-9999px;}
+#cboxPrevious:hover{background-position:-75px -25px;}
+#cboxNext{position:absolute; bottom:0; left:27px; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) no-repeat -50px 0; width:25px; height:25px; text-indent:-9999px;}
+#cboxNext:hover{background-position:-50px -25px;}
+#cboxClose{position:absolute; bottom:0; right:0; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) no-repeat -25px 0; width:25px; height:25px; text-indent:-9999px;}
+#cboxClose:hover{background-position:-25px -25px;}
+.cboxIE #cboxTopLeft,
+.cboxIE #cboxTopCenter,
+.cboxIE #cboxTopRight,
+.cboxIE #cboxBottomLeft,
+.cboxIE #cboxBottomCenter,
+.cboxIE #cboxBottomRight,
+.cboxIE #cboxMiddleLeft,
+.cboxIE #cboxMiddleRight {
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF);
+}
+#fancybox-loading{position:fixed; top:50% ;left:50%; width:40px; height:40px; margin-top:-20px; margin-left:-20px; cursor:pointer; overflow:hidden; z-index:9999;display:none;}
+#fancybox-loading div{position:absolute; top:0; left:0;}
+#fancybox-overlay{position:absolute; top:0; left:0; width:100%; z-index:1100; display:none; background-color:#FFF; opacity:0.7; cursor:pointer; height:auto;}
+.show{display:block;}
+.hide{display:none;}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+$('.active a').attr('class', 'blutop');	
+$(".blutop").colorbox({inline:true, width:"50%"});
+$(".blutop2").colorbox({inline:true, width:"50%"});
+});
+</script>
+</head>
+<body>
+<header>
+</header>
+<div style='display:none'>
+<div id='inline_contents1' style='padding:0px; background:#fff;'>
+<p class="popup"><strong>Membership registration coming soon!</strong></p>
+</div>
+</div>

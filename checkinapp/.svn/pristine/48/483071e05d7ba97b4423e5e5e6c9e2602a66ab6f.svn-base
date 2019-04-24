@@ -1,0 +1,466 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class User_lib {
+
+	function __construct(){
+		$this->CI =& get_instance();
+	}
+	
+	function is_logged_waqas() {
+		return ($this->CI->session->userdata('user_logged')) ? true : false;
+	}
+	
+	function set_logged($val) {
+		$this->CI->session->set_userdata('user_logged',$val);
+	}
+	
+	function set_is_super($val) {
+		$this->CI->session->set_userdata('is_super',$val);
+	}
+	
+	function check_user_auth() {
+		if(!$this->is_logged_waqas()) {
+			//redirect("/admin");
+			redirect(base_url('admin_login'));
+			die;
+		}
+		return true;
+	}
+	
+	function get_is_super()
+	{
+			return ($this->CI->session->userdata('is_super')) ? true : false;
+	}
+	
+	function check_super_user_auth() {
+		if(!$this->get_is_super()) {
+			//redirect("/admin");
+			redirect(base_url('admin_login'));
+		}
+		
+		return true;
+	}
+	
+	
+			
+	function is_logged() {
+		return ($this->get_id() > 0) ? true : false;
+	}
+
+
+	function set_id($val) {
+		$this->CI->session->set_userdata('user_id',$val);
+	}
+	
+	function set_fb_id($val) {
+		$this->CI->session->set_userdata('user_fb_id',$val);
+	}
+
+	
+	function get_id() {
+ 		//return 1;
+		return $this->CI->session->userdata('user_id');
+
+	}
+
+	function get_fb_id() {
+		return $this->CI->session->userdata('user_fb_id');
+	}
+
+	function get_email() {
+		return $this->CI->session->userdata('email');
+	}
+
+	function set_email($email) {
+		$this->CI->session->set_userdata('email', $email);
+		return true;
+	}
+	
+
+	function set_first_name($val) {
+		$this->CI->session->set_userdata('first_name',$val);
+	}
+	
+	function set_last_name($val) {
+		$this->CI->session->set_userdata('last_name',$val);
+	}
+	
+	function set_last_voted_cat($val) {
+		$this->CI->session->set_userdata('last_voted_cat',$val);
+	}
+	
+
+	function get_first_name($val) {
+		return $this->CI->session->userdata('first_name');
+	}
+	
+	function get_last_name($val) {
+		return $this->CI->session->userdata('last_name');
+	}
+
+	function set_pic($val) {
+		$this->CI->session->set_userdata('pic_link',$val);
+	}
+	
+	function get_pic() {
+		return $this->CI->session->userdata('pic_link');
+	}
+
+
+	function set_tournament_id($tournament_id){
+		$this->CI->session->set_userdata('tournament_id', $tournament_id);
+		return true;
+	}
+
+	function get_tournament_id(){
+		return $this->CI->session->userdata('tournament_id');
+	}
+
+
+	function set_tournament_name($tournament_name){
+		$this->CI->session->set_userdata('tournament_name', $tournament_name);
+		return true;
+	}
+
+	function get_tournament_name(){
+		return $this->CI->session->userdata('tournament_name');
+	}
+
+
+	function set_tournament_status($tournament_status){
+		$this->CI->session->set_userdata('tournament_status', $tournament_status);
+		return true;
+	}
+
+	function get_tournament_status(){
+		return $this->CI->session->userdata('tournament_status');
+	}
+
+
+	function set_invite_by_email_address($email){
+		$this->CI->session->set_flashdata('invite_by_email',$email);
+		return true;
+	}
+
+	function get_invite_by_email_address(){
+		return $this->CI->session->flashdata('invite_by_email');
+	}
+
+	function set_inviter_id($id){
+		$this->CI->session->set_userdata('inviter_id',$id);
+		return true;
+	}
+
+	function get_inviter_id(){
+		return $this->CI->session->userdata('inviter_id');
+	}
+
+	function set_remember_me($userInfo){
+
+		$this->CI->load->helper('cookie');
+		$value= generate_hash($userInfo[0]['user_id'], 'cookie_setting_key')."_".$userInfo[0]['user_id'];
+		$cookie_array = array(
+		                          'name'   => 'crime_scene',
+		                          'value'  => $value,
+		                          'expire' => 86500,
+								  //'expire' => time()+120,
+		                          'secure' => FALSE
+		                          );
+		$this->CI->input->set_cookie($cookie_array);
+	}
+
+	function get_remember_me(){
+		$this->CI->load->helper('cookie');
+		return $this->CI->input->cookie('crime_scene');
+	}
+ 	
+
+ 	function destroy_remember_me(){
+ 		$this->CI->load->helper('cookie');
+		$this->CI->input->set_cookie('crime_scene');
+
+ 	}
+
+
+	function check_auth() {
+		if($this->is_logged()) {
+			return true;
+		}
+
+		redirect("/");
+	}
+
+
+	function check_tournament() {
+		if($this->check_auth() && $this->get_tournament_id())
+			return true;
+
+		redirect("/tournament");
+	}
+
+
+	function fb_login() {
+		parse_str( $_SERVER['QUERY_STRING'], $_REQUEST );
+		$this->CI->config->load("facebook",TRUE);
+		$config = $this->CI->config->item('facebook');
+		$this->CI->load->library('facebook', $config);
+		
+		if(isset($_GET['error'])) {
+			redirect(base_url('home'));
+			die;
+		}
+		
+		try {
+			$userId = $this->CI->facebook->getUser();
+			if($userId == 0) {
+				$url = $this->CI->facebook->getLoginUrl(array('scope'=>'email,publish_stream'));
+				redirect($url);
+				die;
+			}
+		}
+		catch(Exception $ex) {
+			redirect(base_url('home'));
+		}
+		
+		$user = $this->CI->facebook->api('/me');
+		return $user;
+	}
+
+
+	private function initFB() {
+		parse_str( $_SERVER['QUERY_STRING'], $_REQUEST );
+		$this->CI->config->load("facebook",TRUE);
+		$config = $this->CI->config->item('facebook');
+		$this->CI->load->library('Facebook', $config);
+	}
+
+	
+
+	function get_fb_friends() {
+		$this->initFB();
+		$friends = $this->CI->facebook->api('/me/friends');
+		return $friends;
+	}
+
+	function get_app_friends(){
+		$this->initFB();
+		$app_users = $this->CI->facebook->api(array('method' => 'friends.getAppUsers'));
+		return $app_users;
+	}
+
+
+	function get_app_friends_detail(){
+		$this->initFB();
+		$fql = 'SELECT uid, name, pic_square FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND is_app_user = 1';
+
+		try{
+			$result = $this->CI->facebook->api(array('method' => 'fql.query','query' => $fql));
+		}
+		catch (Exception $e) {
+			$e;
+		}
+		foreach ($result as $row) {
+			$appFriends[$row['uid']] = $row;
+		}
+		return $appFriends;
+	}
+
+
+
+	function get_friends_detail(){
+		$userId = $this->get_id();
+		 
+		$this->CI->load->model('user_model');
+		$result = $this->CI->user_model->get_all_friends($fbIds, $userId); 
+
+		foreach ($result as $key => $row) {
+			$userFriends[$row['id']] = $row;
+			$userFriends[$row['id']]['photo'] = $this->get_display_pic($row);
+		}
+		return $userFriends;
+	}
+ 
+
+	function get_all_friends_detail(){
+		$userId = $this->get_id();
+		$fbIds;
+
+		if($this->get_fb_id()){
+			$userAppFriends = $this->get_app_friends_detail();
+			
+			foreach ($userAppFriends as $key => $row) {
+				$fbIds[] = $key;
+			}
+		}
+
+		$this->CI->load->model('user_model');
+		$allFriends = $this->CI->user_model->get_all_friends($fbIds, $userId); 
+
+		foreach ($allFriends as $key => $row) {
+			$allFriendsDetail[$row['id']] = $row;
+			$allFriendsDetail[$row['id']]['photo'] = $this->get_display_pic($row);
+		}
+
+		return $allFriendsDetail;
+	}
+
+ 
+
+	 
+	function start_session($userInfo) {
+		//echo "user_lib wala";
+		//print_r($userInfo);die;
+		//$userInfo['photo'] = $this->get_display_pic($userInfo);
+
+		//$this->CI->session->set_userdata('ranks','');
+		//$this->set_email($userInfo['user_email']);
+		$this->set_id($userInfo['user_id']);
+		$this->set_first_name($userInfo['first_name']);
+		$this->set_last_name($userInfo['last_name']);
+	}
+
+
+
+	function get_display_pic($userInfo) {
+		if($userInfo['use_fb_pic']) {
+			return $this->get_fb_pic($userInfo['facebook_id']);
+		}
+		else {
+			if($userInfo['photo']) return IMAGE_USER_PATH.$userInfo['photo'];
+			else return IMAGE_USER_PATH.'default.png';
+		}
+	}
+
+
+	function get_fb_pic($userFbId) {
+		$photoLink = str_replace("user_id",$userFbId,'https://graph.facebook.com/user_id/picture'); 
+		return $photoLink;
+	}
+
+
+
+	function end_session() {
+		$this->set_id('');
+		$this->set_first_name('');
+		$this->set_last_name('');
+		//$this->set_pic('');
+
+		//$this->CI->session->set_userdata('ranks','');
+
+		$this->initFB();
+		$this->CI->facebook->destroySession();
+		$this->CI->session->sess_destroy();
+		
+		redirect(base_url('home'));
+		//redirect('/home');
+	}
+
+	
+	
+	/*
+	Not in use
+	*/
+
+	function set_app_user_friends($userId){
+		$app_user_friends = $this->get_app_friends($userId);
+		$this->CI->session->set_userdata('app_user_friends', $app_user_friends);
+	}
+
+	function get_app_user_friends(){
+		return $this->CI->session->userdata('app_user_friends');
+	}
+
+
+	function set_tournament_rank($tournamentId,$rank) {
+		$ranks = $this->CI->session->userdata('ranks');
+		$ranks = json_decode($ranks,TRUE);
+		if($rank == 0) $rank = NO_RANK_SYMBOL;
+		$ranks[$tournamentId] = $rank;
+		$this->CI->session->set_userdata('ranks',json_encode($ranks));
+	}
+
+
+
+	function get_tournament_rank($tournamentId) {
+		$userId = $this->get_id();
+		if(!$userId) 
+			return "-";
+
+		$ranks = $this->CI->session->userdata('ranks');
+		$ranks = json_decode($ranks,TRUE);
+		$rank = (int)$ranks[$tournamentId];
+
+		if(!array_key_exists($tournamentId,$ranks)) {
+			$this->CI->load->model('user_team_model');
+			$this->set_tournament_rank($tournamentId,NO_RANK_SYMBOL);
+			
+			$userRank = $this->CI->user_team_model->get_user_tournament_rankings($userId);
+			foreach($userRank as $uRank) {
+				if($uRank['tournament_id'] == $tournamentId)
+					$rank = $uRank['rank'];
+
+				$this->set_tournament_rank($uRank['tournament_id'],$uRank['rank']);
+			}
+		}
+
+		return ($rank > 0 ) ? $rank : NO_RANK_SYMBOL;
+	}
+
+	public function twitter_post($entry,$category)
+	{
+
+		$this->CI->load->model('categories_model');
+		$this->CI->load->model('entries_model');
+
+		$categories = $this->CI->categories_model->get_by_id($category);
+		$cat = $categories['category_name'];
+		$entries = $this->CI->entries_model->get_by_id($entry);
+		$voted_entry = $entries['entry_name'];
+		$message = "voted for ".$voted_entry." in ".$cat." category on PAS awards. http://tinyurl.com/m3y8kxc";
+		if(!$message || mb_strlen($message) > 140 || mb_strlen($message) < 1)
+		{
+			// Restrictions error. Notification here.
+			redirect(base_url('/'));
+			
+		}
+		else
+		{
+			if($this->session->userdata('access_token') && $this->session->userdata('access_token_secret'))
+			{
+				$content = $this->connection->get('account/verify_credentials');
+				if(isset($content->errors))
+				{
+					// Most probably, authentication problems. Begin authentication process again.
+					$this->reset_session();
+					redirect(base_url('/twitter/auth'));
+				}
+				else
+				{
+					$data = array(
+						'status' => $message
+						//'in_reply_to_status_id' => $in_reply_to
+					);
+					$result = $this->connection->post('statuses/update', $data);
+
+					if(!isset($result->errors))
+					{
+						// Everything is OK
+						redirect(base_url('summary'));
+					}
+					else
+					{
+						// Error, message hasn't been published
+						redirect(base_url('/'));
+					}
+				}
+			}
+			else
+			{
+				// User is not authenticated.
+				redirect(base_url('/twitter/auth'));
+			}
+		}
+	}
+
+
+}

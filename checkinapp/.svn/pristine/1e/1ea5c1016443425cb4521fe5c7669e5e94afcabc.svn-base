@@ -1,0 +1,1689 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <?php require_once("head.inc.php"); ?>
+    <style type="text/css" rel="stylesheet">
+        #container {
+            width: 90%;
+            margin: 0 auto;
+        }
+		#fancybox-loading{position:fixed; top:50% ;left:50%; width:40px; height:40px; margin-top:-20px; margin-left:-20px; cursor:pointer; overflow:hidden; z-index:9999;display:none;}
+
+#fancybox-loading div{position:absolute; top:0; left:0;}
+
+#fancybox-overlay{position:absolute; top:0; left:0; width:100%; z-index:1100; display:none; background-color:#FFF; opacity:0.7; cursor:pointer; height:1695px;}
+        @media only screen and (max-width: 768px) {
+            #container {
+                width: 90%;
+                margin: 0 auto;
+            }
+        }
+		/*#example_length{display:none;}*/
+		#example_filter{display:none;}
+		#example_info{display:none;}
+		/*#example2_length{display:none;}*/
+		#example2_filter{display:none;}
+		#example2_info{display:none;}
+    </style>
+    <style type="text/css">
+table.scroll {width: 100%;border-spacing: 0;border: 2px solid black;}
+table.scroll tbody,table.scroll thead { display: block; }
+thead tr th {}
+table.scroll tbody {height: 100px;overflow-y: auto;overflow-x: hidden;}
+tbody td, thead th {width: 2%;border-right: 1px solid black; border-left: 1px solid #000000; text-align:center;}
+#example2 > thead { font-size: 11px;}
+.active.odd { font-size: 9px;}
+.active.even { font-size: 9px;}
+tbody td:last-child, thead th:last-child {}
+.green_row{ background:#95bcf2 !important;}
+
+@media screen and (min-width: 1920px) {
+
+#example2 > thead {
+    font-size: 18px;
+}
+.active.odd {
+    font-size: 14px;
+}
+.active.even {
+    font-size: 14px;
+}
+}
+.blink_me {
+	-webkit-animation-name: blinker;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-iteration-count: infinite;
+
+	-moz-animation-name: blinker;
+	-moz-animation-duration: 1s;
+	-moz-animation-timing-function: linear;
+	-moz-animation-iteration-count: infinite;
+
+	animation-name: blinker;
+	animation-duration: 1s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+@-moz-keyframes blinker {  
+	0% { opacity: 1.0; }
+	50% { opacity: 0.0; }
+	100% { opacity: 1.0; }
+}
+@-webkit-keyframes blinker {  
+	0% { opacity: 1.0; }
+	50% { opacity: 0.0; }
+	100% { opacity: 1.0; }
+}
+@keyframes blinker {  
+	0% { opacity: 1.0; }
+	50% { opacity: 0.0; }
+	100% { opacity: 1.0; }
+}
+</style>
+</head>
+<body background="<?php echo base_url(); ?>images/checkIn.png" style="overflow-x: hidden;">
+<!--logo-->
+<div class="header-top">
+        <div class="social-icons">
+        <a href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>images/logo.png" alt=""></a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+<div class="inner-banner">
+<div class="logount2">Welcome&nbsp;<?php echo $this->session->userdata('username'); ?>&nbsp;</div>
+<div class="logout2"><a href="<?php echo base_url(); ?>main/logout" class="logout-btn">Logout</a></div>    <div class="container">
+        
+
+    </div>
+</div>
+<?php echo $this->load->view('modals/modal_assign_shooting_lounges'); ?>
+<?php echo $this->load->view('modals/modal_in_use'); ?>
+<div id="container">
+<div id="fancybox-loading"><div><img src="<?php echo base_url(); ?>images/loading.gif" alt="Loading" /></div></div>
+<div id="fancybox-overlay"></div>
+<input type="hidden" name="memberids" id="memberids">
+<input type="hidden" name="searchingresults" id="searchingresults">
+<input type="hidden" name="realeasebckid" id="realeasebckid">
+<input type="hidden" name="reservationId" id="reservationId">
+<input type="hidden" name="expId" id="expId" value="3" />
+<input type="hidden" name="waitingid" id="waitingid" value="<?php if(isset($_GET['waitid'])){ echo $_GET['waitid']; }else{} ?>">
+<div id="parentVerticalTab">
+            <ul class="resp-tabs-list hor_1">
+                <!--<li><a href="<?php echo base_url(); ?>" id="home">Home</a></li>-->
+				<li><a href="<?php echo base_url(); ?>shooting_lounge" id="addtomember">Wait List</a></li>
+				<li class="resp-tab-active"><a href="<?php echo base_url(); ?>assign" id="shootinglounges">Shooting Lounges</a></li>
+            </ul>
+            <div class="resp-tabs-container hor_1 fullwidth">
+                <div>
+                    <div id="forthstep" class="shhot">
+<h4 class="heading-shooting">Shooting Lounges</h4><br>
+<div id="shootingLounges" class="shootingLounges main-container"></div>
+</div><div id="fifthstep" class="hide">
+           <div class="sidebar">
+               <div class="sidebar__header">
+				<h4 class="purchase">Purchase Confirmation</h4>
+               </div>
+               <div class="sidebar__content">
+                   <div class="payment" data-order-summary="">
+                       <div class="order">
+                       </div>
+
+                       <div id="showinfo"></div>
+                   </div>
+               </div>
+               <div class="bs-example">
+                   <a href="javascript:;" id="backBtnPC"><button type="button" id="nextbtn" class="btn btn-default">Back</button></a>
+                   <a href="javascript:;" id="lastContinueBtn"><button type="button" id="nextbtn" class="btn btn-default">Continue</button></a></div>
+           </div>
+       </div>
+                </div>
+                
+            </div>
+        </div>
+<a href="#qrcodes" data-toggle="modal" id="clickqrcodes"></a>
+<a href="#addmoreplayes" data-toggle="modal" id="clickaddmoreplayes"></a>
+<a href="#addtoparty" data-toggle="modal" id="showaddpartypopup"></a>
+<a href="#addtopartyovermember" data-toggle="modal" id="addtopartyover"></a>
+<a href="#timingpop" data-toggle="modal" id="showtimingpop"></a>
+<a href="#purshspop" data-toggle="modal" id="showpurshspop"></a>
+ <a href="#focuspop" data-toggle="modal" id="focutpop"></a>
+</div>
+<script type="text/javascript">
+<?php if(isset($_GET['id'])){ ?>
+$.ajax({	
+headers: { 'apicode':<?php echo '"'.API_CODE.'"'; ?> },
+url:<?php echo '"'.API_URL_WAITING_QUEUE.'"'; ?>,
+type: 'GET',
+dataType: 'json',
+crossDomain: true,
+beforeSend: function(){
+show_load();
+},
+data: { siteid: "1" }
+}).done(function (data) {
+for (var i = 0; i < data["waitingqueue"].length; i++) {
+	if(data["waitingqueue"][i].waitingid == '<?php if(isset($_GET['waitid'])){ echo $_GET['waitid']; }else{} ?>'){
+		document.getElementById('memberids').value = ','+data["waitingqueue"][i].gamertag;
+		document.getElementById('searchingresults').value = ','+data["waitingqueue"][i].membername;
+	}else{
+	}
+}	
+hide_load();	
+});
+<?php }else{} ?>
+function toTitleCase(str)
+{
+return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+setInterval(function(){
+//getShootingLounges(); 
+$.ajax({
+        headers: { 'apicode':<?php echo '"'.API_CODE.'"'; ?> },
+        url:<?php echo '"'.API_URL_BAY_LIST.'"'; ?>,
+        type: 'POST',
+        dataType: 'json',
+        crossDomain: true,
+        data: { siteid: "1" }
+    }).done();
+}, 10000);
+$.ajax({
+        headers: { 'apicode':<?php echo '"'.API_CODE.'"'; ?> },
+        url:<?php echo '"'.API_URL_BAY_LIST.'"'; ?>,
+        type: 'POST',
+        dataType: 'json',
+        crossDomain: true,
+        data: { siteid: "1" }
+    }).done(function (data) {
+        var resulthtml = "";
+        var statuschanged = "";
+        var colorclass = "";
+        var func = "";
+        for (var i = 0; i < data.length; i++) {
+
+            switch (data[i].status) {
+                case "Res":
+                    statuschanged = "Assigned";
+                    colorclass = "assigned";
+                    func = "yclicked";
+                    break;
+                case "Busy":
+                    statuschanged = "In Use";
+                    colorclass = "use";
+                    func = "rclicked";
+                    break;
+                case "Avail":
+                    statuschanged = "Open";
+                    colorclass = "open";
+                    func = "gclicked";
+                    break;
+                case "ActionNeeded":
+                    statuschanged = "Action Needed";
+                    colorclass = "actionneeded";
+                    func = "rclicked";
+                    break;
+                default :
+                    statuschanged = "Inactive";
+                    colorclass = "inactive";
+                    func = "bclicked";
+
+            }
+
+			var partymem = '';
+
+			if (data[i].partymembers != null) {
+				partymem = parseInt(data[i].partymembers.length) + parseInt(1);
+			}else{
+				partymem = '1';
+			}
+            if(i == 0) {
+				resulthtml += '<div class="column-left"><input class="leftBayGroup" type="text" value="" maxlength="25" />';            } else if(i == 4) {
+				resulthtml += '<div class="column-center"><input class="middleBayGroup" type="text" value="" maxlength="25" />';            } else if(i == 8) {
+				resulthtml += '<div class="column-right"><input class="rightBayGroup" type="text" value="" maxlength="25" />';            }
+            resulthtml += '<a href="javascript:;" onclick="'+func+'('+data[i].bayid+')" data-id="'+data[i].bayid+'">';
+			resulthtml += '<input type="hidden" name="partymember'+data[i].bayid+'" id="partymember'+data[i].bayid+'" value="'+partymem+'">';
+			resulthtml += '<input type="hidden" name="reserv'+data[i].bayid+'" id="reserv'+data[i].bayid+'" value="'+data[i].reservation_code+'">';
+			resulthtml += '<input type="hidden" name="partymembergamertag'+data[i].bayid+'" id="partymembergamertag'+data[i].bayid+'" value="'+data[i].gamertag+'">';
+			resulthtml += '<input type="hidden" name="partymembername'+data[i].bayid+'" id="partymembername'+data[i].bayid+'" value="'+data[i].membername+'">';
+
+
+            resulthtml += '<div style="position:static; margin:0 auto; margin-left: 50px; margin-right: 50px;" class="col-md-11 team-grid '+colorclass+'" id="box'+data[i].bayid+'" data-id="'+data[i].bayid+'"><div class="loungeBox">';
+            if (data[i].bayname != null) {
+                resulthtml += '<div style="text-align: center;" id="bayname' + data[i].bayid + '">' + data[i].bayname + '</div>';
+            }
+            resulthtml += '<div id="baystatus' + data[i].bayid + '">Status: ' + statuschanged + '</div>';
+            if (data[i].membername != null && data[i].membername != "") {
+                resulthtml += '<div>Member: <span id="membername' + data[i].bayid + '">' + toTitleCase(data[i].membername) + '</span></div>';
+            }
+            if (data[i].starttime != null) {
+                var timeStart = convertDateTo12HourTime(data[i].starttime);
+                resulthtml += '<div>Start Time: <span id="timeStart' + data[i].bayid + '">' + timeStart + '</span></div>';
+            }
+            if (data[i].endtime != null) {
+                var timeEnd = convertDateTo12HourTime(data[i].endtime);
+                resulthtml += '<div>End Time: <span id="timeEnd' + data[i].bayid + '">' + timeEnd + '</span></div>';
+            }
+            if (data[i].extendedtime != null && data[i].status != "Avail" && data[i].status != "NotOper") {
+				var extendtiming = data[i].extendedtime;
+				var show_extendtiming = extendtiming.slice(0, -3);
+                //var extendedtime = convertDateTo12HourTime(data[i].extendedtime);
+                resulthtml += '<div>Extended Time: <span id="timeExtend' + data[i].bayid + '">' + show_extendtiming + '</span></div>';
+            }
+            if (data[i].remainingtime != null && data[i].remainingtime != "" && data[i].status != "Avail" && data[i].status != "NotOper") {
+				if(data[i].isunlimited == true){	
+				 resulthtml += '<div>Remaining Time: <span id="timeRemainss' + data[i].bayid + '"><span id="first99' + data[i].bayid + '">99</span>:<span id="second99' + data[i].bayid + '">99</span>:<span id="third99' + data[i].bayid + '">99</span>:<span id="fourth99' + data[i].bayid + '">99</span></span></div>';
+				 
+				 unlimitedTimer(data[i].bayid);
+				}else{
+				var remaintiming = data[i].remainingtime;
+				var show_timeremaining = remaintiming.slice(0, -3); 
+				var remaining_hours = remaintiming.slice(0, -6); 
+				var remaining_mints = remaintiming.slice(3, -3); 
+				var remaining_seconds = remaintiming.slice(6, -3);
+                //var remaintime = convertDateTo12HourTime(data[i].endtime);
+                resulthtml += '<div>Remaining Time: <span id="timeRemain' + data[i].bayid + '">' + data[i].remainingtime + '</span></div>';
+				
+				Timerstart(data[i].bayid,remaining_hours,remaining_mints,remaining_seconds);
+				}
+				
+            }
+			var partymemnamecomasep = "";
+			//alert(data[i].partymembers.firstname);
+			//if(data[i].partymembers != null){
+			//var arr = $.parseJSON(JSON.stringify(data[i].partymembers));
+			//alert(arr.length);
+			//alert(JSON.stringify(data[i].partymembers, null, '  ').length);	
+			//if(!JSON.stringify(data[i].partymembers, null, '  ')){
+			if(data[i].partymembers != null){	
+			partymemnamecomasep += 'Other Members:<div id="mem'+data[i].bayid+'">';
+				partymemnamecomasep += '<ul class="additionalmembers">';
+				$.each(data[i].partymembers, function(j, item) {
+					//partymemnamecomasep += item.firstname+"&nbsp;"+item.lastname+",";
+					partymemnamecomasep += '<li>'+item.firstname+"&nbsp;"+item.lastname+'</li>';
+				});
+				partymemnamecomasep += '</ul></div>';
+				//resulthtml += '<input type="hidden" id="mem'+data[i].bayid+'" value="'+partymemnamecomasep+'" /> ';
+				resulthtml += partymemnamecomasep;
+				//$(".addMemTitle").html("Additional Members:");
+			} else {
+				partymemnamecomasep += '<div id="mem'+data[i].bayid+'">';
+				partymemnamecomasep += '<ul class="additionalmembers">';
+				partymemnamecomasep += '</ul></div>';
+				//resulthtml += '<input type="hidden" id="mem'+data[i].bayid+'" value="'+partymemnamecomasep+'" /> ';
+				resulthtml += partymemnamecomasep;
+				//$(".addMemTitle").html("");
+			}
+            resulthtml += '</div></div></a>';
+            if(i == 3 || i == 7 || i == 11) {
+                resulthtml += '</div>';
+            }
+
+        }
+        $("#shootingLounges").html(resulthtml);
+        getBayHeaders();
+
+    });
+function blinker() {
+    $('.blink_me').fadeOut(500);
+    $('.blink_me').fadeIn(500);
+}
+/*setInterval(blinker, 2000);*/
+function unlimitedTimer(bayid){
+var id = bayid;	
+var everyinterval = 0;
+everyinterval = setInterval(function(){
+var fourth99 = $("#fourth99"+id).html();
+fourth99--;
+if(fourth99 < 10) {
+fourth99 = "0"+fourth99;
+}
+$("#fourth99"+id).html(fourth99);
+var newfourth99 = $("#fourth99"+id).html();
+if(newfourth99 == 0) {
+minusthird99(id);
+$("#fourth99"+id).html("99");
+}
+}, 2000);
+}
+function minusthird99(bayid) {
+var id = bayid;	
+var third99 = $("#third99"+id).html();
+third99--;
+if(third99 < 10) {
+third99 = "0"+third99;
+}
+$("#third99"+id).html(third99);
+var newthird99 = $("#third99"+id).html();
+if(newthird99 == 0) {
+minussecond99(id);
+$("#third99"+id).html(99);
+}
+}
+function minussecond99(bayid) {
+var id = bayid;	
+var second99 = $("#second99"+id).html();
+second99--;
+if(second99 < 10) {
+second99 = "0"+second99;
+}
+$("#second99"+id).html(second99);
+var newsecond99 = $("#second99"+id).html();
+if(second99 == 0) {
+minusfirst99(id);
+$("#second99"+id).html(99);
+}
+}
+function minusfirst99(bayid) {
+var id = bayid;	
+var first99 = $("#first99"+id).html();
+first99--;
+if(first99 < 10) {
+first99 = "0"+first99;
+}
+$("#first99"+id).html(first99);
+}	
+function Timerstart(id,hours,minuts,seconds){
+var counter;
+var hours = hours;
+var minutes = minuts;
+var seconds;
+if(seconds == 0){
+seconds = 1;	
+}else{
+seconds = seconds;	
+}
+if(minutes == 0){
+minutes = 1;	
+}else{
+minutes = minuts;	
+}
+if(hours < 10){
+	hours = ("0"+parseInt(hours)).toString();	
+}
+if(minutes <10){
+	minutes = ("0"+parseInt(minutes)).toString();	
+}
+if(seconds <10){
+	seconds = ("0"+parseInt(seconds)).toString();	
+}
+counter = setInterval(function(){
+var a = new Date();
+document.getElementById("timeRemain"+id).innerHTML = hours +":" + minutes +":" + seconds;	
+seconds--;
+if(hours < 10){
+	hours = ("0"+parseInt(hours)).toString();	
+}
+if(minutes <10){
+	minutes = ("0"+parseInt(minutes)).toString();	
+}
+if(seconds <10){
+	seconds = "0"+seconds;	
+}
+
+if(seconds == "00")
+{
+minutes--;
+seconds = 60;
+if(minutes == "00"){
+hours--;
+minutes = 1;	
+}
+/*if(hours == 0 && minutes <= 5){
+	$("#box"+id).addClass("remainfiveminute");
+}*/
+if (hours < 0)
+{
+	//timeoutReleasebay(id);	
+  /*$("#box"+id).removeClass("remainfiveminute");
+  $("#box"+id).addClass("timeover");	
+  blinkTimerstart(id,"00","04","59");*/
+  /*$("#baystatus"+id).innerHTML = "Action Needed";*/
+  document.getElementById("timeRemain"+id).innerHTML = "00:00:00";
+  clearInterval(counter); 
+  return;
+}
+}
+},2000);
+}	
+function blinkTimerstart(id,hours,minuts,seconds){
+var counter;
+var hours = hours;
+var minutes = minuts;
+var seconds;
+if(seconds == 0){
+seconds = 1;	
+}else{
+seconds = seconds;	
+}
+if(minutes == 0){
+minutes = 1;	
+}else{
+minutes = minuts;	
+}
+if(hours < 10){
+	hours = ("0"+parseInt(hours)).toString();	
+}
+if(minutes <10){
+	minutes = ("0"+parseInt(minutes)).toString();	
+}
+if(seconds <10){
+	seconds = ("0"+parseInt(seconds)).toString();	
+}
+counter = setInterval(function(){
+var a = new Date();
+$("#box"+id).addClass("blink_me");	
+seconds--;
+if(hours < 10){
+	hours = ("0"+parseInt(hours)).toString();	
+}
+if(minutes <10){
+	minutes = ("0"+parseInt(minutes)).toString();	
+}
+if(seconds <10){
+	seconds = "0"+seconds;	
+}
+
+if(seconds == "00")
+{
+minutes--;
+seconds = 60;
+if(minutes == "00"){
+hours--;
+minutes = 1;	
+}
+if (hours < 0)
+{
+  $("#box"+id).removeClass("blink_me");	
+  $("#box"+id).removeAttr("style");
+  clearInterval(counter); 
+  return;
+}
+}
+},2000);
+}
+/*function TimerRestart(id,hours,minuts,seconds,day){
+if(day > 0){	
+var counter;
+var hours = hours;
+var minutes = minuts;
+var seconds;
+var days = day;
+if(seconds == 0){
+seconds = 1;	
+}else{
+seconds = seconds;	
+}
+if(minutes == 0){
+minutes = 1;	
+}else{
+minutes = minuts;	
+}
+if(hours < 10){
+	hours = ("0"+parseInt(hours)).toString();	
+}
+if(minutes <10){
+	minutes = ("0"+parseInt(minutes)).toString();	
+}
+if(seconds <10){
+	seconds = ("0"+parseInt(seconds)).toString();	
+}
+counter = setInterval(function(){
+var a = new Date();
+document.getElementById("timeRemain"+id).innerHTML = "0"+days+":"+hours +":" + minutes +":" + seconds;	
+seconds--;
+if(hours < 10){
+	hours = ("0"+parseInt(hours)).toString();	
+}
+if(minutes <10){
+	minutes = ("0"+parseInt(minutes)).toString();	
+}
+if(seconds <10){
+	seconds = "0"+seconds;	
+}
+
+if(seconds == "00")
+{
+minutes--;
+seconds = 60;
+if(minutes == "00"){
+hours--;
+minutes = 1;	
+}
+if (hours < 0)
+{
+  if(days == "0"){
+  document.getElementById("timeRemain"+id).innerHTML = "00:00:00";
+  clearInterval(counter); 
+  return;	  
+  }else{
+  var countDays = parseInt(days) - parseInt(1);
+  //timeoutReleasebay(id);	
+  document.getElementById('day'+id).value = countDays;
+  Timerstart(id,hours,minuts,seconds,countDays);
+	}
+}
+}
+},1000);
+}else{
+ document.getElementById("timeRemain"+id).innerHTML = "00:00:00";
+ clearInterval(counter); 	
+ return;
+}
+}		
+function Timerstart(id,hours,minuts,seconds,day){
+var counter;
+var hours = hours;
+var minutes = minuts;
+var seconds;
+var days = day;
+if(seconds == 0){
+seconds = 1;	
+}else{
+seconds = seconds;	
+}
+if(minutes == 0){
+minutes = 1;	
+}else{
+minutes = minuts;	
+}
+if(hours < 10){
+	hours = ("0"+parseInt(hours)).toString();	
+}
+if(minutes <10){
+	minutes = ("0"+parseInt(minutes)).toString();	
+}
+if(seconds <10){
+	seconds = ("0"+parseInt(seconds)).toString();	
+}
+counter = setInterval(function(){
+var a = new Date();
+document.getElementById("timeRemain"+id).innerHTML = "0"+days+":"+hours +":" + minutes +":" + seconds;	
+seconds--;
+if(hours < 10){
+	hours = ("0"+parseInt(hours)).toString();	
+}
+if(minutes <10){
+	minutes = ("0"+parseInt(minutes)).toString();	
+}
+if(seconds <10){
+	seconds = "0"+seconds;	
+}
+
+if(seconds == "00")
+{
+minutes--;
+seconds = 60;
+if(minutes == "00"){
+hours--;
+minutes = 1;	
+}
+if (hours < 0)
+{
+  //if(days == "0"){	
+  document.getElementById("timeRemain"+id).innerHTML = "00:00:00";
+  clearInterval(counter); 
+  return;
+  //}else{
+	//var countDays = parseInt(days) - parseInt(1);
+  //timeoutReleasebay(id);	
+  //document.getElementById('day'+id).value = countDays;
+  //TimerRestart(id,hours,minuts,seconds,countDays);
+  //document.getElementById("timeRemain"+id).innerHTML = "00:00:00";
+  //clearInterval(counter); 
+  //return;
+  //}
+}
+}
+},1000);
+	
+/*var counter;	
+var hou = hours;
+var mints = minuts;
+var sec;
+if(seconds == 0){
+sec = 1;	
+}else{
+sec = seconds;	
+}
+if(minuts == 0){
+mints = 1;	
+}else{
+mints = minuts;	
+}
+counter = setInterval(function(){
+var a = new Date();
+document.getElementById("timeRemain"+id).innerHTML = hou +":" + mints +":" + sec ;
+sec--;
+if(sec == 00)
+{
+mints--;
+sec = 60;
+if(mints == 00){
+hou--;
+mints = 60;	
+}
+if (hou < 00)
+{
+//alert('times up');
+//timeoutReleasebay(id);
+document.getElementById("timeRemain"+id).innerHTML = "00:00:00" ;
+clearInterval(counter); 
+return;
+}
+}
+},1000);*/
+//}	*/
+function timeoutReleasebay(id) {
+    var bayID = id;
+    $.ajax({
+        headers: { 'apicode':<?php echo '"'.API_CODE.'"'; ?> },
+        url:<?php echo '"'.API_URL_BAY_RELEASE.'"'; ?>,
+        type: 'POST',
+        dataType: 'json',
+        crossDomain: true,
+        data: { bayid:bayID }
+    }).done(function (data) {
+		document.getElementById('realeasebckid').value = bayID;
+        getShootingLounges();
+    });
+}
+function getShootingLounges() {
+    $.ajax({
+        headers: { 'apicode':<?php echo '"'.API_CODE.'"'; ?> },
+        url:<?php echo '"'.API_URL_BAY_LIST.'"'; ?>,
+        type: 'POST',
+        dataType: 'json',
+        crossDomain: true,
+        data: { siteid: "1" }
+    }).done(function (data) {
+        var resulthtml = "";
+        var statuschanged = "";
+        var colorclass = "";
+        var func = "";
+        for (var i = 0; i < data.length; i++) {
+
+            switch (data[i].status) {
+                case "Res":
+                    statuschanged = "Assigned";
+                    colorclass = "assigned";
+                    func = "yclicked";
+                    break;
+                case "Busy":
+                    statuschanged = "In Use";
+                    colorclass = "use";
+                    func = "rclicked";
+                    break;
+                case "Avail":
+                    statuschanged = "Open";
+                    colorclass = "open";
+                    func = "gclicked";
+                    break;
+                case "ActionNeeded":
+                    statuschanged = "Action Needed";
+                    colorclass = "actionneeded";
+                    func = "rclicked";
+                    break;
+                default :
+                    statuschanged = "Inactive";
+                    colorclass = "inactive";
+                    func = "bclicked";
+
+            }
+			var partymem = '';
+			if (data[i].partymembers != null) {
+				partymem = parseInt(data[i].partymembers.length) + parseInt(1);
+			}else{
+				partymem = '1';
+			}
+            if(i == 0) {
+                resulthtml += '<div class="column-left"><input class="leftBayGroup" type="text" value="" maxlength="25" style="background: transparent none repeat scroll 0px 0px; border: medium none; text-align: center; width:100%;" />';
+            } else if(i == 4) {
+                resulthtml += '<div class="column-center"><input class="middleBayGroup" type="text" value="" maxlength="25" style="background: transparent none repeat scroll 0px 0px; border: medium none; text-align: center; width:100%;" />';
+            } else if(i == 8) {
+                resulthtml += '<div class="column-right"><input class="rightBayGroup" type="text" value="" maxlength="25" style="background: transparent none repeat scroll 0px 0px; border: medium none; text-align: center; width:100%;" />';
+            }
+            resulthtml += '<a href="javascript:;" onclick="'+func+'('+data[i].bayid+')" data-id="'+data[i].bayid+'">';
+			resulthtml += '<input type="hidden" name="partymember'+data[i].bayid+'" id="partymember'+data[i].bayid+'" value="'+partymem+'">';
+
+            resulthtml += '<div style="position:static; margin:0 auto;" class="col-md-11 team-grid '+colorclass+'" id="box'+data[i].bayid+'" data-id="'+data[i].bayid+'"><div class="loungeBox">';
+            if (data[i].bayname != null) {
+                resulthtml += '<div style="text-align: center;" id="bayname' + data[i].bayid + '">' + data[i].bayname + '</div>';
+            }
+            resulthtml += '<div id="baystatus' + data[i].bayid + '">Status: ' + statuschanged + '</div>';
+            if (data[i].membername != null && data[i].membername != "") {
+                resulthtml += '<div>Member: <span id="membername' + data[i].bayid + '">' + toTitleCase(data[i].membername) + '</span></div>';
+            }
+            if (data[i].starttime != null) {
+                var timeStart = convertDateTo12HourTime(data[i].starttime);
+                resulthtml += '<div>Start Time: <span id="timeStart' + data[i].bayid + '">' + timeStart + '</span></div>';
+            }
+            if (data[i].endtime != null) {
+                var timeEnd = convertDateTo12HourTime(data[i].endtime);
+                resulthtml += '<div>End Time: <span id="timeEnd' + data[i].bayid + '">' + timeEnd + '</span></div>';
+            }
+            if (data[i].endtime != null && data[i].status != "Avail" && data[i].status != "NotOper") {
+				
+				var extendtiming = data[i].extendedtime;
+				var show_extendtiming = extendtiming.slice(0, -3);
+				
+                //var timeEnd = convertDateTo12HourTime(data[i].endtime);
+                resulthtml += '<div>Extended Time: <span id="timeExtend' + data[i].bayid + '">' + show_extendtiming + '</span></div>';
+            }
+            if (data[i].remainingtime != null && data[i].remainingtime != "" && data[i].status != "Avail" && data[i].status != "NotOper") {
+				if(data[i].isunlimited == true){	
+				 resulthtml += '<div>Remaining Time: <span id="timeRemainss' + data[i].bayid + '"><span id="first99' + data[i].bayid + '">99</span>:<span id="second99' + data[i].bayid + '">99</span>:<span id="third99' + data[i].bayid + '">99</span>:<span id="fourth99' + data[i].bayid + '">99</span></span></div>';
+				 
+				 unlimitedTimer(data[i].bayid);
+				}else{
+				var remaintiming = data[i].remainingtime;
+				var show_timeremaining = remaintiming.slice(0, -3); 
+				var remaining_hours = remaintiming.slice(0, -6); 
+				var remaining_mints = remaintiming.slice(3, -3); 
+				var remaining_seconds = remaintiming.slice(6, -3);
+                //var remaintime = convertDateTo12HourTime(data[i].endtime);
+                resulthtml += '<div>Remaining Time: <span id="timeRemain' + data[i].bayid + '">' + data[i].remainingtime + '</span></div>';
+				
+				Timerstart(data[i].bayid,remaining_hours,remaining_mints,remaining_seconds);	
+				/*var remaintiming = data[i].remainingtime;
+				var show_timeremaining = remaintiming.slice(0, -3); 
+				var remady = remaintiming.slice(0, -9);
+				var shTime;
+				if(remady > 0){
+					shTime = data[i].remainingtime;
+				}else{
+					shTime = '0.'+data[i].remainingtime;
+				}
+				var remaining_hours = shTime.slice(2, -6); 
+				var remaining_mints = shTime.slice(5, -3); 
+				var remaining_seconds = shTime.slice(8);
+				var dayss = shTime.slice(0, -9);
+                resulthtml += '<div>Remaining Time: <span id="timeRemain' + data[i].bayid + '">' + data[i].remainingtime + '</span></div>';
+				resulthtml += '<input type="hidden" name="day'+data[i].bayid+'" id="day'+data[i].bayid+'" value="'+dayss+'">';
+				
+				Timerstart(data[i].bayid,remaining_hours,remaining_mints,remaining_seconds,dayss);*/
+				}
+            }
+			var partymemnamecomasep = "";
+			//alert(data[i].partymembers.firstname);
+			//if(data[i].partymembers != null){
+			//var arr = $.parseJSON(JSON.stringify(data[i].partymembers));
+			//alert(arr.length);
+			//alert(JSON.stringify(data[i].partymembers, null, '  ').length);	
+			//if(!JSON.stringify(data[i].partymembers, null, '  ')){
+			if(data[i].partymembers != null){	
+			partymemnamecomasep += 'Other Members:<div id="mem'+data[i].bayid+'">';
+				partymemnamecomasep += '<ul class="additionalmembers">';
+				$.each(data[i].partymembers, function(j, item) {
+					//partymemnamecomasep += item.firstname+"&nbsp;"+item.lastname+",";
+					partymemnamecomasep += '<li>'+item.firstname+"&nbsp;"+item.lastname+'</li>';
+				});
+				partymemnamecomasep += '</ul></div>';
+				//resulthtml += '<input type="hidden" id="mem'+data[i].bayid+'" value="'+partymemnamecomasep+'" /> ';
+				resulthtml += partymemnamecomasep;
+				//$(".addMemTitle").html("Additional Members:");
+			} else {
+				partymemnamecomasep += '<div id="mem'+data[i].bayid+'">';
+				partymemnamecomasep += '<ul class="additionalmembers">';
+				partymemnamecomasep += '</ul></div>';
+				//resulthtml += '<input type="hidden" id="mem'+data[i].bayid+'" value="'+partymemnamecomasep+'" /> ';
+				resulthtml += partymemnamecomasep;
+				//$(".addMemTitle").html("");
+			}
+            resulthtml += '</div></div></a>';
+            if(i == 3 || i == 7 || i == 11) {
+                resulthtml += '</div>';
+            }
+
+        }
+        $("#shootingLounges").html(resulthtml);
+        getBayHeaders();
+
+    });
+}
+function convertDateTo12HourTime(datetimestring) {
+    var d = new Date(datetimestring);
+    var hou = d.getHours(); // => 9
+    var min = d.getMinutes(); // =>  30
+    var sec = d.getSeconds(); // => 51
+
+    /*if (hou == "00") {
+     return "00:00";
+     }*/
+    //hou = "00";
+    var timeString = hou+":"+min+":"+sec;
+    if(min < 10) {
+        min = "0"+min;
+    }
+
+    if(hou < 12 && hou != "00") {
+        return (hou+":"+min+"a");
+    } else if(hou > 12) {
+        return ((hou-12)+":"+min+"p");
+    } else if (hou == "00") {
+        hou = 12;
+        return ((hou)+":"+min+"a");
+    }
+
+    var H = +timeString.substr(0, 2);
+    var h = (H % 12) || 12;
+    var ampm = H < 12 ? "a" : "p";
+    return (h + timeString.substr(2, 3) + ampm);
+}
+// e.g. "4/17/2015 10:59:59 AM" to "10:59a"
+function getTimeHourMinuteFromDateTime(datetimestring) {
+    var d = new Date(datetimestring);
+    var hou = d.getHours(); // => 9
+    var min = d.getMinutes(); // =>  30
+    var ampm = "";
+
+    if(datetimestring.indexOf('AM') === -1)
+    {
+        ampm = "p";
+    } else{
+        ampm = "a";
+    }
+    if(min < 10) {
+        min = ("0"+min).toString();
+    }
+    var timeString = hou+":"+min+ampm;
+    return timeString;
+}
+
+function fill_wait_list_grid() {
+    $.ajax({
+        headers: { 'apicode':<?php echo '"'.API_CODE.'"'; ?> },
+        url:<?php echo '"'.API_URL_WAITING_QUEUE.'"'; ?>,
+        type: 'POST',
+        dataType: 'json',
+        crossDomain: true,
+        data: { siteid: "1" }
+    }).done(function (data) {
+        var resulthtml = '<div class="shootingtable"><table id="example2" class="display">';
+        resulthtml +=    '<thead>';
+        resulthtml +=    '<tr><th>Name</th><th>Party Size</th><th>Time In</th><th>Action </th></tr>';
+        resulthtml +=    '</thead><tbody>';
+
+        for (var i = 0; i < data["waitingqueue"].length; i++) {
+
+            resulthtml += '<tr class="active"><td>'+data["waitingqueue"][i].membername+'</td><td>'+data["waitingqueue"][i].partymembers+'</td><td>'+getTimeHourMinuteFromDateTime(data["waitingqueue"][i].checkintime)+'</td><td><a id='+data["waitingqueue"][i].waitingid+' name='+data["waitingqueue"][i].membername+' class="adparty"><span id="nextbtn3" class="label label-default addtoparty">Add to Party</span></a></td></tr>';
+
+        }
+        resulthtml += '</tbody></table><div id="clearmsg"></div><span class="label label-default allclear"><a class="clear">Clear Wait List</a></span></div>';
+
+        $("#waitlist").html(resulthtml);
+		//$('#example2').DataTable();
+		$('#example2').dataTable( {
+			"aLengthMenu": [[5,10, 25, 50, -1], [5,10, 25, 50, "All"]]
+		});
+		
+    });
+}
+function post_to_wait_list() {
+    var searchingresults = $('#memberids').val();
+    var searchArray = searchingresults.substring(1);
+    var members = searchArray.split(",");
+    var phone_number = $('#mobNumber').val();
+	var expId = $('#expId').val();
+    $('#mobNumber').val("");
+    $.ajax({
+        headers: { 'apicode':<?php echo '"'.API_CODE.'"'; ?> },
+        url:<?php echo '"'.API_URL_POST_WAITING_QUEUE.'"'; ?>,
+        type: 'POST',
+        dataType: 'json',
+        crossDomain: true,
+        data: { siteid: "1",phone_number: phone_number,members: members, expid:expId }
+    }).done(function (data) {
+        fill_wait_list_grid();
+    });
+}
+
+function baySelection() {
+    var searchingresults = $('#memberids').val();
+    var searchArray = searchingresults.substring(1);
+    var members = searchArray.split(",");
+    var bayID = $("#boxIDforColorChange").val();
+	var waitingid = $("#waitingid").val();
+	var expId = $('#expId').val();
+    $.ajax({
+        headers: { 'apicode':<?php echo '"'.API_CODE.'"'; ?> },
+        url:<?php echo '"'.API_URL_BAY_SELECTION.'"'; ?>,
+        type: 'POST',
+        dataType: 'json',
+        crossDomain: true,
+        data: { siteid: "1", bayid:bayID, expid:expId, gamertag:members,waitingid: waitingid }
+    }).done(function (data) {
+		if(data.issuccessful == true){
+			document.getElementById('reservationId').value = data.reservation_code;
+			purchaseInformation();
+		}
+    });
+}
+function purchaseInformation(){
+var bayid = $('#boxIDforColorChange').val();	
+$.ajax({
+url: api_url+api_version+"PurchaseInformation",
+headers: {apicode:apiCode},
+data: {bayid:bayid},
+type: 'GET',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+var showmemberInfo = '';
+var junior_div = '';
+
+if(result.member_info.length >0){	
+var a = 1;
+for (var i = 0; i < result.member_info.length; i++) {
+	if(result.member_info[i].juniors != null){
+	//junior_div = '<h5 class="heading-h5"><span>Juniors</span></h5>';
+	for (var j = 0; j < result.member_info[i].juniors.length; j++) {
+		junior_div += '<tr><td>$5.00</td><td>'+result.member_info[i].juniors[j].firstname+'&nbsp;'+result.member_info[i].juniors[j].lastname+' Junior Membership</td></tr>';
+	}
+	}else{
+	junior_div = '';	
+	}
+	if(result.member_info[i].membership_price == null && result.member_info[i].membership_type == null && result.member_info[i].bay_price == '0.0' && result.member_info[i].bay_name == null && result.member_info[i].total_tax == null && result.member_info[i].total_amount == null){}else{
+	showmemberInfo += '<div class="order" data-order-summary-section="payment-lines">';
+	showmemberInfo += '<h5 class="heading-h5">'+a+'.&nbsp;<span>'+result.member_info[i].firstname+'&nbsp;'+result.member_info[i].lastname+'</span></h5>';
+	showmemberInfo += '<table class="purchasetable">';
+	showmemberInfo += '<tr><th class="cost">Cost</th><th class="desc">Description</th></tr>';
+	if(result.member_info[i].membership_price == null && result.member_info[i].membership_type == null){}else{
+	var membershiptype = result.member_info[i].membership_type;	
+	showmemberInfo += '<tr><td>$'+result.member_info[i].membership_price.toFixed(2)+'</td><td>'+membershiptype.replace("*", " ")+' Membership</td></tr>';
+	}
+	if(result.member_info[i].bay_price == '0.0' && result.member_info[i].bay_name == null){}else{
+	showmemberInfo += '<tr><td>$'+result.member_info[i].bay_price.toFixed(2)+'</td><td>'+result.member_info[i].bay_name+'</td></tr>';
+	}
+	showmemberInfo += junior_div;
+	if(result.member_info[i].total_tax == null){}else{
+	showmemberInfo += '<tr><td>$'+result.member_info[i].total_tax.toFixed(2)+'</td><td>Tax</td></tr>';
+	}
+	showmemberInfo += '</table>';
+	showmemberInfo += '';
+	showmemberInfo += '<h5 class="heading-h5"><span>'+result.member_info[i].firstname+'&nbsp;'+result.member_info[i].lastname+'&nbsp;Total:&nbsp;$'+result.member_info[i].total_amount.toFixed(2)+'</h5>';
+	showmemberInfo += '';
+	showmemberInfo += '</div>';
+	}
+a++;	
+}
+$("#showinfo").html(showmemberInfo);
+$("#firststep").removeClass("show");
+$("#firststep").addClass("hide");
+$("#secondstep").removeClass("show");
+$("#secondstep").addClass("hide");
+$("#thirdstep").removeClass("show");
+$("#thirdstep").addClass("hide");
+$("#forthstep").removeClass("show");
+$("#forthstep").addClass("hide");
+$("#fifthstep").removeClass("hide");
+$("#fifthstep").addClass("show");
+$('#thirdmenu').attr('onclick', 'thirdstep();');
+$("#thirdmenu").css("cursor", "pointer");
+}else{
+}
+hide_load();	
+},
+error: function(){
+hide_load();
+}
+});	
+}
+function bayRelease() {
+    var bayID = $("#boxIDforColorChange").val();
+    $.ajax({
+        headers: { 'apicode':<?php echo '"'.API_CODE.'"'; ?> },
+        url:<?php echo '"'.API_URL_BAY_RELEASE.'"'; ?>,
+        type: 'POST',
+        dataType: 'json',
+        crossDomain: true,
+        data: { bayid:bayID }
+    }).done(function (data) {
+		document.getElementById('realeasebckid').value = bayID;
+        getShootingLounges();
+    });
+}
+function back_bayRelease() {
+    var bayID = $("#realeasebckid").val();
+    $.ajax({
+        headers: { 'apicode':<?php echo '"'.API_CODE.'"'; ?> },
+        url:<?php echo '"'.API_URL_BAY_RELEASE.'"'; ?>,
+        type: 'POST',
+        dataType: 'json',
+        crossDomain: true,
+        data: { bayid:bayID }
+    }).done(function (data) {
+        getShootingLounges();
+    });
+}
+$(document).ready(function (){
+	
+    /*getShootingLounges();
+    fill_wait_list_grid();*/
+    $(document).on("mouseover", ".loungeBox", function(){
+        //var color = $(this).closest(".col-md-4").css("background-color");
+		var color = $(this).closest(".col-md-11").css("background-color");		//alert(color);
+        if(color == "rgb(43, 120, 228)") {
+            $(this).css("background-color",color);
+            $(this).addClass("hoverl");
+        }else if(color == "rgb(255, 255, 0)"){
+			 $(this).css("background-color",color);
+             $(this).addClass("hoverl");
+		}else if(color == "rgb(207, 42, 39)"){
+			 $(this).css("background-color",color);
+             $(this).addClass("hoverl");
+		}
+        /*$(this).css("margin","-30px 0 0 -15px");
+        $(this).css("-webkit-transform","scale(1.1)");
+        $(this).css("transform","scale(1.1)");
+        $(this).css("height","172px");#2b78e4 none repeat scroll 0 0
+        $(this).css("padding-top","16px");
+        $(this).css("position","absolute");
+        $(this).css("text-align","center");
+        $(this).css("width","32%");*/
+    });
+    $(document).on("mouseout", ".loungeBox", function(){
+		var color = $(this).closest(".col-md-11").css("background-color");        if(color == "rgb(43, 120, 228)") {
+            $(this).removeClass("hoverl");
+        }else if(color == "rgb(255, 255, 0)"){
+			 $(this).removeClass("hoverl");
+		}else if(color == "rgb(207, 42, 39)"){
+			 $(this).removeClass("hoverl");
+		}
+    });
+
+    $("#mobNumber").mask("(999) 999-9999");
+
+    $("#mobNumber").on("blur", function() {
+        var last = $(this).val().substr( $(this).val().indexOf("-") + 1 );
+
+        if( last.length == 3 ) {
+            var move = $(this).val().substr( $(this).val().indexOf("-") - 1, 1 );
+            var lastfour = move + last;
+
+            var first = $(this).val().substr( 0, 9 );
+
+            $(this).val( first + '-' + lastfour );
+        }
+    });
+
+    $("#closeBtnStatusopen").click(function(){
+        var boxID = $("#boxIDforColorChange").val();
+
+        $("#box"+boxID).addClass("open");
+        $("#box"+boxID).removeClass("assigned");
+        $("#baystatus"+boxID).html("Open");
+        if(everyinterval == 0) {
+            everyinterval = setInterval(function(){
+                getShootingLounges(); // this will run after every 10 seconds
+                fill_wait_list_grid();
+            }, 10000);
+        }
+    });
+
+    $("#addMemToList").click(function(){
+        clearInterval(everyinterval);
+        everyinterval = 0;
+        $('#addMemToListModal').modal();                     // initialized with defaults
+        $('#addMemToListModal').modal({ keyboard: false });   // initialized with no keyboard
+        $('#addMemToListModal').modal('show');                // initializes and invokes show immediately
+    });
+	
+	function add_to_wait_list() {
+    var searchingresults = $('#memberids').val();
+    var searchArray = searchingresults.substring(1);
+    var members = searchArray.split(",");
+    var phone_number = $('#mobNumber').val();
+	var expId = $('#expId').val();
+    $('#mobNumber').val("");
+    $.ajax({
+        headers: { 'apicode':<?php echo '"'.API_CODE.'"'; ?> },
+        url:<?php echo '"'.API_URL_POST_WAITING_QUEUE.'"'; ?>,
+        type: 'POST',
+        dataType: 'json',
+        crossDomain: true,
+        data: { siteid: "1",phone_number: phone_number,members: members, expid:expId }
+    }).done(function (data) {
+        window.location.href = '<?php echo base_url(); ?>';
+    });
+	}
+    $("#submitPhoneBtn").click(function(){
+		var checkMob = /^\(?\d{3}\)?[-\.\s]?\d{3}[-\.\s]?\d{4}$/;
+		var mobNumber = $("#mobNumber").val();
+		if(mobNumber == ''){
+		$("#mobilerror").html('<p style="color:#F00;">Please enter phone number in a valid format(xxx-xxx-xxxx).</p>');	
+		}else if(checkMob.test(mobNumber)){
+		$("#mobilerror").html('');		
+        add_to_wait_list();
+        if(everyinterval == 0) {
+            everyinterval = setInterval(function(){
+                getShootingLounges(); // this will run after every 10 seconds
+                fill_wait_list_grid();
+            }, 10000);
+        }
+		$('#addMemToListModal').modal('hide');
+		//window.location.href = '<?php //echo base_url(); ?>';
+		}
+    });
+
+    $("#finishBtnStatusopen").click(function(){
+		//updatePurchaseInformation();
+        window.location.href = '<?php echo base_url(); ?>';
+        /*getShootingLounges();
+        if(everyinterval == 0) {
+            everyinterval = setInterval(function(){
+                getShootingLounges(); // this will run after every 10 seconds
+                fill_wait_list_grid();
+            }, 10000);
+        }*/
+    });
+
+    $("#backBtnPC").click(function(){
+        $("#fifthstep").removeClass("show");
+        $("#fifthstep").addClass("hide");
+        $("#forthstep").removeClass("hide");
+        $("#forthstep").addClass("show");
+        $( "ul.resp-tabs-list li:nth-child(4)" ).removeClass("");
+        $( "ul.resp-tabs-list li:nth-child(3)" ).addClass("gobackstep3");
+        $( "ul.resp-tabs-list li:nth-child(3)" ).addClass("resp-tab-active");
+		back_bayRelease();
+        getShootingLounges();
+    });
+
+});
+
+/*var everyinterval = setInterval(function(){
+    getShootingLounges(); // this will run after every 10 seconds
+    fill_wait_list_grid();
+}, 10000);*/
+var everyinterval = "";
+<?php if(isset($_GET['id'])){ ?>
+function gclicked(id) {
+
+    // modal reset
+	document.getElementById('realeasebckid').value = id;
+    $("#firstscreen").css("display","block");
+    $("#heading_modal_open").css("display","block");
+    $("#heading_member_line").css("display","none");
+    $("#secondscreen").css("display","none");
+    $("#fourthscreen").css("display","none");
+    $("#thirdscreen").css("display","none");
+    $("#openStatusModal").css("height","auto");
+    $("#assignBtn").css("display","inline-block");
+	$("#deactivatBtn").css("display","inline-block");
+    $("#continueBtn").css("display","none");
+    $("#backBtn").css("display","none");
+    $("#lastContinueBtnold").css("display","none");
+    $("#boxIDforColorChange").val(id);
+    $("#closeBtnStatusopen").html("Close");
+    $("#closeBtnStatusopen").css("display","inline-block");
+    $(".modal-footer").css("text-align","right");
+    $(".modal-header").css("display","block");
+    $("#finishBtnStatusopen").css("display","none");
+    // end modal reset
+
+    clearInterval(everyinterval);
+    everyinterval = 0;
+    var editid = $(this).data('id');
+    var bayname = $("#bayname"+id).html();
+    var searchingresults = $('#searchingresults').val();
+    var searchArray = searchingresults.substring(1);
+    var memberarray = searchArray.split(",");
+    var membername = memberarray[0];
+    $("#memberNameOnModal").val(membername);
+    membername = $("#memberNameOnModal").val();
+        //var membername = $("#membername"+id).html();
+    $("#heading_modal_open").html(bayname);
+	$("#loungeName1").html(bayname);
+    $("#heading_member_line").html(membername+" Assigned to "+bayname);
+	$(".memNameagain1").html(membername);
+	$(".memNameagain2").html(membername);
+    $(".memName").html(membername);
+    $('#openStatusModal').modal();                     // initialized with defaults
+    $('#openStatusModal').modal({ keyboard: false });   // initialized with no keyboard
+    $('#openStatusModal').modal('show');                // initializes and invokes show immediately
+}
+<?php }else{ ?>
+function gclicked(id) {
+
+   /* // modal reset
+	document.getElementById('realeasebckid').value = id;
+    $("#firstscreen").css("display","block");
+    $("#heading_modal_open").css("display","block");
+    $("#heading_member_line").css("display","none");
+    $("#secondscreen").css("display","none");
+    $("#fourthscreen").css("display","none");
+    $("#thirdscreen").css("display","none");
+    $("#openStatusModal").css("height","auto");
+    $("#assignBtn").css("display","inline-block");
+	$("#deactivatBtn").css("display","inline-block");
+    $("#continueBtn").css("display","none");
+    $("#backBtn").css("display","none");
+    $("#lastContinueBtnold").css("display","none");
+    $("#boxIDforColorChange").val(id);
+    $("#closeBtnStatusopen").html("Close");
+    $("#closeBtnStatusopen").css("display","inline-block");
+    $(".modal-footer").css("text-align","right");
+    $(".modal-header").css("display","block");
+    $("#finishBtnStatusopen").css("display","none");
+    // end modal reset
+
+    clearInterval(everyinterval);
+    everyinterval = 0;
+    var editid = $(this).data('id');
+    var bayname = $("#bayname"+id).html();
+    var searchingresults = $('#searchingresults').val();
+    var searchArray = searchingresults.substring(1);
+    var memberarray = searchArray.split(",");
+    var membername = memberarray[0];
+    $("#memberNameOnModal").val(membername);
+    membername = $("#memberNameOnModal").val();
+        //var membername = $("#membername"+id).html();
+    $("#heading_modal_open").html(bayname);
+	$("#loungeName1").html(bayname);
+    $("#heading_member_line").html(membername+" Assigned to "+bayname);
+    $(".memName").html(membername);*/
+	
+	var bayname = $("#bayname"+id).html();
+	$("#directshotingmesg").html("Assigned to "+bayname);
+	$("#directassignBtn").attr("href","<?php echo base_url(); ?>assignshooting?action="+id);
+	$("#deactivatBtn2").attr("bayid",id);
+    $('#shotingdirectassign').modal();                     // initialized with defaults
+    $('#shotingdirectassign').modal({ keyboard: false });   // initialized with no keyboard
+    $('#shotingdirectassign').modal('show');                // initializes and invokes show immediately
+}
+$("#deactivatBtn2").click(function(){
+        var bayID = $(this).attr("bayid");
+		$.ajax({
+		  url: api_url+api_version+"BayDeactivate",
+		  headers: {apicode:apiCode},
+		  data: {bayid:bayID},
+		  type: 'POST',
+		  crossDomain: true,
+		  dataType: 'json',
+		  beforeSend: function(){
+		  show_load();
+		  },
+		  success: function (result) {
+		  getShootingLounges();		  
+		  hide_load();	  
+		  },
+		  error: function(){
+		  hide_load();
+		  }
+		  });
+    });
+<?php } ?>
+function rclicked(id) {
+	var exist = $('#exist').val();
+	if(exist == 1){
+	var bayname = $("#bayname"+id).html();
+    var membername = $("#membername"+id).html();
+    var timeStart = $("#timeStart"+id).html();
+    var timeEnd = $("#timeEnd"+id).html();
+    var timeExtend = $("#timeExtend"+id).html();
+    var timeRemain = $("#timeRemain"+id).html();
+	var partymemb = $("#mem"+id).html();
+	//var partymemb = $(".additionalmembers").html();
+	if($("#mem"+id).text().length > 0) {
+		$(".addMemTitle").html('Addtional Members:');
+	}else{
+		$(".addMemTitle").html('');
+	}
+	$('#adtiming').attr('byid', id);
+    $("#heading_modal_inuse").html(bayname);
+    $(".memName").html(membername);
+    $(".startTime").html(timeStart);
+    $(".endTime").html(timeEnd);
+    $(".extendedTime").html(timeExtend);
+    $(".remainTime").html(timeRemain);
+	$(".jnuiors").html(partymemb);
+    $("#boxIDforColorChange").val(id);
+	$('#adextingparty').attr('by_id', id);
+	$("#adextingparty").css("display","inline-block");
+	$("#adtiming").css("display","none");
+    $('#busyStatusModal').modal();                     // initialized with defaults
+    $('#busyStatusModal').modal({ keyboard: false });   // initialized with no keyboard
+    $('#busyStatusModal').modal('show');
+	}else{
+	var bayname = $("#bayname"+id).html();
+    var membername = $("#membername"+id).html();
+    var timeStart = $("#timeStart"+id).html();
+    var timeEnd = $("#timeEnd"+id).html();
+    var timeExtend = $("#timeExtend"+id).html();
+    var timeRemain = $("#timeRemain"+id).html();
+	var partymemb = $("#mem"+id).html();
+	//var partymemb = $(".additionalmembers").html();
+	if($("#mem"+id).text().length > 0) {
+		$(".addMemTitle").html('Addtional Members:');
+	}else{
+		$(".addMemTitle").html('');
+	}
+	var membername = $('#partymembername'+id).val();
+	$('#adtiming').attr('byid', id);
+    $("#heading_modal_inuse").html(bayname);
+    $(".memName").html(membername);
+    $(".startTime").html(timeStart);
+    $(".endTime").html(timeEnd);
+    $(".extendedTime").html(timeExtend);
+    $(".remainTime").html(timeRemain);
+	$(".jnuiors").html(partymemb);
+    $("#boxIDforColorChange").val(id);
+	$('#adextingparty').attr('by_id', id);
+	$("#adextingparty").css("display","inline-block");
+	var totalpartymembers = document.getElementById('partymember'+id).value;
+	$('#adtiming').attr('totalmembers', totalpartymembers);
+	$('#adtiming').removeClass('adtiming');
+	$('#adtiming').addClass('directadtiming');
+	var partygame = $("#partymembergamertag"+id).val();
+	var reservations = $("#reserv"+id).val();
+	$('#adtiming').attr('reservation', reservations);
+	$('#adextingparty').attr('gamer', partygame);
+	$('#adextingparty').attr('totalmember', totalpartymembers);
+	$(".memNameagain1").html(membername);
+	$(".memNameagain2").html(membername);
+	$("#adextingparty").attr("href","<?php echo base_url(); ?>assigntiming?action="+id+"&partysize="+totalpartymembers);
+	$('#adextingparty').removeClass('existingparty');
+	$('#adextingparty').addClass('directexistingparty');
+    $('#busyStatusModal').modal();                     // initialized with defaults
+    $('#busyStatusModal').modal({ keyboard: false });   // initialized with no keyboard
+    $('#busyStatusModal').modal('show');	
+	}
+	
+    /*var bayname = $("#bayname"+id).html();
+    var membername = $("#membername"+id).html();
+    var timeStart = $("#timeStart"+id).html();
+    var timeEnd = $("#timeEnd"+id).html();
+    var timeExtend = $("#timeExtend"+id).html();
+    var timeRemain = $("#timeRemain"+id).html();
+
+    $("#heading_modal_inuse").html(bayname);
+    $(".memName").html(membername);
+    $(".startTime").html(timeStart);
+    $(".endTime").html(timeEnd);
+    $(".extendedTime").html(timeExtend);
+    $(".remainTime").html(timeRemain);
+
+    $("#boxIDforColorChange").val(id);
+
+    $('#busyStatusModal').modal();                     // initialized with defaults
+    $('#busyStatusModal').modal({ keyboard: false });   // initialized with no keyboard
+    $('#busyStatusModal').modal('show');      */          // initializes and invokes show immediately
+}
+function yclicked(id) {
+	$('#adextingpartyellow').removeClass('existingparty');
+	$("#adextingpartyellow").attr("href","<?php echo base_url(); ?>assigntiming?action="+id);
+    $("#boxIDforColorChange").val(id);
+	$("#boxIDforColorChange").val(id);
+	var bayname = $("#bayname"+id).html();
+	$("#heading_modal_inassing").html(bayname);
+	$('#inassigned').modal();
+}
+function bclicked(id) {
+    $("#boxIDforColorChange").val(id);
+	var bayname = $("#bayname"+id).html();
+	$("#heading_modal_inactive").html(bayname);
+	$('#inactiveto').modal(); 
+}
+</script>
+
+<style>
+
+    .loungeBox { transition: all .2s ease-in-out; }/*
+    .loungeBox:hover { -webkit-transform: scale(1.1);
+        transform: scale(1.1); height: 172px;
+        background-color: red; margin: -30px 0 0 -15px; padding-top: 0px; position: absolute; text-align: center; width: 32%;}*/
+    .hoverl { 
+    
+    	-webkit-transform: scale(1.1);
+        transform: scale(1.1); 
+        height: auto;
+        margin: -8px 0 0 -15px; 
+        padding-top: 10px;
+		padding-bottom: 10px;
+		padding-left: 16px; 
+        position: absolute; 
+        text-align: center; 
+        width: 26.6%; 
+        border: 2px solid #000;
+        font-size:12px;}
+</style>
+<!--Plug-in Initialisation-->
+	<script type="text/javascript">
+    $(document).ready(function() {
+        //Horizontal Tab
+        $('#parentHorizontalTab').easyResponsiveTabs({
+            type: 'default', //Types: default, vertical, accordion
+            width: 'auto', //auto or any width like 600px
+            fit: true, // 100% fit in a container
+            tabidentify: 'hor_1', // The tab groups identifier
+            activate: function(event) { // Callback function if tab is switched
+                var $tab = $(this);
+                var $info = $('#nested-tabInfo');
+                var $name = $('span', $info);
+                $name.text($tab.text());
+                $info.show();
+            }
+        });
+
+        // Child Tab
+        $('#ChildVerticalTab_1').easyResponsiveTabs({
+            type: 'vertical',
+            width: 'auto',
+            fit: true,
+            tabidentify: 'ver_1', // The tab groups identifier
+            activetab_bg: '#fff', // background color for active tabs in this group
+            inactive_bg: '#F5F5F5', // background color for inactive tabs in this group
+            active_border_color: '#c1c1c1', // border color for active tabs heads in this group
+            active_content_border_color: '#5AB1D0' // border color for active tabs contect in this group so that it matches the tab head border
+        });
+
+        //Vertical Tab
+        $('#parentVerticalTab').easyResponsiveTabs({
+            type: 'vertical', //Types: default, vertical, accordion
+            width: 'auto', //auto or any width like 600px
+            fit: true, // 100% fit in a container
+            closed: 'accordion', // Start closed if in accordion view
+            tabidentify: 'hor_1', // The tab groups identifier
+            activate: function(event) { // Callback function if tab is switched
+                var $tab = $(this);
+                var $info = $('#nested-tabInfo2');
+                var $name = $('span', $info);
+                $name.text($tab.text());
+                $info.show();
+            }
+        });
+		
+		$("#lastContinueBtn").click(function(){
+			updatePurchaseInformation();
+			
+			//updatePurchaseInformation();
+            //baySelection();           // API call for bay selection
+            /*$(".modal-header").css("display","block");
+            $("#heading_modal_open").css("display","block");
+            $("#heading_modal_open").html("Check-In Completed");
+            $("#heading_member_line").css("display","none");
+            $("#finishBtnStatusopen").css("display","inline-block");
+            $(".modal-footer").css("text-align","center");
+            $("#thirdscreen").css("display","none");
+            $("#fourthscreen").css("display","block");
+            $("#backBtn").css("display","none");
+            $("#lastContinueBtnold").css("display","none");
+
+            clearInterval(everyinterval);
+            everyinterval = 0;
+            $('#openStatusModal').modal();                     // initialized with defaults
+            $('#openStatusModal').modal({ keyboard: false });   // initialized with no keyboard
+            $('#openStatusModal').modal('show');*/                // initializes and invokes show immediately
+
+        });
+		$(".focuscontinue").click(function(){
+			//updatePurchaseInformation();
+            //baySelection();           // API call for bay selection
+			var txt_focus = $('#txt_focus').val();
+			var txt_focusbayid = $('#txt_focusbayid').val();
+			var txt_focusreservation = $('#txt_focusreservation').val();
+			if(txt_focus == ''){
+				$("#errorfocustxt").html('<p style="color:#F00;">Please enter your employee number.</p>');
+			}else{
+			focusTracking(txt_focusreservation,txt_focus,txt_focusbayid);	
+			/*$("#errorfocustxt").html('');	
+			$('#focuspop').modal('hide');	
+            $(".modal-header").css("display","block");
+            $("#heading_modal_open").css("display","block");
+            $("#heading_modal_open").html("Check-In Completed");
+            $("#heading_member_line").css("display","none");
+            $("#finishBtnStatusopen").css("display","inline-block");
+            $(".modal-footer").css("text-align","center");
+            $("#thirdscreen").css("display","none");
+            $("#fourthscreen").css("display","block");
+            $("#backBtn").css("display","none");
+            $("#lastContinueBtnold").css("display","none");
+
+            clearInterval(everyinterval);
+            everyinterval = 0;
+            $('#openStatusModal').modal();                     // initialized with defaults
+            $('#openStatusModal').modal({ keyboard: false });   // initialized with no keyboard
+            $('#openStatusModal').modal('show');                // initializes and invokes show immediately*/
+			}
+        });
+		function focusTracking(reservation_id,membershipnumber,bayid){
+		show_load();	
+		var reservation_id = reservation_id;
+		var membershipnumber = membershipnumber;
+		var bayid = bayid;
+		$.ajax({
+		url: api_url+api_version+"FocusTracking",
+		headers: {apicode:apiCode},
+		data: {reservation_code:reservation_id,bayid:bayid,membershipnumber:membershipnumber,error_message:'Could not find Start Session Return File'
+		},
+		type: 'POST',
+		crossDomain: true,
+		dataType: 'json',
+		beforeSend: function(){
+		show_load();
+		},
+		success: function (result) {
+			if(result.success == true){
+			$("#errorfocustxt").html('');	
+			$('#focuspop').modal('hide');
+            $(".modal-header").css("display","block");
+            $("#heading_modal_open").css("display","block");
+            $("#heading_modal_open").html("Check-In Completed");
+            $("#heading_member_line").css("display","none");
+            $("#finishBtnStatusopen").css("display","inline-block");
+            $(".modal-footer").css("text-align","center");
+            $("#thirdscreen").css("display","none");
+            $("#fourthscreen").css("display","block");
+            $("#backBtn").css("display","none");
+            $("#lastContinueBtnold").css("display","none");
+
+            clearInterval(everyinterval);
+            everyinterval = 0;
+            $('#openStatusModal').modal();                     // initialized with defaults
+            $('#openStatusModal').modal({ keyboard: false });   // initialized with no keyboard
+            $('#openStatusModal').modal('show');                // initializes and invokes show immediately	
+			hide_load();	
+			}else{
+			$("#errorfocustxt").html('<p style="color:#F00;">Please enter a valid membership number</p>');	
+			hide_load();
+			}
+		
+		},
+		error: function(){
+		$("#errorfocustxt").html('<p style="color:#F00;">Please enter a valid membership number</p>');	
+			hide_load();
+		}
+		});
+		}
+		
+                       	$( "ul.resp-tabs-list li:nth-child(1)" ).removeClass("resp-tab-active");
+
+        $(document).on("blur", ".leftBayGroup", function(e){
+            var fieldValue = this.value;
+            if(fieldValue == "") {
+                fieldValue = "Left Section";
+            }
+            updateBayHeaders(1,fieldValue);
+        });
+        $(document).on("keyup", ".leftBayGroup", function(e){
+            if(e.keyCode == 13) {
+                this.blur();
+            }
+        });
+
+        $(document).on("blur", ".middleBayGroup", function(e){
+            var fieldValue = this.value;
+            if(fieldValue == "") {
+                fieldValue = "Middle Section";
+            }
+            updateBayHeaders(2,fieldValue);
+        });
+        $(document).on("keyup", ".middleBayGroup", function(e){
+            if(e.keyCode == 13) {
+                this.blur();
+            }
+        });
+
+        $(document).on("blur", ".rightBayGroup", function(e){
+            var fieldValue = this.value;
+            if(fieldValue == "") {
+                fieldValue = "Right Section";
+            }
+            updateBayHeaders(3,fieldValue);
+        });
+        $(document).on("keyup", ".rightBayGroup", function(e){
+            if(e.keyCode == 13) {
+                this.blur();
+            }
+        });
+           
+    });
+    function getBayHeaders(){
+        $.ajax({
+            url: api_url+api_version+'BayHeader',
+            headers: {apicode: apiCode},
+            type: 'GET',
+            crossDomain: true,
+            dataType: 'json',
+            beforeSend: function(){
+            },
+            success: function (result) {
+                var left = result.headers[0].name;
+                var middle = result.headers[1].name;
+                var right = result.headers[2].name;
+                $(".leftBayGroup").val(left);
+                $(".middleBayGroup").val(middle);
+                $(".rightBayGroup").val(right);
+            },
+            error: function(){
+                $(".leftBayGroup").val('Left');
+                $(".middleBayGroup").val('Middle Section');
+                $(".rightBayGroup").val('Right Section');
+            }
+        });
+    }
+    function updateBayHeaders(id, value){
+        $.ajax({
+            url: api_url+api_version+'BayHeader',
+            headers: {apicode: apiCode},
+            type: 'POST',
+            data: {id:id,name:value},
+            crossDomain: true,
+            dataType: 'json',
+            beforeSend: function(){
+            },
+            success: function (result) {
+                getBayHeaders();
+            },
+            error: function(){
+                getBayHeaders();
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

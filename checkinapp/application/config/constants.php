@@ -1,0 +1,89 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+include_once("passwords.inc.php");
+/*
+|--------------------------------------------------------------------------
+| File and Directory Modes
+|--------------------------------------------------------------------------
+|
+| These prefs are used when checking and setting modes when working
+| with the file system.  The defaults are fine on servers with proper
+| security, but you may wish (or even need) to change the values in
+| certain environments (Apache running a separate process for each
+| user, PHP under CGI with Apache suEXEC, etc.).  Octal values should
+| always be used to set the mode correctly.
+|
+*/
+define('FILE_READ_MODE', 0644);
+define('FILE_WRITE_MODE', 0666);
+define('DIR_READ_MODE', 0755);
+define('DIR_WRITE_MODE', 0777);
+
+/*
+|--------------------------------------------------------------------------
+| File Stream Modes
+|--------------------------------------------------------------------------
+|
+| These modes are used when working with fopen()/popen()
+|
+*/
+
+define('FOPEN_READ',							'rb');
+define('FOPEN_READ_WRITE',						'r+b');
+define('FOPEN_WRITE_CREATE_DESTRUCTIVE',		'wb'); // truncates existing file data, use with care
+define('FOPEN_READ_WRITE_CREATE_DESTRUCTIVE',	'w+b'); // truncates existing file data, use with care
+define('FOPEN_WRITE_CREATE',					'ab');
+define('FOPEN_READ_WRITE_CREATE',				'a+b');
+define('FOPEN_WRITE_CREATE_STRICT',				'xb');
+define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
+
+
+/* End of file constants.php */
+/* Location: ./application/config/constants.php */
+
+
+/*
+|--------------------------------------------------------------------------
+| Custom defined Global Variables
+|--------------------------------------------------------------------------
+*/
+
+define('MAC_ADDRESS', '00-1C-C0-82-DF-F8');
+if(strpos($_SERVER["DOCUMENT_ROOT"],'wamp') !== false || strpos($_SERVER["DOCUMENT_ROOT"],'xampp') !== false) {
+    //define('API_URL', 'http://10.10.0.100/BayCheckinApi/api/');
+	define('API_URL', 'http://qacheckin.modernround.com/api/');
+} else if($_SERVER['SERVER_NAME'] == 'www.modernround.com') {
+    define('API_URL', 'http://checkin.modernround.com/api/');
+}else{
+	define('API_URL', 'http://qacheckin.modernround.com/api/');
+}
+define('API_VERSION', 'v1/');
+
+define('API_URL_CHECKIN', API_URL.API_VERSION.'CheckIn');
+define('API_URL_BAY_LIST', API_URL.API_VERSION.'BayList');
+define('API_URL_WAITING_QUEUE', API_URL.API_VERSION.'WaitingQueue');
+define('API_URL_POST_WAITING_QUEUE', API_URL.API_VERSION.'WaitingList');
+define('API_URL_BAY_SELECTION', API_URL.API_VERSION.'BaySelection');
+define('API_URL_BAY_RELEASE', API_URL.API_VERSION.'BayRelease');
+define('API_CODE', 'C5D39F3A-5601-41B2-B107-0B70BFCEA713');
+define('API_URL_QRCODES', API_URL.API_VERSION.'CheckIn_v1');
+define('API_URL_RESERVATION_LOG', API_URL.API_VERSION.'ReservationLog');
+
+//define('API_URL_GET_RESERVATIONS', 'https://services.nextable.com/api/v2/restaurants/Z3R9056IR/reservations?apiKey=D6D47E8EF63847B85959C9C7C7546');
+
+define('API_URL_GET_RESERVATIONS', 'https://services.nextable.com/api/v2/restaurants/0EP87552H/reservations?apiKey=D6D47E8EF63847B85959C9C7C7546');
+
+define('ADMIN_URL_CHECKINAPP', 'http://qaadmin.modernround.com');
+//define('API_URL_GET_MEMBERLIST', API_URL.API_VERSION.'/getmemberlist/getmemberlist');
+
+if(strpos($_SERVER["DOCUMENT_ROOT"],'wamp') !== false || strpos($_SERVER["DOCUMENT_ROOT"],'xampp') !== false) {
+    define('API_URL_GET_MEMBERLIST', 'http://10.10.0.100/BayCheckinApi/getmemberlist/getmemberlist');
+} else if($_SERVER['SERVER_NAME'] == 'www.modernround.com') {
+    define('API_URL_GET_MEMBERLIST', 'http://checkin.modernround.com/getmemberlist/getmemberlist');
+}else{
+	define('API_URL_GET_MEMBERLIST', 'http://qacheckin.modernround.com/getmemberlist/getmemberlist');
+}
+//define('MAC_ADDRESS', '98-7A-BC-DE-F6-55');
+
+
+global $login_salt;
+$login_salt = "32hj4./23n4/3t1#!@@#@#sdbajsh";

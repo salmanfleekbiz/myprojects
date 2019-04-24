@@ -1,0 +1,49 @@
+Paypal
+
+n1921217@mvrht.com
+Developer account : FrankJWashington@rhyta.com
+Developer Password  :fleekbiz@123
+
+
+
+sandbox developer account: FrankJWashington-facilitator@rhyta.com
+password: 12345678
+
+pay email account: FrankJWashington-buyer@rhyta.com
+password : 12345678
+
+
+
+New Paypal
+--------------------
+
+Login: developer.paypal.com
+user: morre@yopmail.com
+Pass: Developer@321
+
+SanboxPay:
+----------------------
+User: morre-buyer@yopmail.com
+Pass: 12345678
+
+Sandbox:
+----------------------
+
+User: morre-facilitator@yopmail.com
+Pass: 12345678
+
+
+
+Strip Account
+---------------
+
+https://dashboard.stripe.com
+
+bcdeveloper3@gmail.com
+Developer@123
+
+jimmy@yopmail.com
+Developer@123
+
+onlyfans@yopmail.com
+Dev@123456

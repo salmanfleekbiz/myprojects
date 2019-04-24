@@ -1,0 +1,82 @@
+<section id="bottom">
+<div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+<div class="row">
+<div class="col-md-6 col-sm-12" style="text-align:center;">
+<div class="widget">
+<h3><a href="http://aws.modernround.com/responsive/location/" style="color: #323839; font-family: latobold; font-size: 30px; text-transform: none;">Locations</a></h3>
+<ul>
+<h4 style="color: #4c4c4c; font-family: latobold; font-size:15px; text-transform: none;">Scottsdale (Coming Soon)</h4>
+</ul>
+</div>    
+</div>
+<div class="col-md-6 col-sm-12" style="text-align:center;">
+<div class="widget">
+<h3 style="color: #323839; font-family: latobold; font-size: 30px; text-transform: none;">Connect With Us</h3>
+<ul>
+<li><a href="?page_id=62" style="color: #4c4c4c; font-family: latobold; font-size:15px; position: relative; top: -0.2em;">Join our email list</a></li>
+<li><a href="https://www.facebook.com/ModernRound" target="_blank"><img src="<?php bloginfo( 'template_url' ); ?>/images/facebook.png"></a> <a href="https://twitter.com/ModernRound" target="_blank"><img src="<?php bloginfo( 'template_url' ); ?>/images/tweet.png"></a> 
+<a href="https://instagram.com/modernround/" target="_blank"><img src="<?php bloginfo( 'template_url' ); ?>/images/insta.png"></a> <a href="https://www.pinterest.com/ModernRound/" target="_blank"><img src="<?php bloginfo( 'template_url' ); ?>/images/pinterest.png"></a></li>
+</ul>
+</div>    
+</div>
+</div>
+</div>
+</section>
+<footer id="footer" class="midnight-blue">
+<div class="container">
+<div class="row">
+<div class="col-sm-12">
+Copyright © 2015 <a target="_blank" href="<?php echo site_url(); ?>" title="Modern Round Virtual Shooting Lounge">Modern Round</a>. All Rights Reserved. <span>/</span>    <a href="?page_id=42">Terms & Conditions</a>      <span>/</span>    <a href="?page_id=44">Privacy Policy</a>
+</div>
+</div>
+</div>
+</footer>
+<?php wp_footer(); ?>  
+<script type="text/javascript">
+$(document).ready(function() {
+$("#webcam").scriptcam({
+showMicrophoneErrors:false,
+onError:onError,
+cornerRadius:20,
+disableHardwareAcceleration:1,
+cornerColor:'e3e5e2',
+onWebcamReady:onWebcamReady,
+uploadImage:'upload.gif',
+onPictureAsBase64:base64_tofield_and_image
+});
+});
+function base64_tofield() {
+$('#formfield').val($.scriptcam.getFrameAsBase64());
+};
+function base64_toimage() {
+$('#image').attr("src","data:image/png;base64,"+$.scriptcam.getFrameAsBase64());
+};
+function base64_tofield_and_image(b64) {
+$('#formfield').val(b64);
+$('#image').attr("src","data:image/png;base64,"+b64);
+};
+function changeCamera() {
+$.scriptcam.changeCamera($('#cameraNames').val());
+}
+function onError(errorId,errorMsg) {
+$( "#btn1" ).attr( "disabled", true );
+$( "#btn2" ).attr( "disabled", true );
+alert(errorMsg);
+}          
+function onWebcamReady(cameraNames,camera,microphoneNames,microphone,volume) {
+$.each(cameraNames, function(index, text) {
+$('#cameraNames').append( $('<option></option>').val(index).html(text) )
+});
+$('#cameraNames').val(camera);
+}
+function saveimg() {
+imgsrc = $.scriptcam.getFrameAsBase64();
+$('#image').attr("src","data:image/png;base64,"+imgsrc);
+$('#image').css('display','inline');
+$('#take_a_selfie_img_src').attr('value', imgsrc);
+$("form img#previewimg").attr('src','');
+$("form img#previewimg").css('display','none');
+}
+</script>
+</body>
+</html>

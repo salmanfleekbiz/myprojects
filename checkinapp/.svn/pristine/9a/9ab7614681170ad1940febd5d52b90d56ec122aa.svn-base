@@ -1,0 +1,185 @@
+<?php 
+/*
+	Template Name: Events
+*/
+
+
+get_header(); ?>
+<link href="<?php bloginfo( 'template_url' ); ?>/css/datepicker.css" rel="stylesheet">
+<link href="<?php bloginfo( 'template_url' ); ?>/assets/css/eventon_dynamic_styles.css" rel="stylesheet">
+<link href="<?php bloginfo( 'template_url' ); ?>/assets/css/eventon_styles.css" rel="stylesheet">
+<link href="<?php bloginfo( 'template_url' ); ?>/assets/css/dynamic_styles.css" rel="stylesheet">
+<link href="<?php bloginfo( 'template_url' ); ?>/assets/css/colorpicker_styles.css" rel="stylesheet">
+<link href="<?php bloginfo( 'template_url' ); ?>/assets/css/activation.css" rel="stylesheet">
+<link href="<?php bloginfo( 'template_url' ); ?>/assets/css/jquery.timepicker.css" rel="stylesheet">
+<link href="<?php bloginfo( 'template_url' ); ?>/assets/css/menu.css" rel="stylesheet">
+<link href="<?php bloginfo( 'template_url' ); ?>/assets/css/backend_evcal_settings.css" rel="stylesheet">
+<link href="<?php bloginfo( 'template_url' ); ?>/assets/css/backend_evcal_post.css" rel="stylesheet">
+<link href="<?php bloginfo( 'template_url' ); ?>/assets/css/ajde_backender_style.css" rel="stylesheet">
+<link href="<?php bloginfo( 'template_url' ); ?>/assets/fonts/font-awesome.css" rel="stylesheet">
+<link href="<?php bloginfo( 'template_url' ); ?>/assets/fonts/font-awesome.min.css" rel="stylesheet">
+<link href="<?php bloginfo( 'template_url' ); ?>/assets/webfontkit/stylesheet.css" rel="stylesheet">
+<style type="text/css">
+    @media only screen and (min-width : 240px) and (max-width : 568px) { .pull-left { float: none !important; } }
+    
+    </style>
+<section id="inner-banner" class="wow fadeIn" >
+<div class="container">
+<div class="col-sm-12 col-lg-12 headline wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+<h1><?php the_title(); ?></h1>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+
+                <!-- event on code start -->
+                <div class="ajde_evcal_calendar  ul " id="evcal_calendar_1">
+        <div data-accord="0" data-ux_val="0" data-send_unix="0" data-range_end="0" data-range_start="0" data-filters_on="false" data-sort_by="sort_date" data-tiles="no" data-show_limit="no" data-ev_cnt="3" data-mapzoom="12" data-mapformat="roadmap" data-mapscroll="true" data-cal_ver="2.2.21" data-evc_open="0" data-runajax="1" data-cmonth="04" data-cyear="2015" class="evo-data"></div><div class="calendar_header " id="evcal_head"><div data-tile_count="2" data-tile_bg="0" data-tile_height="0" data-tiles="no" data-etc_override="no" data-show_limit="no" data-evc_open="no" data-month_incre="+1" data-lang="L1" data-ft_event_priority="no" data-event_order="ASC" data-show_et_ft_img="no" data-hide_past="yes" style="display:none" class="cal_arguments"></div><div class="clear"></div></div><div class="evcal_month_line"><p>april </p></div><div class="eventon_events_list" id="evcal_list"><div class="eventon_list_event"><p class="no_events">No Events</p></div></div><div class="evcal_month_line"><p>may </p></div><div class="eventon_events_list" id="evcal_list"><div data-colr="#206177" style="" itemtype="http://schema.org/Event" itemscope="" data-ri="0" data-event_id="276" class="eventon_list_event event" id="event_276"><div style="display:none" class="evo_event_schema">
+              <a itemprop="url" href="http://qa.modernround.com/event-directory/"></a>        
+              <time datetime="2015-5-21" itemprop="startDate"></time>
+              <time datetime="2015-6-25" itemprop="endDate"></time></div>
+        <div data-ux_val="1" data-gmap_status="null" data-gmtrig="1" style="border-color: #206177;" data-exlk="0" class="evcal_list_a desc_trig mul_val " id="evc_1432170000276" data-gmstat="1"><span data-syr="2015" data-smon="may" data-bgcolor="#206177" class="evcal_cblock"><em class="evo_date"><span class="start">21<em>may</em></span><span class="end"> - 25<em>jun</em></span></em><em class="evo_time"><em class="evo_day">may 21</em><span class="start">1:00 am</span><em class="evo_day end">jun 25</em></em><em class="clear"></em></span><span data-location_status="false" class="evcal_desc evo_info "><span itemprop="name" class="evcal_desc2 evcal_event_title">qa test</span><span class="evcal_desc_info"></span><span class="evcal_desc3"></span></span><em class="clear"></em></div><div style="display: none;" class="event_description evcal_eventcard"><div data-minheight="400" data-imgstyle="minimized" style="background-image: url(&quot;http://qa.modernround.com/wp-content/uploads/2015/03/164_houstonn-help-desk-daytime.jpg&quot;); height: 400px;" data-imgwidth="1024" data-imgheight="672" class="evo_metarow_fimg evorow evcal_evdata_img " data-status="open"></div><div class="evo_metarow_details evorow evcal_evdata_row bordb evcal_event_details">
+            <div style="display:none" class="event_excerpt"><h3 class="padb5 evo_h3">Event Details</h3><p></p></div>
+            <span class="evcal_evdata_icons"><i class="fa fa-align-justify"></i></span>
+            <div class="evcal_evdata_cell "><div class="eventon_full_description">
+                <h3 class="padb5 evo_h3">Event Details</h3><div itemprop="description" class="eventon_desc_in">
+                qa test abc</div><div class="clear"></div>
+
+              </div>
+            </div>
+          </div><div class="evo_metarow_time evorow evcal_evdata_row bordb evcal_evrow_sm  lastrow">
+              <span class="evcal_evdata_icons"><i class="fa fa-clock-o"></i></span>
+              <div class="evcal_evdata_cell">             
+                <h3 class="evo_h3">Time</h3><p>May 21 (Thursday) 1:00 am - June 25 (Thursday) 1:00 am</p>
+              </div>
+            <div title="Close" class="evcal_evdata_row evcal_close"></div></div></div><div class="clear end"></div></div><div data-colr="#206177" style="" itemtype="http://schema.org/Event" itemscope="" data-ri="0" data-event_id="247" class="eventon_list_event event" id="event_247"><div style="display:none" class="evo_event_schema">
+              <a itemprop="url" href="http://qa.modernround.com/event-directory/"></a>        
+              <time datetime="2015-5-31" itemprop="startDate"></time>
+              <time datetime="2015-6-30" itemprop="endDate"></time>
+                  <item itemtype="http://schema.org/Place" itemscope="" itemprop="location" style="display:none">
+                    <span itemtype="http://schema.org/PostalAddress" itemscope="" itemprop="address">
+                      <item itemprop="streetAddress">arizona</item>
+                    </span>
+                  </item></div>
+        <div data-ux_val="1" data-gmtrig="1" style="border-color: #206177;" data-exlk="0" class="evcal_list_a desc_trig mul_val " id="evc_1433062800247"><span data-syr="2015" data-smon="may" data-bgcolor="#206177" class="evcal_cblock"><em class="evo_date"><span class="start">31<em>may</em></span><span class="end"> - 30<em>jun</em></span></em><em class="evo_time"><em class="evo_day">may 31</em><span class="start">9:00 am</span><em class="evo_day end">jun 30</em></em><em class="clear"></em></span><span data-location_status="true" data-location_name="food event location" data-location_type="lonlat" data-location_address="arizona" data-latlng="37.090240,-95.712891" class="evcal_desc evo_info "><span itemprop="name" class="evcal_desc2 evcal_event_title">Food Event</span><span class="evcal_event_subtitle">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span><span class="evcal_desc_info"></span><span class="evcal_desc3"></span></span><em class="clear"></em></div><div style="display:none" class="event_description evcal_eventcard "><div data-minheight="400" data-imgstyle="minimized" style="background-image: url(&quot;http://qa.modernround.com/wp-content/uploads/2015/04/year.jpg&quot;); height: 400px;" data-imgwidth="1900" data-imgheight="1151" class="evo_metarow_fimg evorow evcal_evdata_img " data-status="open"></div><div class="evo_metarow_details evorow evcal_evdata_row bordb evcal_event_details">
+            <div style="display:none" class="event_excerpt"><h3 class="padb5 evo_h3">Event Details</h3><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took [...]</p></div>
+            <span class="evcal_evdata_icons"><i class="fa fa-align-justify"></i></span>
+            <div class="evcal_evdata_cell "><div class="eventon_full_description">
+                <h3 class="padb5 evo_h3">Event Details</h3><div itemprop="description" class="eventon_desc_in">
+                <strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div><div class="clear"></div>
+
+              </div>
+            </div>
+          </div><div class="evo_metarow_time_location evorow bordb ">
+            <div class="tb">
+              <div class="tbrow">
+              <div class="evcal_col50 bordr">
+                <div class="evcal_evdata_row evo_time">
+                  <span class="evcal_evdata_icons"><i class="fa fa-clock-o"></i></span>
+                  <div class="evcal_evdata_cell">             
+                    <h3 class="evo_h3">Time</h3><p>May 31 (Sunday) 9:00 am - June 30 (Tuesday) 9:00 am</p>
+                  </div>
+                </div>
+              </div><div class="evcal_col50">
+                <div class="evcal_evdata_row evo_location">
+                  <span class="evcal_evdata_icons"><i class="fa fa-map-marker"></i></span>
+                  <div class="evcal_evdata_cell">             
+                    <h3 class="evo_h3">Location</h3><p class="evo_location_name">food event location</p><p>arizona</p>
+                  </div>
+                </div>
+              </div><div class="clear"></div>
+              </div></div>
+            </div><div id="evc1433062800556851f702095247_gmap" class="evo_metarow_gmap evorow evcal_gmaps bordb "></div><div class="evo_metarow_organizer evorow evcal_evdata_row bordb evcal_evrow_sm  lastrow">
+              <span class="evcal_evdata_icons"><i class="fa fa-headphones"></i></span>
+              <div class="evcal_evdata_cell">             
+                <h3 class="evo_h3">Organizer</h3><p class="evo_data_val">test</p>
+                <p class="evo_data_val">1231231234</p>
+                
+              </div>
+            <div title="Close" class="evcal_evdata_row evcal_close"></div></div></div><div class="clear end"></div></div></div><div class="evcal_month_line"><p>june </p></div><div class="eventon_events_list" id="evcal_list"><div data-colr="#206177" style="" itemtype="http://schema.org/Event" itemscope="" data-ri="0" data-event_id="276" class="eventon_list_event event" id="event_276"><div style="display:none" class="evo_event_schema">
+              <a itemprop="url" href="http://qa.modernround.com/event-directory/"></a>        
+              <time datetime="2015-5-21" itemprop="startDate"></time>
+              <time datetime="2015-6-25" itemprop="endDate"></time></div>
+        <div data-ux_val="1" data-gmap_status="null" data-gmtrig="1" style="border-color: #206177;" data-exlk="0" class="evcal_list_a desc_trig mul_val " id="evc_1432170000276"><span data-syr="2015" data-smon="may" data-bgcolor="#206177" class="evcal_cblock"><em class="evo_date"><span class="start">21<em>may</em></span><span class="end"> - 25<em>jun</em></span></em><em class="evo_time"><em class="evo_day">may 21</em><span class="start">1:00 am</span><em class="evo_day end">jun 25</em></em><em class="clear"></em></span><span data-location_status="false" class="evcal_desc evo_info "><span itemprop="name" class="evcal_desc2 evcal_event_title">qa test</span><span class="evcal_desc_info"></span><span class="evcal_desc3"></span></span><em class="clear"></em></div><div style="display:none" class="event_description evcal_eventcard "><div data-minheight="400" data-imgstyle="minimized" style="background-image: url(&quot;http://qa.modernround.com/wp-content/uploads/2015/03/164_houstonn-help-desk-daytime.jpg&quot;); height: 400px;" data-imgwidth="1024" data-imgheight="672" class="evo_metarow_fimg evorow evcal_evdata_img " data-status="open"></div><div class="evo_metarow_details evorow evcal_evdata_row bordb evcal_event_details">
+            <div style="display:none" class="event_excerpt"><h3 class="padb5 evo_h3">Event Details</h3><p></p></div>
+            <span class="evcal_evdata_icons"><i class="fa fa-align-justify"></i></span>
+            <div class="evcal_evdata_cell "><div class="eventon_full_description">
+                <h3 class="padb5 evo_h3">Event Details</h3><div itemprop="description" class="eventon_desc_in">
+                qa test abc</div><div class="clear"></div>
+
+              </div>
+            </div>
+          </div><div class="evo_metarow_time evorow evcal_evdata_row bordb evcal_evrow_sm  lastrow">
+              <span class="evcal_evdata_icons"><i class="fa fa-clock-o"></i></span>
+              <div class="evcal_evdata_cell">             
+                <h3 class="evo_h3">Time</h3><p>May 21 (Thursday) 1:00 am - June 25 (Thursday) 1:00 am</p>
+              </div>
+            <div title="Close" class="evcal_evdata_row evcal_close"></div></div></div><div class="clear end"></div></div><div data-colr="#206177" style="" itemtype="http://schema.org/Event" itemscope="" data-ri="0" data-event_id="247" class="eventon_list_event event" id="event_247"><div style="display:none" class="evo_event_schema">
+              <a itemprop="url" href="http://qa.modernround.com/event-directory/"></a>        
+              <time datetime="2015-5-31" itemprop="startDate"></time>
+              <time datetime="2015-6-30" itemprop="endDate"></time>
+                  <item itemtype="http://schema.org/Place" itemscope="" itemprop="location" style="display:none">
+                    <span itemtype="http://schema.org/PostalAddress" itemscope="" itemprop="address">
+                      <item itemprop="streetAddress">arizona</item>
+                    </span>
+                  </item></div>
+        <div data-ux_val="1" data-gmtrig="1" style="border-color: #206177;" data-exlk="0" class="evcal_list_a desc_trig mul_val " id="evc_1433062800247"><span data-syr="2015" data-smon="may" data-bgcolor="#206177" class="evcal_cblock"><em class="evo_date"><span class="start">31<em>may</em></span><span class="end"> - 30<em>jun</em></span></em><em class="evo_time"><em class="evo_day">may 31</em><span class="start">9:00 am</span><em class="evo_day end">jun 30</em></em><em class="clear"></em></span><span data-location_status="true" data-location_name="food event location" data-location_type="lonlat" data-location_address="arizona" data-latlng="37.090240,-95.712891" class="evcal_desc evo_info "><span itemprop="name" class="evcal_desc2 evcal_event_title">Food Event</span><span class="evcal_event_subtitle">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span><span class="evcal_desc_info"></span><span class="evcal_desc3"></span></span><em class="clear"></em></div><div style="display:none" class="event_description evcal_eventcard "><div data-minheight="400" data-imgstyle="minimized" style="background-image: url(&quot;http://qa.modernround.com/wp-content/uploads/2015/04/year.jpg&quot;); height: 400px;" data-imgwidth="1900" data-imgheight="1151" class="evo_metarow_fimg evorow evcal_evdata_img " data-status="open"></div><div class="evo_metarow_details evorow evcal_evdata_row bordb evcal_event_details">
+            <div style="display:none" class="event_excerpt"><h3 class="padb5 evo_h3">Event Details</h3><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took [...]</p></div>
+            <span class="evcal_evdata_icons"><i class="fa fa-align-justify"></i></span>
+            <div class="evcal_evdata_cell "><div class="eventon_full_description">
+                <h3 class="padb5 evo_h3">Event Details</h3><div itemprop="description" class="eventon_desc_in">
+                <strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div><div class="clear"></div>
+
+              </div>
+            </div>
+          </div><div class="evo_metarow_time_location evorow bordb ">
+            <div class="tb">
+              <div class="tbrow">
+              <div class="evcal_col50 bordr">
+                <div class="evcal_evdata_row evo_time">
+                  <span class="evcal_evdata_icons"><i class="fa fa-clock-o"></i></span>
+                  <div class="evcal_evdata_cell">             
+                    <h3 class="evo_h3">Time</h3><p>May 31 (Sunday) 9:00 am - June 30 (Tuesday) 9:00 am</p>
+                  </div>
+                </div>
+              </div><div class="evcal_col50">
+                <div class="evcal_evdata_row evo_location">
+                  <span class="evcal_evdata_icons"><i class="fa fa-map-marker"></i></span>
+                  <div class="evcal_evdata_cell">             
+                    <h3 class="evo_h3">Location</h3><p class="evo_location_name">food event location</p><p>arizona</p>
+                  </div>
+                </div>
+              </div><div class="clear"></div>
+              </div></div>
+            </div><div id="evc1433062800556851f7068d3247_gmap" class="evo_metarow_gmap evorow evcal_gmaps bordb "></div><div class="evo_metarow_organizer evorow evcal_evdata_row bordb evcal_evrow_sm  lastrow">
+              <span class="evcal_evdata_icons"><i class="fa fa-headphones"></i></span>
+              <div class="evcal_evdata_cell">             
+                <h3 class="evo_h3">Organizer</h3><p class="evo_data_val">test</p>
+                <p class="evo_data_val">1231231234</p>
+                
+              </div>
+            <div title="Close" class="evcal_evdata_row evcal_close"></div></div></div><div class="clear end"></div></div></div><div class="evcal_month_line"><p>july </p></div><div class="eventon_events_list" id="evcal_list"><div class="eventon_list_event"><p class="no_events">No Events</p></div></div><div class="evcal_month_line"><p>august </p></div><div class="eventon_events_list" id="evcal_list"><div class="eventon_list_event"><p class="no_events">No Events</p></div></div><div class="evcal_month_line"><p>september </p></div><div class="eventon_events_list" id="evcal_list"><div class="eventon_list_event"><p class="no_events">No Events</p></div></div><div class="evcal_month_line"><p>october </p></div><div class="eventon_events_list" id="evcal_list"><div class="eventon_list_event"><p class="no_events">No Events</p></div></div><div class="evcal_month_line"><p>november </p></div><div class="eventon_events_list" id="evcal_list"><div class="eventon_list_event"><p class="no_events">No Events</p></div></div><div class="evcal_month_line"><p>december </p></div><div class="eventon_events_list" id="evcal_list"><div class="eventon_list_event"><p class="no_events">No Events</p></div></div><div class="evcal_month_line"><p>january </p></div><div class="eventon_events_list" id="evcal_list"><div class="eventon_list_event"><p class="no_events">No Events</p></div></div><div class="evcal_month_line"><p>february </p></div><div class="eventon_events_list" id="evcal_list"><div class="eventon_list_event"><p class="no_events">No Events</p></div></div><div class="evcal_month_line"><p>march </p></div><div class="eventon_events_list" id="evcal_list"><div class="eventon_list_event"><p class="no_events">No Events</p></div></div><div class="clear"></div></div>
+
+
+                <!-- event on code end -->
+                </div><!--/.span-->
+
+            </div><!--/.row-->
+        </div>
+</section>
+<script src="<?php bloginfo( 'template_url' ); ?>/assets/js/add_to_calendar.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/assets/js/colorpicker.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/assets/js/eventon_all_backend.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/assets/js/eventon_backend.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/assets/js/eventon_gen_maps.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/assets/js/eventon_init_gmap.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/assets/js/eventon_init_gmap_blank.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/assets/js/eventon_script.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/assets/js/index-temp.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/assets/js/jquery.mobile.min.js"></script>
+<script src="<?php bloginfo( 'template_url' ); ?>/assets/js/jquery.timepicker.js"></script>
+<?php get_footer(); ?>	

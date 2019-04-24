@@ -1,0 +1,106 @@
+<?php 
+
+/*
+
+Template Name: Home
+
+*/
+
+
+
+
+
+get_header(); ?>
+<style type="text/css">
+#rev_slider_6_1_wrapper {
+    padding: 0 !important;
+}
+
+</style>
+<body class="background">
+<div class="container">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="<?php echo site_url(); ?>"><img src="<?php bloginfo( 'template_url' ); ?>/images/logo.png" alt="logo"></a>
+</div>
+
+</div>
+					
+                    
+                 <section id="home" class="home container">
+
+		<!-- Home Inner Details -->
+		<div class="home-inner">
+			<!-- Home Boxes -->
+			<div class="home_boxes t-left">
+
+				<!-- Texts -->
+				<div class="home_boxes_texts">
+					<!-- First -->
+					<!--<h2 class="white thin no-margin">
+						Welcome To Crexis!
+					</h2>-->
+					<!-- Second, Big Text -->
+					<!--<h1 class="white thin">
+						Design Your Life <span>never give up!</span>
+					</h1>-->
+					<!-- Third, Description -->
+					<!--<p class="white thin no-margin">
+						Contrary to popular belief, Lorem Ipsum is not simply random text. piece of classical Latin literature
+					</p>-->
+                    <div class="col-xs-11 col-sm-11 animation animated-item-4">
+
+                    <div class="slider-img">
+                    
+                    <img src="<?php bloginfo( 'template_url' ); ?>/images/slider/sliderlogo.png" class="img-responsive img img-responsive animation animated-item-1">
+                    
+                    </div>
+                    
+                    </div>
+                    
+                    <div class="col-xs-11 col-sm-11">
+
+                    <div class="carousel-content row">
+                    
+                    <div class="col-xs-4 col-sm-4"><img src="<?php bloginfo( 'template_url' ); ?>/images/slider/shoot.png" class="img-responsive animation animated-item-1">
+                    
+                    <h1 class="animation animated-item-1">Shoot</h1></div>
+                    
+                    <div class="col-xs-4 col-sm-4"><img src="<?php bloginfo( 'template_url' ); ?>/images/slider/eat.png" class="img-responsive animation animated-item-1">
+                    
+                    <h1 class="animation animated-item-2">Eat</h1></div>
+                    
+                    <div class="col-xs-4 col-sm-4"><img src="<?php bloginfo( 'template_url' ); ?>/images/slider/sip.png" class="img-responsive animation animated-item-1">
+                    
+                    <h1 class="animation animated-item-3">Sip</h1></div>
+                    
+                    </div>
+                    
+                    </div>
+                                    </div>
+				<!-- End Texts -->
+
+				<!-- Boxes -->
+                
+				
+				<!-- End Boxes -->
+			</div>
+			<!-- End Home Boxes -->
+            
+		</div>
+		<!-- End Home Inner Details -->
+        
+	</section>
+    <div class="main-box">
+                <a href="join.php" class="scroll box inline-block">
+						<h4 class="white thin"><a href="join">Member Registration</a></h4>
+						<span class="img-icon"><img alt="music theme" class="img-responsive" src="<?php bloginfo( 'template_url' ); ?>/images/left-icon.png"></span>
+                        <p><img alt="music theme" class="img-responsive arrow" src="<?php bloginfo( 'template_url' ); ?>/images/icon.png"></p>
+					</a>
+                    </div>
+</body>                    

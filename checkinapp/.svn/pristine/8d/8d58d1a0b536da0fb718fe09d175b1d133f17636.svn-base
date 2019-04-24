@@ -1,0 +1,443 @@
+<?php 
+/*
+	Template Name: Host and Event
+*/
+
+
+get_header(); ?>
+
+
+<style type="text/css">
+#colorbox, #cboxOverlay, #cboxWrapper{position:absolute; top:0; left:0; z-index:9999; overflow:hidden;}
+#cboxWrapper {max-width:none;}
+#cboxOverlay{position:fixed; width:100%; height:100%;}
+#cboxMiddleLeft, #cboxBottomLeft{clear:left;}
+#cboxContent{position:relative;}
+#cboxLoadedContent{overflow:hidden !important; -webkit-overflow-scrolling: touch;}
+#cboxTitle{margin:0;}
+#cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute; top:0; left:0; width:100%; height:100%;}
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;}
+.cboxPhoto{float:left; margin:auto; border:0; display:block; max-width:none; -ms-interpolation-mode:bicubic;}
+.cboxIframe{width:100%; height:100%; display:block; border:0; padding:0; margin:0;}
+#colorbox, #cboxContent, #cboxLoadedContent{box-sizing:content-box; -moz-box-sizing:content-box; -webkit-box-sizing:content-box;}
+#cboxOverlay{background:url(<?php bloginfo( 'template_url' ); ?>/images/overlay.png) repeat 0 0; opacity: 0.9; filter: alpha(opacity = 90);}
+#colorbox{outline:0;}
+#cboxTopLeft{width:21px; height:21px; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) no-repeat -101px 0;}
+#cboxTopRight{width:21px; height:21px; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) no-repeat -130px 0;}
+#cboxBottomLeft{width:21px; height:21px; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) no-repeat -101px -29px;}
+#cboxBottomRight{width:21px; height:21px; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) no-repeat -130px -29px;}
+#cboxMiddleLeft{width:21px; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) left top repeat-y;}
+#cboxMiddleRight{width:21px; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) right top repeat-y;}
+#cboxTopCenter{height:21px; background:url(<?php bloginfo( 'template_url' ); ?>/images/border.png) 0 0 repeat-x;}
+#cboxBottomCenter{height:21px; background:url(<?php bloginfo( 'template_url' ); ?>/images/border.png) 0 -29px repeat-x;}
+#cboxContent{background:#fff; overflow:hidden;}
+.cboxIframe{background:#fff;}
+#cboxError{padding:50px; border:1px solid #ccc;}
+#cboxLoadedContent{margin-bottom:28px;}
+#cboxTitle{position:absolute; bottom:4px; left:0; text-align:center; width:100%; color:#949494;}
+#cboxCurrent{position:absolute; bottom:4px; left:58px; color:#949494;}
+#cboxLoadingOverlay{background:url(<?php bloginfo( 'template_url' ); ?>/images/loading_background.png) no-repeat center center;}
+#cboxLoadingGraphic{background:url(<?php bloginfo( 'template_url' ); ?>/images/loading.gif) no-repeat center center;}
+#cboxPrevious, #cboxNext, #cboxSlideshow, #cboxClose {border:0; padding:0; margin:0; overflow:visible; width:auto; background:none; }
+#cboxPrevious:active, #cboxNext:active, #cboxSlideshow:active, #cboxClose:active {outline:0;}
+#cboxSlideshow{position:absolute; bottom:4px; right:30px; color:#0092ef;}
+#cboxPrevious{position:absolute; bottom:0; left:0; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) no-repeat -75px 0; width:25px; height:25px; text-indent:-9999px;}
+#cboxPrevious:hover{background-position:-75px -25px;}
+#cboxNext{position:absolute; bottom:0; left:27px; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) no-repeat -50px 0; width:25px; height:25px; text-indent:-9999px;}
+#cboxNext:hover{background-position:-50px -25px;}
+#cboxClose{position:absolute; bottom:0; right:0; background:url(<?php bloginfo( 'template_url' ); ?>/images/controls.png) no-repeat -25px 0; width:25px; height:25px; text-indent:-9999px;}
+#cboxClose:hover{background-position:-25px -25px;}
+</style>
+
+
+<?php global $post; ?>
+<?php if (has_post_thumbnail( $post->ID ) ): ?>
+<?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' ); ?>
+<section id="inner-banner" class="wow fadeIn" style="background:url('<?php echo $image[0]; ?>'); background-size: 100% 120%; height: auto; max-width: 100%;" >
+<div class="container">
+<div class="col-sm-12 col-lg-12 headline wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+<h1><?php the_title(); ?></h1>
+</div>
+</div>
+</div>
+</section>
+<?php endif; ?>
+<section>
+<div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="500ms">
+<div class="row">
+<div class="col-sm-12 col-lg-12">
+<article class="col-md-12" >
+<?php while (have_posts()) : the_post(); ?>
+<?php the_content() ?>
+<?php endwhile; ?>
+</article>
+<div class="col-md-12 contact-box">
+<form class="form-horizontal row-border" action="#">
+<div class="col-md-6">
+<div class="form-group">
+<div class="col-md-12">
+<input name="regular" class="form-control" type="text" placeholder="First Name" onClick="$('#nextbtn').click()">
+</div>
+</div>
+<div class="form-group">
+<div class="col-md-12">
+<input name="regular" class="form-control" type="text" placeholder="Last Name" onClick="$('#nextbtn').click()">
+</div>
+</div>
+<div class="form-group">
+<div class="col-md-12">
+<input name="regular" class="form-control" type="text" placeholder="Email" onClick="$('#nextbtn').click()">
+</div>
+</div>
+</div>
+<div class="col-md-6">
+<div class="form-group">
+<div class="col-md-12">
+<input name="regular" class="form-control" type="text" placeholder="Company Name" onClick="$('#nextbtn').click()">
+</div>
+</div>
+<div class="form-group">
+<div class="col-md-12">
+<input name="regular" class="form-control" type="text" placeholder="Phone Number" onClick="$('#nextbtn').click()">
+</div>
+</div>
+<div class="form-group">
+<div class="col-md-12">
+<input name="regular" class="form-control" type="text" placeholder="Street Address" onClick="$('#nextbtn').click()">
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="form-group">
+<div class="col-md-12">
+<input name="regular" class="form-control" type="text" placeholder="City" onClick="$('#nextbtn').click()">
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="form-group">
+<div class="col-md-12">
+<div class="happySelectContainer">
+<div class="arrow"></div>
+<select id="state" name="state" onchange="$('#nextbtn').click()"> 
+<option value="">Select State</option> 
+<option value="Alabama">Alabama</option> 
+<option value="Alaska">Alaska</option> 
+<option value="Arizona">Arizona</option> 
+<option value="Arkansas">Arkansas</option> 
+<option value="California">California</option> 
+<option value="Colorado">Colorado</option> 
+<option value="Connecticut">Connecticut</option> 
+<option value="Delaware">Delaware</option> 
+<option value="District Of Columbia">District Of Columbia</option> 
+<option value="Florida">Florida</option> 
+<option value="Georgia">Georgia</option> 
+<option value="Hawaii">Hawaii</option> 
+<option value="Idaho">Idaho</option> 
+<option value="Illinois">Illinois</option> 
+<option value="Indiana">Indiana</option> 
+<option value="Iowa">Iowa</option> 
+<option value="Kansas">Kansas</option> 
+<option value="Kentucky">Kentucky</option> 
+<option value="Louisiana">Louisiana</option> 
+<option value="Maine">Maine</option> 
+<option value="Maryland">Maryland</option> 
+<option value="Massachusetts">Massachusetts</option> 
+<option value="Michigan">Michigan</option> 
+<option value="Minnesota">Minnesota</option> 
+<option value="Mississippi">Mississippi</option> 
+<option value="Missouri">Missouri</option> 
+<option value="Montana">Montana</option> 
+<option value="Nebraska">Nebraska</option> 
+<option value="Nevada">Nevada</option> 
+<option value="New Hampshire">New Hampshire</option> 
+<option value="New Jersey">New Jersey</option> 
+<option value="New Mexico">New Mexico</option> 
+<option value="New York">New York</option> 
+<option value="North Carolina">North Carolina</option> 
+<option value="North Dakota">North Dakota</option> 
+<option value="Ohio">Ohio</option> 
+<option value="Oklahoma">Oklahoma</option> 
+<option value="Oregon">Oregon</option> 
+<option value="Pennsylvania">Pennsylvania</option> 
+<option value="Rhode Island">Rhode Island</option> 
+<option value="South Carolina">South Carolina</option> 
+<option value="South Dakota">South Dakota</option> 
+<option value="Tennessee">Tennessee</option> 
+<option value="Texas">Texas</option> 
+<option value="Utah">Utah</option> 
+<option value="Vermont">Vermont</option> 
+<option value="Virginia">Virginia</option> 
+<option value="Washington">Washington</option> 
+<option value="West Virginia">West Virginia</option> 
+<option value="Wisconsin">Wisconsin</option> 
+<option value="Wyoming">Wyoming</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="form-group">
+<div class="col-md-12">
+<input name="regular" class="form-control" type="text" placeholder="Zip Code" onClick="$('#nextbtn').click()">
+</div>
+</div>
+</div>
+<div class="col-md-12">
+<h3 class="event-heading">EVENT DETAILS</h3>
+</div>
+<div class="col-md-4">
+<div class="form-group">
+<div class="col-md-12">
+<div class="happySelectContainer" id="site_location_div">
+<div class="arrow"></div>
+<select name="site_locations" id="site_locations" class="selectbox valid" onchange="$('#nextbtn').click()">
+<option value="0">Select Location</option>
+<option value="AZ - Scottsdale">AZ - Scottsdale</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="form-group">
+<div class="col-md-12">
+<div class="happySelectContainer">
+<div class="arrow"></div>
+<select id="eventype" name="eventype" onchange="$('#nextbtn').click()">
+<option value="" selected="selected">Event Type</option>
+<option value="Corporate - Entertainment">Corporate - Entertainment</option>
+<option value="Corporate - Holiday">Corporate - Holiday</option>
+<option value="Corporate - Meeting">Corporate - Meeting</option>
+<option value="Corporate - Team Building">Corporate - Team Building</option>
+<option value="Corporate - Happy Hour">Corporate - Happy Hour</option>
+<option value="Social - Adult">Social - Adult</option>
+<option value="Social - Kids">Social - Kids</option>
+<option value="Social - Bachelor(ette)/Wedding">Social - Bachelor(ette)/Wedding</option>
+<option value="Social - Education/School/Club">Social - Education/School/Club</option>
+<option value="Social - Government">Social - Government</option>
+<option value="Social - Fantasy Football">Social - Fantasy Football</option>
+<option value="Social - Fraternity/Sorority">Social - Fraternity/Sorority</option>
+<option value="Social - Bar/Bat Mitzvah">Social - Bar/Bat Mitzvah</option>
+<option value="Fundraiser">Fundraiser</option>
+<option value="Trade Show">Trade Show</option>
+<option value="Tournament/Golf Outing">Tournament/Golf Outing</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="form-group">
+<div class="col-md-12">
+<div class="happySelectContainer">
+<div class="arrow"></div>
+<select id="people" name="people" onchange="$('#nextbtn').click()">
+<option value="" selected="selected">Estimated # of People</option> 
+<option value="10">10</option>
+<option value="12">12</option>
+<option value="20">20</option>
+<option value="40">40</option>
+<option value="60">60</option>
+<option value="80">80</option>
+<option value="100">100</option>
+<option value="120">120</option>
+<option value="140">140</option>
+<option value="160">160</option>
+<option value="180">180</option>
+<option value="200">200+</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="form-group">
+<div class="col-md-12">
+<div id="datePicker" class="input-group input-append date">
+<input type="text" name="date" class="datepicker form-control" placeholder="Date" onClick="$('#nextbtn').click()">
+<span class="input-group-addon add-on" style="left: 0px; position: relative;"><span class="glyphicon glyphicon-calendar"></span></span>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="form-group">
+<div class="col-md-12">
+<div class="happySelectContainer">
+<div class="arrow"></div>
+<select id="startime" name="startime" onchange="$('#nextbtn').click()">
+<option value="" selected="selected">Potential Start Time</option>
+<option value="12:00 PM">12:00 PM</option>
+<option value="12:30 PM">12:30 PM</option>
+<option value="01:00 PM">01:00 PM</option>
+<option value="01:30 PM">01:30 PM</option>
+<option value="02:00 PM">02:00 PM</option>
+<option value="02:30 PM">02:30 PM</option>
+<option value="03:00 PM">03:00 PM</option>
+<option value="03:30 PM">03:30 PM</option>
+<option value="04:00 PM">04:00 PM</option>
+<option value="04:30 PM">04:30 PM</option>
+<option value="05:00 PM">05:00 PM</option>
+<option value="05:30 PM">05:30 PM</option>
+<option value="06:00 PM">06:00 PM</option>
+<option value="06:30 PM">06:30 PM</option>
+<option value="07:00 PM">07:00 PM</option>
+<option value="07:30 PM">07:30 PM</option>
+<option value="08:00 PM">08:00 PM</option>
+<option value="08:30 PM">08:30 PM</option>
+<option value="09:00 PM">09:00 PM</option>
+<option value="09:30 PM">09:30 PM</option>
+<option value="10:00 PM">10:00 PM</option>
+<option value="10:30 PM">10:30 PM</option>
+<option value="11:00 PM">11:00 PM</option>
+<option value="11:30 PM">11:30 PM</option>
+<option value="12:00 AM">12:00 AM</option>
+<option value="12:30 AM">12:30 AM</option>
+<option value="01:00 AM">01:00 AM</option>
+<option value="01:30 AM">01:30 AM</option>
+<option value="02:00 AM">02:00 AM</option>
+<option value="02:30 AM">02:30 AM</option>
+<option value="03:00 AM">03:00 AM</option>
+<option value="03:30 AM">03:30 AM</option>
+<option value="04:00 AM">04:00 AM</option>
+<option value="04:30 AM">04:30 AM</option>
+<option value="05:00 AM">05:00 AM</option>
+<option value="05:30 AM">05:30 AM</option>
+<option value="06:00 AM">06:00 AM</option>
+<option value="06:30 AM">06:30 AM</option>
+<option value="07:00 AM">07:00 AM</option>
+<option value="07:30 AM">07:30 AM</option>
+<option value="08:00 AM">08:00 AM</option>
+<option value="08:30 AM">08:30 AM</option>
+<option value="09:00 AM">09:00 AM</option>
+<option value="09:30 AM">09:30 AM</option>
+<option value="10:00 AM">10:00 AM</option>
+<option value="10:30 AM">10:30 AM</option>
+<option value="11:00 AM">11:00 AM</option>
+<option value="11:30 AM">11:30 AM</option>
+<option value="12:00 AM">12:00 AM</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="form-group">
+<div class="col-md-12">
+<div class="happySelectContainer">
+<div class="arrow"></div>
+<select id="endtime" name="endtime" onchange="$('#nextbtn').click()">
+<option value="" selected="selected">Potential End Time</option> 
+<option value="12:00 PM">12:00 PM</option>
+<option value="12:30 PM">12:30 PM</option>
+<option value="01:00 PM">01:00 PM</option>
+<option value="01:30 PM">01:30 PM</option>
+<option value="02:00 PM">02:00 PM</option>
+<option value="02:30 PM">02:30 PM</option>
+<option value="03:00 PM">03:00 PM</option>
+<option value="03:30 PM">03:30 PM</option>
+<option value="04:00 PM">04:00 PM</option>
+<option value="04:30 PM">04:30 PM</option>
+<option value="05:00 PM">05:00 PM</option>
+<option value="05:30 PM">05:30 PM</option>
+<option value="06:00 PM">06:00 PM</option>
+<option value="06:30 PM">06:30 PM</option>
+<option value="07:00 PM">07:00 PM</option>
+<option value="07:30 PM">07:30 PM</option>
+<option value="08:00 PM">08:00 PM</option>
+<option value="08:30 PM">08:30 PM</option>
+<option value="09:00 PM">09:00 PM</option>
+<option value="09:30 PM">09:30 PM</option>
+<option value="10:00 PM">10:00 PM</option>
+<option value="10:30 PM">10:30 PM</option>
+<option value="11:00 PM">11:00 PM</option>
+<option value="11:30 PM">11:30 PM</option>
+<option value="12:00 AM">12:00 AM</option>
+<option value="12:30 AM">12:30 AM</option>
+<option value="01:00 AM">01:00 AM</option>
+<option value="01:30 AM">01:30 AM</option>
+<option value="02:00 AM">02:00 AM</option>
+<option value="02:30 AM">02:30 AM</option>
+<option value="03:00 AM">03:00 AM</option>
+<option value="03:30 AM">03:30 AM</option>
+<option value="04:00 AM">04:00 AM</option>
+<option value="04:30 AM">04:30 AM</option>
+<option value="05:00 AM">05:00 AM</option>
+<option value="05:30 AM">05:30 AM</option>
+<option value="06:00 AM">06:00 AM</option>
+<option value="06:30 AM">06:30 AM</option>
+<option value="07:00 AM">07:00 AM</option>
+<option value="07:30 AM">07:30 AM</option>
+<option value="08:00 AM">08:00 AM</option>
+<option value="08:30 AM">08:30 AM</option>
+<option value="09:00 AM">09:00 AM</option>
+<option value="09:30 AM">09:30 AM</option>
+<option value="10:00 AM">10:00 AM</option>
+<option value="10:30 AM">10:30 AM</option>
+<option value="11:00 AM">11:00 AM</option>
+<option value="11:30 AM">11:30 AM</option>
+<option value="12:00 AM">12:00 AM</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-12">
+<div class="form-group">
+<div class="col-md-12">
+<textarea class="form-control" id="commnt" name="commnt" placeholder="Comments (Optional) - Please do not use any special characters such as quotation marks" onClick="$('#nextbtn').click()"></textarea>
+</div>
+</div>
+</div>
+<div class="col-md-12">
+<div class="form-group">
+<div class="col-sm-3 col-md-3">
+
+<a href="#inline_contents2"  id="nextbtn" class="blutop cboxElement">Send Request</a>
+</div>
+</div>
+</div>
+</form>
+</div>
+<!--<article class="col-md-12">
+<p>For Media/Press Inquiries, contact:
+Adrienne Chance <br>
+<a href="mailto:modernround.com">modernround.com</a><br>
+469-546-5370<br>
+</p>
+</article>-->
+</div>
+</div>
+</div>
+</section>
+
+<?php get_footer(); ?>
+
+<script type="text/javascript">
+$(document).ready(function(){
+$('.active a').attr('class', 'blutop');	
+$(".blutop").colorbox({inline:true, width:"50%"});
+$(".blutop2").colorbox({inline:true, width:"50%"});
+});
+</script>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+  alert("sadsd");
+  function call_cboxpop()
+  {
+  $.colorbox({html:'<p class="popup">
+    <strong style="font-size:12px;">Membership registration coming soon!</strong>
+  </p>'});
+  }
+
+  });
+</script>
+<div style='display:none'>
+<div id='inline_contents2' style='padding:0px; background:#fff;'>
+<p class="popup"><strong style="font-size:12px;">Looking to book a party with Modern Round? Party/event reservations are coming soon!</strong></p>
+</div>
+</div>

@@ -1,0 +1,459 @@
+<?php session_start(); ?>
+<?php
+require( '../../../wp-load.php' );
+require( 'api.php' );
+$first_name = htmlspecialchars($_REQUEST['first_name'], ENT_QUOTES);
+$last_name = htmlspecialchars($_REQUEST['last_name'], ENT_QUOTES);
+$juniorfirst_name = htmlspecialchars($_REQUEST['juniorfirst_name'], ENT_QUOTES);
+$juniorlast_name = htmlspecialchars($_REQUEST['juniorlast_name'], ENT_QUOTES);
+$jnuniornumber = htmlspecialchars($_REQUEST['jnuniornumber'], ENT_QUOTES);
+$juniorgamer_tag_array = $_POST['list'];
+$gmacheck = $_POST['gmacheck'];
+$token = htmlspecialchars($_REQUEST['token'], ENT_QUOTES);
+$fname = htmlspecialchars($_REQUEST['fname'], ENT_QUOTES);
+$lname = htmlspecialchars($_REQUEST['lname'], ENT_QUOTES);
+$default1 = htmlspecialchars($_REQUEST['default1'], ENT_QUOTES);
+$action = htmlspecialchars($_REQUEST['action'], ENT_QUOTES);
+
+//Generate Nick Name
+if($action == 'usergenratenick'){
+		echo $first_name[0].str_replace(' ', '', $last_name).'1';
+}
+if($action == 'juniorGmaercheck'){
+		echo $juniorfirst_name[0].str_replace(' ', '', $juniorlast_name).'1';
+}
+if($action == 'checkForm'){
+		if(in_array($gmacheck,$juniorgamer_tag_array)){
+			$new_array = array();
+			$check_array = $juniorgamer_tag_array;
+			sort($check_array);
+			foreach($check_array as $row){
+				if($row != ""){
+					$new_array[] = $row;
+				}
+			}
+			$check_array = $new_array;
+			
+			$length = count($check_array);
+			$name = $gmacheck;
+			$numbers = preg_match_all("/(\d+)/", $name, $matches)
+						  ? array_map('intval', $matches[1])
+						  : NULL
+				;
+			$new_string = ereg_replace("[^A-Za-z?!]", "", $name); 
+			$number_exist_in_string = $numbers[0];
+			unset($matches);
+			$new_gamer_tag = "";
+			foreach($check_array as $key=>$val){
+				$new = $new_string.$number_exist_in_string;
+				if($val == $new){
+					$number_exist_in_string++;
+					$new_gamer_tag = $new_string.$number_exist_in_string;
+				}else{
+					$new_gamer_tag = $new;
+				}
+			}
+			echo $new_gamer_tag;
+		}else{
+			echo $gmacheck;
+		}
+}
+if($action == 'loginsession'){
+	if($rememb == 'Yes'){
+	$cookie_name = "user";
+	$cookie_pass = "passw";
+	$cookie_pass_value = $passd;
+	$cookie_value = $emaild;
+	setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+	setcookie($cookie_pass, $cookie_pass_value, time() + (86400 * 30), "/"); // 86400 = 1 day	
+	}
+	$_SESSION['token'] = $token;
+	$_SESSION['firstname'] = $fname;
+	$_SESSION['lname'] = $lname;
+	echo 'loginsucess';
+}
+if($action == 'showresetform'){ ?>
+<form class="form-horizontal row-border" name="resetpassword" id="resetpassword" method="post" action="">
+<input type="hidden" name="action" id="action" value="resetpassword">
+<div class="form-group">
+<label class="col-md-4 control-label">Please Enter New Password</label>
+<div class="col-md-7">
+<input type="password" id="password" name="password" class="form-control" placeholder="Password">
+<input type="password" id="confpassword" name="confpassword" class="form-control" placeholder="Confirm Password">
+<label id="paswoderror" class="haserror"></label>
+</div>
+</div>
+<div class="form-group">
+<div class="col-sm-3 col-md-3">
+</div>
+<div class="col-sm-3 col-md-3">
+<input id="submit" name="submit" type="submit" value="Update">
+</div>
+</div>
+</form>
+<?php }
+if($action == 'juniorfield'){
+	if($jnuniornumber != 0){
+		for($i=0; $i < $jnuniornumber; $i++){
+?>	
+<input type="hidden" name="totaljunioradd" id="totaljunioradd" value="<?php echo $jnuniornumber; ?>" />
+<div class="jnios">
+<a id="<?php echo $i; ?>" href="#" class="remove_field">Delete Junior</a>
+<div class="form-group">
+<label class="col-md-4 control-label">First Name: <span style="color:#F00;">*</span></label>
+<div class="col-md-7">
+<input name="juniorfirst_name[]" id="juniorfirstname<?php echo $i; ?>" class="form-control" type="text">
+<label id="juniorfirst_name<?php echo $i; ?>" class="haserror"></label>
+</div>
+</div>
+<div class="form-group">
+<label class="col-md-4 control-label">Last Name: <span style="color:#F00;">*</span></label>
+<div class="col-md-7">
+<input name="juniorlast_name[]" id="juniorlastname<?php echo $i; ?>" class="form-control" type="text" onblur="createJuniorGamerTag<?php echo $i; ?>();">
+<input name="juniorlast_name_hidden[]" id="juniorlast_name_hidden<?php echo $i; ?>" class="form-control" type="hidden">
+<label id="juniorlast_name<?php echo $i; ?>" class="haserror"></label>
+</div>
+</div>
+<div class="form-group">
+<label class="col-md-4 control-label">Nick Name: <span style="color:#F00;">*</span></label>
+<div class="col-md-7">
+<input name="juniorgamer_tag[]" id="junigamtag<?php echo $i; ?>" class="form-control" type="text" onblur="juniorEntergamerTag<?php echo $i; ?>(this.value);">
+<input name="juniorgamer_tag_hidden[]" id="juniorgamer_tag_hidden<?php echo $i; ?>" class="form-control cb" type="hidden">
+<div id="loadingjuniornickname<?php echo $i; ?>"></div><label id="juniorgamer_tag<?php echo $i; ?>" class="haserror"></label>
+</div>
+</div>
+<div class="form-group">
+<label class="col-md-4 control-label">Date of Birth: <span style="color:#F00;">*</span></label>
+<div class="col-md-7">
+<input type="text" class="form-control date_picker" name="juniordob[]" id="juniordbth<?php echo $i; ?>" />
+<label id="juniordob<?php echo $i; ?>" class="haserror"></label>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+$(".input_fields_wrap").on("click",".remove_field", function(e){
+var gtnum = $(this).attr('id');
+var shovalu = $('#junigamtag'+gtnum).val();
+if(shovalu != ''){
+delete_junior(shovalu);	  
+e.preventDefault(); $(this).parent('div').remove();
+document.getElementById('jnuniornumber').value = parseInt(document.getElementById('jnuniornumber').value)-parseInt(1);
+}else{
+e.preventDefault(); $(this).parent('div').remove();
+document.getElementById('jnuniornumber').value = parseInt(document.getElementById('jnuniornumber').value)-parseInt(1);  
+}
+});
+});
+function delete_junior(gamer_tag_junior){	
+var token = $('#token').val();
+$.ajax({
+url: "<?php echo $junior_membership_delete; ?>",
+headers: {apicode: "<?php echo $apicode; ?>",token:token},
+data: {
+gamertag: gamer_tag_junior
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+hide_load();	
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+}
+</script>
+<?php } ?>
+<?php for($j=0; $j<10; $j++){ ?>
+<script type="text/javascript">
+$(document).ready(function() {
+var dates = $("#juniordbth<?php echo $j; ?>").datepicker({
+buttonImage: '<?php echo site_url(); ?>/wp-content/themes/modernround/images/date.png',
+buttonImageOnly: true,
+changeYear: true,
+dateFormat: 'mm/dd/yy',
+maxDate: 0,
+yearRange: '1945:'+(new Date).getFullYear(),
+showOn: 'button',
+onSelect: function(selected,evnt) {
+getAgeJunior<?php echo $j; ?>(selected);
+}
+});	
+$('#juniordbth<?php echo $j; ?>').mask('00/00/0000');
+});
+function getAgeJunior<?php echo $j; ?>(dateString) 
+{
+var x=new Date(dateString);
+var Cnow=new Date();//current Date
+if(Cnow.getFullYear()- x.getFullYear()>18){
+$("#juniordob<?php echo $j; ?>").html('Must be under 18 to register as a Junior Member');
+}
+else{
+$("#juniordob<?php echo $j; ?>").html('');
+}
+}
+function createJuniorGamerTag<?php echo $j; ?>(){
+var action = 'juniorGmaercheck';
+var juniorgamer_tag_array = [];
+var juniorfirst_name = $('#juniorfirstname<?php echo $j; ?>').val();
+var juniorlast_name = $('#juniorlastname<?php echo $j; ?>').val();
+var juniorlast_name_hidden = $('#juniorlast_name_hidden<?php echo $j; ?>').val();
+$(".cb").each(function () {
+		juniorgamer_tag_array.push($(this).val());
+	});
+if(juniorlast_name != '' && juniorlast_name != juniorlast_name_hidden){
+$.ajax({
+url: "<?php echo site_url(); ?>/wp-content/themes/modernround/process.php",
+data: {action:action,juniorfirst_name:juniorfirst_name,juniorlast_name:juniorlast_name,list:juniorgamer_tag_array},
+type: 'POST',
+beforeSend: function(){
+$("#loadingjuniornickname<?php echo $j; ?>").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+},
+success: function (result) {
+document.getElementById('juniorlast_name_hidden<?php echo $j; ?>').value = juniorlast_name;	
+checkDb_userNickname<?php echo $j; ?>(result);
+},
+error: function(){
+hide_load();
+$("#juniorgamer_tag<?php echo $j; ?>").html("Nick name was an error please try again");
+}
+});	
+}
+}
+function checkDb_userNickname<?php echo $j; ?>(gamer_tag){
+if(gamer_tag != ''){	
+$.ajax({
+url: "<?php echo $user_gamertag_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {
+gamertag: gamer_tag
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+$("#juniorgamer_tag<?php echo $j; ?>").html("");	
+$("#loadingjuniornickname<?php echo $j; ?>").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+},
+success: function (result) {
+if(result.isavailable == false){
+		$("#juniorgamer_tag<?php echo $j; ?>").html("");
+		auto_generatejuniorNickName<?php echo $j; ?>(gamer_tag);
+}else if(result.isavailable == true){
+		juniorgamerTagCheckinForm<?php echo $j; ?>(gamer_tag);
+}
+},
+error: function(){
+$("#loadingjuniornickname<?php echo $j; ?>").html("");
+$("#juniorgamer_tag<?php echo $j; ?>").html("Nick name was an error please try again");
+}
+});	
+}if(gamer_tag == ''){
+	$("#juniorgamer_tag<?php echo $j; ?>").html("");
+	$("#loadingjuniornickname<?php echo $j; ?>").html('');
+}
+}
+function auto_generatejuniorNickName<?php echo $j; ?>(gamValue){
+$("#loadingnickname").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+var getCharac = gamValue;
+var removeLastcharac = getCharac.substring(0, getCharac.length - 1);
+var getLastcharac = getCharac.slice(-1);
+var incrementLastcharac = parseInt(getLastcharac) + parseInt(1);
+var finalGamerTag = removeLastcharac + incrementLastcharac;
+checkDb_userNickname<?php echo $j; ?>(finalGamerTag);
+}
+function juniorgamerTagCheckinForm<?php echo $j; ?>(gmacheck){
+var action = 'checkForm';
+var juniorgamer_tag_array = [];
+$(".cb").each(function () {
+juniorgamer_tag_array.push($(this).val());
+});
+$.ajax({
+url: "<?php echo site_url(); ?>/wp-content/themes/modernround/process.php",
+data: {action:action,gmacheck:gmacheck,list:juniorgamer_tag_array},
+type: 'POST',
+beforeSend: function(){
+$("#juniorgamer_tag<?php echo $j; ?>").html("");	
+$("#loadingjuniornickname<?php echo $j; ?>").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+},
+success: function (result) {
+		document.getElementById('junigamtag<?php echo $j; ?>').value = result;
+		document.getElementById('juniorgamer_tag_hidden<?php echo $j; ?>').value = result;		
+$("#loadingjuniornickname<?php echo $j; ?>").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/verified.png">');
+$("#juniorgamer_tag<?php echo $j; ?>").html("<span style='color:#8bbd41'>Nickname is available for registration</span>");
+
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+}
+function auto_generateEnterjuniorNickName<?php echo $j; ?>(gamValue){
+$("#loadingnickname").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+var getCharac = gamValue;
+var removeLastcharac = getCharac.substring(0, getCharac.length - 1);
+var getLastcharac = getCharac.slice(-1);
+var incrementLastcharac = parseInt(getLastcharac) + parseInt(1);
+var finalGamerTag = removeLastcharac + incrementLastcharac;
+checkDb_EnterNickname<?php echo $j; ?>(finalGamerTag);
+}
+function checkDb_EnterNickname<?php echo $j; ?>(gamer_tag){
+if(gamer_tag != ''){	
+$.ajax({
+url: "<?php echo $user_gamertag_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {
+gamertag: gamer_tag
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+$("#juniorgamer_tag<?php echo $j; ?>").html("");	
+$("#loadingjuniornickname<?php echo $j; ?>").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+},
+success: function (result) {
+if(result.isavailable == false){
+		$("#juniorgamer_tag<?php echo $j; ?>").html("");
+		auto_generateEnterjuniorNickName<?php echo $j; ?>(gamer_tag);
+}else if(result.isavailable == true){
+		juniorgamerTagCheckinForm<?php echo $j; ?>(gamer_tag);
+}
+},
+error: function(){
+$("#loadingjuniornickname<?php echo $j; ?>").html("");
+$("#juniorgamer_tag<?php echo $j; ?>").html("Nick name was an error please try again");
+}
+});	
+}if(gamer_tag == ''){
+	$("#juniorgamer_tag<?php echo $j; ?>").html("");
+	$("#loadingjuniornickname<?php echo $j; ?>").html('');
+}
+}
+function juniorEntergamerTag<?php echo $j; ?>(entergamerTag){
+var juniorgamer_tag_hidden = $('#juniorgamer_tag_hidden<?php echo $j; ?>').val();
+var junigamtag = $('#junigamtag<?php echo $j; ?>').val();
+if(junigamtag != '' && entergamerTag != juniorgamer_tag_hidden){
+checkDb_EnterNickname<?php echo $j; ?>(entergamerTag);
+}else if(junigamtag == ''){
+document.getElementById('juniorgamer_tag_hidden<?php echo $j; ?>').value = '';	
+$("#loadingjuniornickname<?php echo $j; ?>").html('');
+$("#juniorgamer_tag<?php echo $j; ?>").html("");	
+}
+}
+</script>
+<?php } ?>
+<script type="text/javascript">
+$(document).ready(function() {
+var max_fields      = 5;
+var wrapper         = $(".input_fields_wrap");
+var add_button      = $(".add_field_button");
+var x = $('#totaljunioradd').val();
+var y = 1;
+$(add_button).click(function(e){
+if(x < max_fields){
+$(wrapper).append('<div class="jnios"><a id="'+x+'" href="#" class="remove_field">Delete Junior</a><div class="form-group"><label class="col-md-4 control-label">First Name: <span style="color:#F00;">*</span></label><div class="col-md-7"><input name="juniorfirst_name[]" id="juniorfirstname'+x+'" class="form-control" type="text"><label id="juniorfirst_name'+x+'" class="haserror"></label></div></div><div class="form-group"><label class="col-md-4 control-label">Last Name: <span style="color:#F00;">*</span></label><div class="col-md-7"><input name="juniorlast_name[]" id="juniorlastname'+x+'" class="form-control" type="text" onblur="createJuniorGamerTag'+x+'();"><input name="juniorlast_name_hidden[]" id="juniorlast_name_hidden'+x+'" class="form-control" type="hidden"><label id="juniorlast_name'+x+'" class="haserror"></label></div></div><div class="form-group"><label class="col-md-4 control-label">Nick Name: <span style="color:#F00;">*</span></label><div class="col-md-7"><input name="juniorgamer_tag[]" id="junigamtag'+x+'" class="form-control" type="text" onblur="juniorEntergamerTag'+x+'(this.value);"><input name="juniorgamer_tag_hidden[]" id="juniorgamer_tag_hidden'+x+'" class="form-control cb" type="hidden"><div id="loadingjuniornickname'+x+'"></div><label id="juniorgamer_tag'+x+'" class="haserror"></label></div></div><div class="form-group"><label class="col-md-4 control-label">Date of Birth: <span style="color:#F00;">*</span></label><div class="col-md-7"><input type="text" class="form-control date_picker" name="juniordob[]" id="juniordbth'+x+'" /><label id="juniordob'+x+'" class="haserror"></label></div></div><div class="form-group"><label class="col-md-8 control-label"></label><div class="col-sm-3 col-md-3"><button title="" id="cancelbtn" type="submit">Delete Junior</button></div></div></div>');
+x++;
+document.getElementById('totaljunioradd').value = parseInt(document.getElementById('totaljunioradd').value)+parseInt(1);
+}
+y++;
+$('.date_picker').removeClass('hasDatepicker').datepicker({buttonImage: '<?php echo site_url(); ?>/wp-content/themes/modernround/images/date.png',buttonImageOnly: true,changeYear: true,dateFormat: 'mm/dd/yy',maxDate: 0,yearRange: '1945:'+(new Date).getFullYear(),showOn: 'button',onSelect: function(selected,evnt) { eval('getAgeJunior'+y+'(selected)'); }
+});
+
+});
+$(wrapper).on("click",".remove_field", function(e){
+var gtnum = $(this).attr('id');
+var shovalu = $('#juniorgamer_tag'+gtnum).val();
+if(shovalu != ''){
+y--;	  
+delete_junior(shovalu);	  
+e.preventDefault(); $(this).parent('div').remove(); x--;
+document.getElementById('jnuniornumber').value = parseInt(document.getElementById('jnuniornumber').value)-parseInt(1);
+}else{
+y--;	  
+e.preventDefault(); $(this).parent('div').remove(); x--;	
+document.getElementById('jnuniornumber').value = parseInt(document.getElementById('jnuniornumber').value)-parseInt(1);  
+}
+})
+});
+</script>
+<?php    	
+	}else{
+	}
+}
+if($action == 'uploadimage'){
+function getExtension($str) 
+{
+         $i = strrpos($str,".");
+         if (!$i) { return ""; } 
+
+         $l = strlen($str) - $i;
+         $ext = substr($str,$i+1,$l);
+         return $ext;
+}
+
+$valid_formats = array("jpg", "png", "gif", "bmp","jpeg","PNG","JPG","JPEG","GIF","BMP");	
+
+$name = $_FILES['file']['name'];
+$size = $_FILES['file']['size'];
+$tmp = $_FILES['file']['tmp_name'];
+$ext = getExtension($name);
+if(in_array($ext,$valid_formats))
+{
+include('s3_config.php');
+//Rename image name. 
+$actual_image_name = "Images/Member/".time().".".$ext;
+if($s3->putObjectFile($tmp, $bucket , $actual_image_name, S3::ACL_PUBLIC_READ) )
+{
+	?>
+<style type="text/css">
+.showimg b{display:none;}
+</style>    
+    <?php
+$s3file='http://'.$bucket.'.s3-website-us-west-2.amazonaws.com/'.$actual_image_name;
+echo "<img src='$s3file' style='max-width:400px'/><br/>";
+echo '<input type="hidden" name="imgurl" id="imgurl" value="'.$s3file.'" />';
+}
+}
+
+}
+if($action == 'defaultprofileimage'){ ?>
+<img src="http://www.modernround.com.s3-website-us-west-2.amazonaws.com/Assets/PlayerIcons/<?php echo $default1; ?>" width="25%" />
+<input type="hidden" name="imgurl" id="imgurl" value="http://www.modernround.com.s3-website-us-west-2.amazonaws.com/Assets/PlayerIcons/<?php echo $default1; ?>" />
+<?php
+}if($action == 'uploadselfiepopup'){
+		$take_a_selfie_img_src = htmlspecialchars($_REQUEST['take_a_selfie_img_src'], ENT_QUOTES);		
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$randomString = '';
+		for ($i = 0; $i < 8; $i++) {
+			$randomString .= $characters[rand(0, strlen($characters) - 1)];
+		}
+		$browse_a_selfie = "data:image/png;base64,".$take_a_selfie_img_src;
+		$browse_a_selfie = str_replace('data:image/png;base64,', '', $browse_a_selfie);
+		$browse_a_selfie = str_replace(' ', '+', $browse_a_selfie);
+		$browse_a_selfie = base64_decode($browse_a_selfie);
+		$browse_a_selfies = sys_get_temp_dir()."/12_".$randomString.'.png';
+		$imagename = '12_'.$randomString.'.png';
+		$selfie_upload = file_put_contents($browse_a_selfies, $browse_a_selfie);
+		$actual_image_name = "Images/Member/".time().".".$imagename;
+		include('s3_config.php');
+		if($s3->putObjectFile($browse_a_selfies, $bucket , $actual_image_name, S3::ACL_PUBLIC_READ) )
+		{
+			?>
+		<style type="text/css">
+		.showimg b{display:none;}
+		</style>    
+			<?php
+		$s3file='http://'.$bucket.'.s3-website-us-west-2.amazonaws.com/'.$actual_image_name;
+		echo "<img src='$s3file' style='max-width:400px'/><br/>";
+		echo '<input type="hidden" name="imgurl" id="imgurl" value="'.$s3file.'" />';
+		}
+}
+?>

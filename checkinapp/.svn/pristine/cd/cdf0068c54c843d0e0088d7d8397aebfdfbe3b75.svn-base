@@ -1,0 +1,161 @@
+<?php 
+/*
+	Template Name: Contact Us
+*/
+
+
+get_header(); ?>
+<style type="text/css">
+    @media only screen and (max-width: 240px) { .happySelectContainer select option { text-indent: 0; font-size: 9px; } }
+    
+    </style>
+<section id="inner-banner" class="wow fadeIn" >
+<div class="container">
+<div class="col-sm-12 col-lg-12 headline wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+<h1><?php the_title(); ?></h1>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="500ms">
+<div class="row">
+<div class="col-sm-12 col-lg-12">
+
+<div class="panel panel-default">
+<div class="panel-heading clearfix">
+<h3 class="panel-title">We're Always Listening</h3>
+</div>
+
+<div class="panel-body">        
+<article class="col-md-12" >
+<h1></h1>
+<p>Let us know about any questions, comments or concerns you have about your ModernRound experience by filling out the form below.
+<br><br>
+<strong>ModernRound Home Office</strong><br>
+1717 McKinney Ave, Suite 800<br>
+Dallas, TX 75202<br>
+p. 214-377-0615</p>
+
+
+</article>
+
+<div class="col-md-12 contact-box">
+<!-- contact form start -->
+<form class="form-horizontal row-border" action="#">
+
+<div class="col-md-6">
+ <div class="form-group">
+<label class="col-md-6 control-label">Location</label>
+<div class="col-md-6">
+<div class="happySelectContainer">
+<div class="arrow"></div>
+  <select id="title" name="title">
+  <option value="">Select Site Location</option>
+  <option value="Mr.">Online Access</option>
+  <option value="Mrs.">AZ - Scottsdale</option>
+  </select>
+</div>
+</div>
+</div>
+<div class="form-group">
+<label class="col-md-6 control-label">Reason for Contacting</label>
+<div class="col-md-6">
+<div class="happySelectContainer">
+<div class="arrow"></div>
+<select id="reasioncontact" name="reasioncontact">
+<option value="">Please Select</option>
+<option value="Mr.">Comment or Question</option>
+<option value="Mrs.">Compliment</option>
+<option value="Ms.">Complaint</option>
+</select>
+</div>
+</div>
+</div>
+<div class="form-group">
+<label class="col-md-6 control-label">Subject</label>
+<div class="col-md-6">
+<div class="happySelectContainer">
+  <div class="arrow"></div>
+  <select id="subject" name="subject">
+  <option value="">Please Select</option>
+  <option value="Mr.">Recent ModernRound Experience</option>
+  <option value="Mrs.">Online Account</option>
+  <option value="Ms.">Advertising</option>
+  <option value="Miss">Business Development</option>
+  <option value="Dr">Corporate Partnerships</option>
+  </select>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+ <div class="form-group">
+<label class="col-md-4 control-label">First Name</label>
+<div class="col-md-7">
+<input name="regular" class="form-control" type="text">
+</div>
+</div>
+<div class="form-group">
+<label class="col-md-4 control-label">Last Name</label>
+<div class="col-md-7">
+<input name="regular" class="form-control" type="text">
+</div>
+</div>
+<div class="form-group">
+<label class="col-md-4 control-label">Email</label>
+<div class="col-md-7">
+<input name="regular" class="form-control" type="text">
+</div>
+</div>
+<div class="form-group">
+<label class="col-md-4 control-label">Phone Number</label>
+<div class="col-md-7">
+<input name="regular" class="form-control" type="text">
+</div>
+</div>
+</div>
+
+
+<div class="col-md-6">
+<div class="form-group">
+<label class="col-md-6 control-label">Comment</label>
+<div class="col-md-6">
+<textarea class="form-control" id="commnt" name="commnt"></textarea>
+</div>
+</div>
+</div>
+
+
+<div class="col-md-6">
+<div class="form-group">
+<label class="col-md-4 control-label"></label>
+<div class="col-sm-3 col-md-7">
+<button title="" id="nextbtn" type="submit">Send Request</button>
+</div>
+</div>
+</div>
+</form>
+<!-- contact form ene -->
+</div>
+<article class="col-md-12">
+<p>
+For Media/Press Inquiries, contact:
+
+Adrienne Chance <br>
+<a href="mailto:modernround.com">modernround.com</a><br>
+469-546-5370<br>
+
+</p>
+</article>
+
+</div>
+</div>
+
+</div><!--/.span-->
+
+</div><!--/.row-->
+</div>
+</section>
+<?php get_footer(); ?>	

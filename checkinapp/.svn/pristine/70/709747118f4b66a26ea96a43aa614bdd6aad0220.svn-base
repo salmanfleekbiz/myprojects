@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <?php require_once("head.inc.php"); ?>
+</head>
+<body class="header" style="overflow-x:hidden; overflow-y:hidden;">
+<!--header-->
+<div class="header2">
+    <div class="header-top">
+        <div class="social-icons">
+
+            <img src="<?php echo base_url(); ?>images/logo.png" alt="">
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    
+    <!--services-->
+    <div class="login">
+      <div class="login__check"><img src="<?php echo base_url(); ?>images/lo.png" alt=""></div>
+      <div class="login__form">
+        <div class="login__row">
+         <form name="loginForm" id="loginForm" action="" method="post">
+ 		 <input type="hidden" name="action" id="action" value="loogin">
+
+          <svg class="login__icon name svg-icon" viewBox="0 0 20 20">
+            <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8" />
+          </svg>
+          <input type="text" name="username" id="username" class="login__input name" placeholder="Username" autocomplete="off"/>
+        </div>
+        <div class="login__row">
+          <svg class="login__icon pass svg-icon" viewBox="0 0 20 20">
+            <path d="M0,20 20,20 20,8 0,8z M10,13 10,16z M4,8 a6,8 0 0,1 12,0" />
+          </svg>
+          <input type="password" name="userpassword" id="userpassword" class="login__input pass" placeholder="Password" autocomplete="off"/>
+        </div>
+        <input type="submit" name="submit" class="login__submit" id="submit" value="Login">
+		</form>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <div class="login" style="display:none;">
+    <div class="content">
+        <div class="service">
+            <div class="login__check">
+                <h1><img src="<?php echo base_url(); ?>images/lo.png" alt=""></h1>
+            </div>
+                <div class="service-grids">
+                <div id="loginerror"></div>
+                <form name="loginForm" id="loginForm" action="" method="post">
+                <input type="hidden" name="action" id="action" value="loogin">
+                	<table>
+                    <tr>
+                    <td>User Name</td>
+                    <td><input type="text" name="username" id="username"></td>
+                    </tr>
+                    <tr>
+                    <td>User Password</td>
+                    <td><input type="password" name="userpassword" id="userpassword"></td>
+                    </tr>
+                    <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="submit" name="submit" id="submit" value="Login"></td>
+                    </tr>
+                    </table>
+                 </form>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+        </div>
+        </div>
+        <!--services-->
+    </div>
+
+</div>
+<!--header-->
+<script type="text/javascript">
+$("#loginForm").validate({
+rules: {
+	username: "required",
+	userpassword: "required"
+},
+messages: {
+	username: "Enter user name",
+	userpassword: "Enter your password"
+},
+submitHandler: function() {
+user_login();
+},
+success: function(label) {
+	label.remove();
+}
+});
+</script>
+</body>
+</html>

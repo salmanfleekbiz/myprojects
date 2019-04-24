@@ -1,0 +1,23 @@
+<?php
+/**
+ * The Sidebar containing the main widget area.
+ *
+ * @package WordPress
+ */
+?>
+<ul class="nav nav-pills nav-stacked">
+<li><a id="onstep" class="active2">LOCATION</a></li>
+<li><a id="secstep">MY PROFILE</a></li>
+<li><a id="thrstep">MY PROFILE IMAGE</a></li>
+<li><a id="fortep">MEMBERSHIP LEVEL</a></li>
+<li><a id="fivstep">CHOOSE JUNIOR MEMBERSHIP</a></li>
+<li><a id="sxstep">JUNIOR MEMBER PROFILE</a></li>
+<li><a id="svntep">TERMS & CONDITIONS</a></li>
+<li><a id="eightstep">REVIEW PROFILE</a></li>
+</ul>
+<div class="middle-logo"><a href="#"><img src="<?php bloginfo( 'template_url' ); ?>/images/logo.png"></a></div>
+<div class="quick-links">
+<a class="buttonText" id="button2" href="?page_id=23">Frequently Asked Questions</a>
+<a class="buttonText" id="button2" href="?page_id=196">Purchase a Gift Card</a>
+<a class="buttonText" id="button2" href="<?php echo site_url(); ?>">Return to modernround.com</a>
+</div>

@@ -1,0 +1,565 @@
+<?php 
+/*
+	Template Name: Update Membership
+*/
+
+
+get_header(); ?>
+<?php global $post; ?>
+<?php if (has_post_thumbnail( $post->ID ) ): ?>
+<?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' ); ?>
+<section id="inner-banner" class="wow fadeIn" style="background:url('<?php echo $image[0]; ?>'); background-repeat: no-repeat; background-color: #525969; background-size:100% 100%;" >
+<div class="container">
+<div class="col-sm-12 col-lg-12 headline wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+<h1>My Account</h1>
+</div>
+</div>
+</div>
+</section>
+<?php endif; ?>
+<?php //if($_SESSION['firstname'] == ''){ ?>
+<script type="text/javascript">
+//window.location.href = '<?php //echo site_url(); ?>/?page_id=25';
+</script>
+<?php //}else{ ?>
+<script type="text/javascript">
+$.ajax({
+url: "<?php echo $membership_details_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {
+apicode : "<?php echo $apicode; ?>"
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+hide_load();
+var membertypes_name = new Array();
+var pck_annual_rate = new Array();
+$.each(result, function(i, item) {
+	membertypes_name[i] = item.membershiptype;
+	pck_annual_rate[i] = item.annularate;
+});
+$('#firstpckname').html(membertypes_name[0]);
+$('#firstpckprice').html('$'+pck_annual_rate[0]);
+$('#firstpckbuton').html('<input type="button" value="Select" id="'+membertypes_name[0]+'" class="right membershiptype pricebtn" pakgename="annual" rel="'+pck_annual_rate[0]+'">');
+$('#firstpckbutonbotom').html('<input type="button" value="Select" id="'+membertypes_name[0]+'" class="right membershiptype pricebtn" pakgename="annual" rel="'+pck_annual_rate[0]+'">');
+$('#secondpckname').html(membertypes_name[1]);
+$('#secondpckprice').html('$'+pck_annual_rate[1]);
+$('#secondpckbuton').html('<input type="button" value="Select" id="'+membertypes_name[1]+'" class="right membershiptype pricebtn" pakgename="annual" rel="'+pck_annual_rate[1]+'">');
+$('#secondpckbutonbotom').html('<input type="button" value="Select" id="'+membertypes_name[1]+'" class="right membershiptype pricebtn" pakgename="annual" rel="'+pck_annual_rate[1]+'">');
+$('#thirdpckname').html(membertypes_name[2]);
+$('#thirdpckprice').html('$'+pck_annual_rate[2]);	
+$('#thirdpckbuton').html('<input type="button" value="Select" id="'+membertypes_name[2]+'" class="right membershiptype pricebtn" pakgename="annual" rel="'+pck_annual_rate[2]+'">');
+$('#thirdpckbutonbotom').html('<input type="button" value="Select" id="'+membertypes_name[2]+'" class="right membershiptype pricebtn" pakgename="annual" rel="'+pck_annual_rate[2]+'">');
+$( ".membershiptype" ).click(function() {
+var contentPanelId = $(this).attr("id");
+var membership_amnt = $(this).attr("rel");
+var checksubscription = $(this).attr("pakgename");
+document.getElementById('membershipamnt').value = membership_amnt;
+document.getElementById('membershiptype').value = contentPanelId;
+showjuniorDescription();
+});
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+var max_fields      = 5;
+var wrapper         = $(".input_fields_wrap");
+var add_button      = $(".add_field_button");
+var y = 1;
+$(add_button).click(function(e){
+var x = $('#totaljunioradd').val();	
+if(x < max_fields){
+$(wrapper).append('<div class="jnios"><a id="'+x+'" href="#" class="remove_field">Delete Junior</a><div class="form-group"><label class="col-md-4 control-label">First Name: <span style="color:#F00;">*</span></label><div class="col-md-7"><input name="juniorfirst_name[]" id="juniorfirstname'+x+'" class="form-control" type="text"><label id="juniorfirst_name'+x+'" class="haserror"></label></div></div><div class="form-group"><label class="col-md-4 control-label">Last Name: <span style="color:#F00;">*</span></label><div class="col-md-7"><input name="juniorlast_name[]" id="juniorlastname'+x+'" class="form-control" type="text" onblur="createJuniorGamerTag'+x+'();"><input name="juniorlast_name_hidden[]" id="juniorlast_name_hidden'+x+'" class="form-control" type="hidden"><label id="juniorlast_name'+x+'" class="haserror"></label></div></div><div class="form-group"><label class="col-md-4 control-label">Nick Name: <span style="color:#F00;">*</span></label><div class="col-md-7"><input name="juniorgamer_tag[]" id="junigamtag'+x+'" class="form-control" type="text" onblur="juniorEntergamerTag'+x+'(this.value);"><input name="juniorgamer_tag_hidden[]" id="juniorgamer_tag_hidden'+x+'" class="form-control cb" type="hidden"><div id="loadingjuniornickname'+x+'"></div><label id="juniorgamer_tag'+x+'" class="haserror"></label></div></div><div class="form-group"><label class="col-md-4 control-label">Date of Birth: <span style="color:#F00;">*</span></label><div class="col-md-7"><input type="text" class="form-control date_picker" name="juniordob[]" id="juniordbth'+x+'" /><label id="juniordob'+x+'" class="haserror"></label></div></div><div class="form-group"><label class="col-md-8 control-label"></label></div></div>');
+x++;
+document.getElementById('totaljunioradd').value = parseInt(document.getElementById('totaljunioradd').value)+parseInt(1);
+}
+y++;
+$('.date_picker').removeClass('hasDatepicker').datepicker({buttonImage: '<?php echo site_url(); ?>/wp-content/themes/modernround/images/date.png',buttonImageOnly: true,changeYear: true,dateFormat: 'mm/dd/yy',maxDate: 0,yearRange: '1945:'+(new Date).getFullYear(),showOn: 'button',onSelect: function(selected,evnt) { eval('getAgeJunior'+y+'(selected)'); }
+});
+
+});
+$(wrapper).on("click",".remove_field", function(e){
+var x = $('#totaljunioradd').val();	
+var gtnum = $(this).attr('id');
+var shovalu = $('#juniorgamer_tag'+gtnum).val();
+if(shovalu != ''){
+y--;	  
+delete_junior(shovalu);	  
+e.preventDefault(); $(this).parent('div').remove();
+document.getElementById('totaljunioradd').value = parseInt(x);
+}else{
+y--;	  
+e.preventDefault(); $(this).parent('div').remove();
+document.getElementById('totaljunioradd').value = parseInt(x); 
+}
+})
+});
+</script>
+<?php for($j=0; $j<10; $j++){ ?>
+<script type="text/javascript">
+$(document).ready(function() {
+var dates = $("#juniordbth<?php echo $j; ?>").datepicker({
+buttonImage: '<?php echo site_url(); ?>/wp-content/themes/modernround/images/date.png',
+buttonImageOnly: true,
+changeYear: true,
+dateFormat: 'mm/dd/yy',
+maxDate: 0,
+yearRange: '1945:'+(new Date).getFullYear(),
+showOn: 'button',
+onSelect: function(selected,evnt) {
+getAgeJunior<?php echo $j; ?>(selected);
+}
+});	
+$('#juniordbth<?php echo $j; ?>').mask('00/00/0000');
+});
+function getAgeJunior<?php echo $j; ?>(dateString) 
+{
+var x=new Date(dateString);
+var Cnow=new Date();//current Date
+if(Cnow.getFullYear()- x.getFullYear()>18){
+$("#juniordob<?php echo $j; ?>").html('Must be under 18 to register as a Junior Member');
+}
+else{
+$("#juniordob<?php echo $j; ?>").html('');
+}
+}
+function createJuniorGamerTag<?php echo $j; ?>(){
+var action = 'juniorGmaercheck';
+var juniorgamer_tag_array = [];
+var juniorfirst_name = $('#juniorfirstname<?php echo $j; ?>').val();
+var juniorlast_name = $('#juniorlastname<?php echo $j; ?>').val();
+var juniorlast_name_hidden = $('#juniorlast_name_hidden<?php echo $j; ?>').val();
+$(".cb").each(function () {
+		juniorgamer_tag_array.push($(this).val());
+	});
+if(juniorlast_name != '' && juniorlast_name != juniorlast_name_hidden){
+$.ajax({
+url: "<?php echo site_url(); ?>/wp-content/themes/modernround/process.php",
+data: {action:action,juniorfirst_name:juniorfirst_name,juniorlast_name:juniorlast_name,list:juniorgamer_tag_array},
+type: 'POST',
+beforeSend: function(){
+$("#loadingjuniornickname<?php echo $j; ?>").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+},
+success: function (result) {
+document.getElementById('juniorlast_name_hidden<?php echo $j; ?>').value = juniorlast_name;	
+checkDb_userNickname<?php echo $j; ?>(result);
+},
+error: function(){
+hide_load();
+$("#juniorgamer_tag<?php echo $j; ?>").html("Nick name was an error please try again");
+}
+});	
+}
+}
+function checkDb_userNickname<?php echo $j; ?>(gamer_tag){
+if(gamer_tag != ''){	
+$.ajax({
+url: "<?php echo $user_gamertag_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {
+gamertag: gamer_tag
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+$("#juniorgamer_tag<?php echo $j; ?>").html("");	
+$("#loadingjuniornickname<?php echo $j; ?>").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+},
+success: function (result) {
+if(result.isavailable == false){
+		$("#juniorgamer_tag<?php echo $j; ?>").html("");
+		auto_generatejuniorNickName<?php echo $j; ?>(gamer_tag);
+}else if(result.isavailable == true){
+		juniorgamerTagCheckinForm<?php echo $j; ?>(gamer_tag);
+}
+},
+error: function(){
+$("#loadingjuniornickname<?php echo $j; ?>").html("");
+$("#juniorgamer_tag<?php echo $j; ?>").html("Nick name was an error please try again");
+}
+});	
+}if(gamer_tag == ''){
+	$("#juniorgamer_tag<?php echo $j; ?>").html("");
+	$("#loadingjuniornickname<?php echo $j; ?>").html('');
+}
+}
+function auto_generatejuniorNickName<?php echo $j; ?>(gamValue){
+$("#loadingnickname").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+var getCharac = gamValue;
+var removeLastcharac = getCharac.substring(0, getCharac.length - 1);
+var getLastcharac = getCharac.slice(-1);
+var incrementLastcharac = parseInt(getLastcharac) + parseInt(1);
+var finalGamerTag = removeLastcharac + incrementLastcharac;
+checkDb_userNickname<?php echo $j; ?>(finalGamerTag);
+}
+function juniorgamerTagCheckinForm<?php echo $j; ?>(gmacheck){
+var action = 'checkForm';
+var juniorgamer_tag_array = [];
+$(".cb").each(function () {
+juniorgamer_tag_array.push($(this).val());
+});
+$.ajax({
+url: "<?php echo site_url(); ?>/wp-content/themes/modernround/process.php",
+data: {action:action,gmacheck:gmacheck,list:juniorgamer_tag_array},
+type: 'POST',
+beforeSend: function(){
+$("#juniorgamer_tag<?php echo $j; ?>").html("");	
+$("#loadingjuniornickname<?php echo $j; ?>").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+},
+success: function (result) {
+		document.getElementById('junigamtag<?php echo $j; ?>').value = result;
+		document.getElementById('juniorgamer_tag_hidden<?php echo $j; ?>').value = result;		
+$("#loadingjuniornickname<?php echo $j; ?>").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/verified.png">');
+$("#juniorgamer_tag<?php echo $j; ?>").html("<span style='color:#8bbd41'>Nickname is available for registration</span>");
+
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+}
+function auto_generateEnterjuniorNickName<?php echo $j; ?>(gamValue){
+$("#loadingnickname").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+var getCharac = gamValue;
+var removeLastcharac = getCharac.substring(0, getCharac.length - 1);
+var getLastcharac = getCharac.slice(-1);
+var incrementLastcharac = parseInt(getLastcharac) + parseInt(1);
+var finalGamerTag = removeLastcharac + incrementLastcharac;
+checkDb_EnterNickname<?php echo $j; ?>(finalGamerTag);
+}
+function checkDb_EnterNickname<?php echo $j; ?>(gamer_tag){
+if(gamer_tag != ''){	
+$.ajax({
+url: "<?php echo $user_gamertag_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {
+gamertag: gamer_tag
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+$("#juniorgamer_tag<?php echo $j; ?>").html("");	
+$("#loadingjuniornickname<?php echo $j; ?>").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+},
+success: function (result) {
+if(result.isavailable == false){
+		$("#juniorgamer_tag<?php echo $j; ?>").html("");
+		auto_generateEnterjuniorNickName<?php echo $j; ?>(gamer_tag);
+}else if(result.isavailable == true){
+		juniorgamerTagCheckinForm<?php echo $j; ?>(gamer_tag);
+}
+},
+error: function(){
+$("#loadingjuniornickname<?php echo $j; ?>").html("");
+$("#juniorgamer_tag<?php echo $j; ?>").html("Nick name was an error please try again");
+}
+});	
+}if(gamer_tag == ''){
+	$("#juniorgamer_tag<?php echo $j; ?>").html("");
+	$("#loadingjuniornickname<?php echo $j; ?>").html('');
+}
+}
+function juniorEntergamerTag<?php echo $j; ?>(entergamerTag){
+var juniorgamer_tag_hidden = $('#juniorgamer_tag_hidden<?php echo $j; ?>').val();
+var junigamtag = $('#junigamtag<?php echo $j; ?>').val();
+if(junigamtag != '' && entergamerTag != juniorgamer_tag_hidden){
+checkDb_EnterNickname<?php echo $j; ?>(entergamerTag);
+}else if(junigamtag == ''){
+document.getElementById('juniorgamer_tag_hidden<?php echo $j; ?>').value = '';	
+$("#loadingjuniornickname<?php echo $j; ?>").html('');
+$("#juniorgamer_tag<?php echo $j; ?>").html("");	
+}
+}
+</script>
+<?php } ?>
+<section>
+<div class="container">
+<div class="row">
+<div class="col-sm-12 col-lg-12">
+<div class="col-md-4 col-lg-4 column wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+<ul class="nav nav-pills nav-stacked">
+<li><a href="?page_id=170">MY STATS</a></li>
+<li><a href="?page_id=190">LEADERBOARD</a></li>
+<li><a href="?page_id=192" class="active2">MY ACCOUNT</a></li>
+<li><a href="?page_id=194">SUPPORT</a></li>
+</ul>
+<div class="middle-logo"><a href="#"><img src="<?php bloginfo('template_directory'); ?>/images/logo.png"></a></div>
+<div class="quick-links">
+<a class="buttonText" id="button2" href="?page_id=23">Frequently Asked Questions</a>
+<a class="buttonText" id="button2" href="?page_id=196">Purchase a Gift Card</a>
+<a class="buttonText" id="button2" href="<?php echo site_url(); ?>">Return to modernround.com</a>
+</div>
+</div>
+<div class="col-lg-8 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="900ms">
+<div class="col-md-10"><div id="hassuccess"></div></div>
+<div class="col-md-10"><div id="haserror"></div></div>
+<div class="col-md-10"><div id="haswarning"></div></div>
+<div id="fancybox-loading"><div><img src="<?php bloginfo('template_directory'); ?>/images/apiloading.gif" alt="Loading" width="75%" /></div></div>
+<div id="fancybox-overlay"></div>
+<input type="hidden" name="membershipamnt" id="membershipamnt" value="">
+<input type="hidden" name="membershiptype" id="membershiptype" value="">
+<input type="hidden" name="token" id="token" value="<?php echo $_SESSION['token']; ?>">
+<div id="selectuserPackages" class="pricing_table pricing_six show">
+<ul class="pricing_column_first">
+<li class="pricing_header1"> Membership comparison </li>
+<li class="Odd head-value"><span>Benefits</span></li>
+<li class="odd">Smartphone Application Access</li>
+<li class="odd">$10 Credit on Member Birthday </li>
+<li class="odd">Real Life Scenario Access </li>
+<li class="odd">Modern Round Cap </li>
+<li class="pricing_footer"></li>
+</ul>
+<div class="pricing_hover_area">
+<ul class="pricing_column gradient_black">
+<li class="pricing_header1">
+<div id="mainwrap">
+<div class="header1bg">
+<h1 id="firstpckname"></h1>
+<h2 id="firstpckprice"></h2>
+<img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/annual.png" width="100%" >
+</div>
+<div id="firstpckbuton"></div>
+</div>
+</li>
+<li class="odd head-value"></li>
+<li class="odd" data-table="Usage of Game Controllers"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/annualtick.png"></li>
+<li class="odd" data-table="Online Portal Access"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/annualtick.png"></li>
+<li class="odd" data-table="Score Tracking"></li>
+<li class="odd" data-table="Hat"></li>
+<li class="pricing_footer">
+<div id="firstpckbutonbotom"></div></li>
+</ul>
+<ul class="pricing_column gradient_black">
+<li class="pricing_header1">
+<div id="mainwrap">
+<div class="header3bg">
+<h1 id="secondpckname"></h1>
+<h2 id="secondpckprice"></h2>
+<img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/silver.png" width="100%" >
+</div>
+<div id="secondpckbuton"></div>
+</div>
+</li>
+<li class="odd head-value"></li>
+<li class="odd" data-table="Usage of Game Controllers"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/silvertick.png"></li>
+<li class="odd" data-table="Online Portal Access"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/silvertick.png"></li>
+<li class="odd" data-table="Score Tracking"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/silvertick.png"></li>
+<li class="odd" data-table="Hat"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/silvertick.png"></li>
+<li class="pricing_footer">
+<div id="secondpckbutonbotom"></div></li>
+</ul>
+<ul class="pricing_column gradient_black">
+<li class="pricing_header1">
+<div id="mainwrap">
+<div class="header4bg">
+<h1 id="thirdpckname"></h1>
+<h2 id="thirdpckprice"></h2>
+<img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/gold.png" width="100%" >
+</div>
+<div id="thirdpckbuton"></div>
+</div>
+</li>
+<li class="odd head-value"></li>
+<li class="odd" data-table="Usage of Game Controllers"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/goldtick.png"></li>
+<li class="odd" data-table="Online Portal Access"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/goldtick.png"></li>
+<li class="odd" data-table="Score Tracking"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/goldtick.png"></li>
+<li class="odd" data-table="Hat"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/goldtick.png"></li>
+<li class="pricing_footer">
+<div id="thirdpckbutonbotom"></div></li>
+</ul>
+</div>
+</div>
+<div id="juniormemberDescp" class="panel panel-default hide">
+<div class="panel-heading clearfix">
+<i class="icon-calendar"></i>
+<h3 class="panel-title">Would you like to purchase a Junior Membership?</h3>
+</div>
+<div class="panel-body">
+<form class="form-horizontal row-border" action="#">
+<div id="jr_membership_type_div" class="panel-body"></div>
+<div class="form-group">
+<div class="col-sm-3 col-md-3">
+<a id="backbtn" class="updatejuniorback">Back</a>
+</div>
+<div class="col-sm-3 col-md-3">
+<a id="cancelbtn" onClick="getAlljuniorupdate();">Yes</a>
+</div>
+<div class="col-sm-3 col-md-3">
+<a id="cancelbtn" class="juniorno">No</a>
+</div>
+</div>
+</form>
+</div>
+</div>
+<div id="juniorprofiles" class="panel panel-default hide">
+<div class="panel-heading clearfix">
+<i class="icon-calendar"></i>
+<h3 class="panel-title">Junior Member Profile</h3>
+</div>
+<div class="panel-body">
+<div class="panel-body">
+<p class="hasp">Please enter your Junior Member details below:</p>
+</div>
+<form class="form-horizontal row-border" action="#">
+<input type="hidden" name="totaljunioradd" id="totaljunioradd" value="" />
+<div id="showjuniorfields" class="input_fields_wrap"></div>
+<div id="morejunior" class="form-group">
+<label class="col-md-8 control-label"></label>
+<div class="col-sm-3 col-md-3">
+<button id="cancelbtn" type="button" class="add_field_button">Add More Juniors</button>
+</div>
+</div>
+<div class="form-group">
+<label class="col-md-4 control-label"></label>
+<div class="col-md-7">
+<label class="checkbox-inline">
+<input id="inlineCheckbox1" value="option1" type="checkbox"> Do you authorize your linked junior member(s) to utilize our facilities with any adult over the age of 18?
+</label>
+</div>
+</div>
+<div class="form-group">
+<div class="col-sm-3 col-md-3">
+<a id="backbtn" class="updatejuniorprofileback" >Back</a>
+</div>
+<div class="col-sm-3 col-md-3">
+<a id="nextbtn" class="juniorprofilecontinue" onclick="juniorformFieldValidat();">Add & Continue</a>
+</div>
+<div class="col-sm-3 col-md-3">
+<a id="cancelbtn" class="juniorprofileskip">Skip</a>
+</div>
+</div>
+</form>
+</div>
+</div>
+<div id="termscondit" class="panel panel-default hide">
+<div class="panel-heading clearfix">
+<i class="icon-calendar"></i>
+<h3 class="panel-title">Membership Terms & Conditions Agreement</h3>
+</div>
+<div class="panel-body">
+<form class="form-horizontal row-border" action="#">
+<div class="panel-body">
+<p>Please review and accept the Terms & Conditions below to</p>
+<div id="tg-para" style="width: 100%; height: 300px; overflow-y: scroll;">
+<p align="center" style="text-align:center !important;"><b><u>MEMBERSHIP AGREEMENT</u></b></p>
+<p>This agreement ("Agreement") sets forth the terms and conditions of your membership as a member ("Member") of Modern Round USA ("Modern Round"). If you have any questions, please feel free to consult any member of our staff for assistance.</p>
+<p>I HAVE READ, UNDERSTAND, AND AGREE TO ALL OF THE INFORMATION UNDER THE TERMS, CONDITIONS AND POLICIES OF THIS MEMBERSHIP AGREEMENT. IN ADDITION, I UNDERSTAND AND&nbsp; AGREE THAT THE ASSUMPTION OF RISK, WAIVER AND RELEASE OF ALL CLAIMS PROVISIONS SET FORTH IN THE TERMS AND CONDITIONS OF THIS AGREEMENT ARE IN EFFECT THROUGHOUT MY MEMBERSHIP WITH Modern Round. I ALSO UNDERSTAND AND AGREE THAT IF MY MEMBERSHIP IS INTERRUPTED FOR ANY REASON, THIS AGREEMENT WILL REMAIN IN EFFECT DURING THE PERIOD OF INTERRUPTION AS WELL AS AFTER THE MEMBERSHIP IS REINSTATED.&nbsp; THIS AGREEMENT IS THE ENTIRE AGREEMENT, AND NO VERBAL OR OTHER AGREEMENTS HAVE BEEN MADE TO ALTER THE TERMS OF THIS AGREEMENT.</p>
+<p>&nbsp;</p>
+<p style="text-align: center !important;"><b><u>Modern Round MEMBERSHIP TERMS AND CONDITIONS</u></b></p>
+<p>1. MEMBERSHIPS: Modern Round currently offers a variety of memberships at select locations. These memberships will collectively be referred to as “Monthly Memberships” in this agreement.</p>
+<p>2. MEMBERSHIP TERMS:&nbsp; If you choose a Monthly Membership,you agree that as a condition of your continued membership at Modern Round you authorize Modern Round or its agent to charge your Payment Card the Monthly Membership Fee (plus applicable taxes), in effect from time to time and which may change, on each monthly periodic anniversary date of your membership, until your Monthly Membership is canceled, as set forth in Paragraph 19 below.&nbsp; For example, if your Monthly Membership began on June 19, your periodic anniversary date is the 19th of each month, and your Payment Card will be charged for the Monthly Membership Fee on that date each month.&nbsp; If your monthly periodic anniversary date falls on a date that is not contained in your anniversary month (for example, if your paid membership started on the 31st day of a month), your Payment Card will be charged on the last day of that month.&nbsp; You will not be provided with copies of charge slips evidencing the recurring charges of the Monthly Membership Fee unless requested.&nbsp; You agree to pay the Monthly Membership Fee (plus taxes) in accordance with your Payment Card issuer agreement, if applicable.&nbsp; You also authorize Modern Round to charge your Payment Card for any other charges you may incur associated with your Monthly Membership.&nbsp; </p>
+<p>&nbsp;</p>
+<p>a. PLATINUM MEMBERSHIPS</p>
+<p style="text-align:justify">Platinum Memberships begin as an initial twelve (12) month term&nbsp; (the "Membership Initial Term") that, if not terminated at the end of the initial 12-month period, continue as a month-to-month membership for the convenience of the Member until terminated in accordance with this Agreement.&nbsp; The cost for a Platinum Membership is a $125 application fee and a $250 monthly fee (the "Monthly Membership Fee").&nbsp; The cost for a 12 month Pre-Paid Platinum Membership is a $125 application fee and a $3,000 upfront fee (the "12 month Pre-Paid Platinum Membership"). </p>
+<p>b. PLATINUM HERO MEMBERSHIPS</p>
+<p style="text-align:justify">Modern Round offers a Platinum Membership discount for members who hold and can provide proof of a current military/emergency services (EMS, Police and Fire Department) identification badge.&nbsp; Please see a Modern Round representative for details.&nbsp; This discount is in Modern Round’s sole discretion and may change at any time.</p>
+<p style="text-align:justify">Platinum Hero Memberships have a twelve (12) month Membership Initial Term that, if not terminated, continues as a month-to-month membership for the convenience of the Member until terminated in accordance with this Agreement.&nbsp; The cost for a Platinum Hero Membership is a $125 application fee and a $200 monthly fee (the "Monthly Hero Membership Fee").&nbsp; The cost for a 12 month Pre-Paid Platinum Hero Membership is a $125 application fee and a $2,400 upfront fee (the "12 month Pre-Paid Platinum Hero Membership").</p>
+<p>c. CORPORATE PLATINUM MEMBERSHIPS</p>
+<p style="text-align:justify">Corporate Platinum Memberships have a twelve (12) month initial term that, if not terminated by the Member, continue as a month-to-month membership for the convenience of the Member until terminated in accordance with this Agreement. The cost for a Corporate Platinum Membership is based on a tiered system. One Corporate Platinum Membership has a $125 application fee and a $425 monthly fee and/or $5,100 annual fee. Two Corporate Platinum Membership cards have a $250 application fee and a $750 monthly fee and/or $9,000 annual fee. Three Corporate Platinum Membership cards have a $375 application fee and a $975 monthly fee and/or $11,700 annual fee. Four Corporate Platinum Membership cards have a $500 application fee and a $1,100 monthly fee and/or $13,200 annual fee. Five Corporate Platinum Membership cards have a $625 application fee and a $1,250 monthly fee and/or $15,000 annual fee plus an additional $250 for each additional card with an additional $125 application fee per card. </p>
+<p style="text-align:justify">&nbsp;</p>
+<p style="text-align:justify">d. DAILY DRIVE MEMBERSHIP</p>
+<p style="text-align:justify">Daily Drive Memberships are available for a twelve (12) month or six (6) month initial term that, if not terminated by the Member, continue as a month-to-month membership for the convenience of the Member until terminated in accordance with this Agreement. The cost for a Daily Drive Membership is a $75 application fee and a $150 monthly fee. The cost for a Daily Drive 6 month Pre-Paid Membership is a $75 application fee and a $1,050 upfront fee. The cost for a Daily Drive 12 month Pre-Paid Membership is a $75 application fee and a $1,800 upfront fee. The cost for a Hero Daily Drive Monthly Membership is a $75 application fee and a $120 monthly fee. The cost for a Hero Daily Drive 6 month Pre-Paid Membership is a $75 application fee and a $840 upfront fee. The cost for a Hero Daily Drive 12 month Pre-Paid Membership is a $75 application fee and a $1,440 upfront fee.</p>
+<p style="text-align:justify">e. EARLY DRIVE MEMBERSHIP</p>
+<p style="text-align:justify">Early Drive Memberships are available for a twelve (12) month or six (6) month initial term that, if not terminated by the Member, continue as a month-to-month membership for the convenience of the Member until terminated in accordance with this Agreement. The cost for an Early Drive Membership is a $40 application fee and a $80 monthly fee. The cost for an Early Drive 6 month Pre-Paid Membership is a $40 application fee and a $560 upfront fee. The cost for an Early Drive 12 month Pre-Paid Membership is a $40 application fee and a $960 upfront fee. The cost for a Hero Early Drive Monthly Membership is a $40 application fee and a $64 monthly fee. The cost for a Hero Early Drive 6 month Pre-Paid Membership is a $40 application fee and a $840 upfront fee. The cost for a Hero Early Drive 12 month Pre-Paid Membership is a $40 application fee and a $768 upfront fee.</p>
+<p style="text-align:justify">f. LATE NITE DRIVE MEMBERSHIP</p>
+<p style="text-align:justify">Late Nite Drive Memberships are available for a twelve (12) month or six (6) month initial that, if not terminated by the Member, continue as a month-to-month membership for the convenience of the Member until terminated in accordance with this Agreement. The cost for a Late Nite Drive Membership is a $50 application fee and a $100 monthly fee.&nbsp; The cost for a Late Nite Drive 6 month Pre-Paid Membership is a $50 application fee and a $700 upfront fee. The cost for a Late Nite Drive 12 month Pre-Paid Membership is a $50 application fee and a $1,200 upfront fee. The cost for a Hero Late Nite Drive Monthly Membership is a $50 application fee and an $80 monthly fee. The cost for a Hero Late Nite Drive 6 month Pre-Paid Membership is a $50 application fee and a $560 upfront fee. The cost for a Hero Late Nite Drive 12 month Pre-Paid Membership is a $50 application fee and a $960 upfront fee.</p>
+<p>&nbsp;</p>
+<p>3. PAYMENT CARDS: You may pay by corporate check, VISA<sup>&reg;</sup>, MASTERCARD<sup>&reg;</sup>, or AMERICAN EXPRESS<sup>&reg;</sup> credit card or VISA or MASTERCARD check card(check card must bear the VISA or MASTERCARD logo) for any membership.&nbsp;&nbsp; Any such credit or check card shall be referred to as the "Payment Card".&nbsp; You also authorize Modern Round to place a pending charge to your Payment Card when you sign up for any membership and prior to each subsequent periodic charge for Monthly Membership.&nbsp; Pending charges are used to verify your billing address and the validity of your Payment Card, are temporary (typically 3 to 7 days in length) and will not be converted into an actual charge to you.&nbsp; Pending charges, while pending, will, however, reduce the available amount of credit on your Payment
+Card in the amount of $1 per $1 of pending charge.&nbsp; You also authorize Modern Round to charge your Payment Card for any other charges you may incur associated with your Monthly Membership, if applicable.</p>
+<p>&nbsp;</p>
+<p>4. PAYMENT </p>
+<p>a. MONTHLY BILLING</p>
+<p style="text-align:justify">FEES RELATING TO YOUR PAYMENT CARD.&nbsp; You are solely responsible for any and all fees charged to your Payment Card by the issuer, bank or financial institution including, but not limited to, membership, overdraft, insufficient funds and over the credit limit fees.</p>
+<p style="text-align:justify">EXPIRATION DATE AND REFUSAL OF CHARGES TO YOUR PAYMENT CARD.&nbsp; If your Payment Card reaches its expiration date, your failure to cancel your Monthly Membership constitutes authorization for Modern Round to continue billing that Payment Card.&nbsp; If your Payment Card for any reason will not accept charges for any periodic Monthly Membership Fee, your Monthly Membership will be immediately suspended until payment is collected.&nbsp; For the 60 days immediately following the suspension day, Modern Round may attempt to charge the Payment Card the periodic Monthly Membership Fee every 10 days.&nbsp; If the charge is accepted, then your Monthly Membership benefits will be reinstated as of the date the charge is accepted.&nbsp; In order for your membership to be reinstated, you must make your Payment Card information valid by either rectifying the issue with the Payment Card issuer or providing new Payment Card information by contacting your membership department.&nbsp; If Modern Round is able to charge your Payment Card (existing or new, if you have provided new Payment Card information) and any past due Modern Round membership fees are paid, then your Monthly Membership benefits will continue uninterrupted and this Payment Card will be used to charge the applicable periodic membership fee for each consecutive renewal period until your Monthly Membership is cancelled (your original anniversary date will still apply) and will be your Payment Card for all purposes. If Modern Round is unable to charge your Payment Card (existing or new) for 3 consecutive billing dates, your Monthly Membership will be terminated and you will not be able to use your membership or any associated perks at any Modern Round location. If Modern Round terminates your membership, you must immediately surrender your membership card and you will remain liable for all unpaid dues (including any Monthly Membership charges and all other charges against your account).&nbsp; If your membership is terminated by Modern Round, you will not receive a refund on any amounts paid under any type of membership.&nbsp; </p>
+<p style="margin-top:6.0pt;text-align:justify">From time to time, Modern Round may avail itself of account updating services provided by the Payment Card industry, including, without limitation, VISA’s Account Updater program or MasterCard’s Automatic Billing Updater program.&nbsp; By enrolling in a Monthly Membership, you hereby agree and authorize Modern Round to update your Payment Card or similar account information and charge any updated Payment Card in accordance with the terms and conditions of such account updating programs.</p>
+<p style="text-align:justify">SERVICE CHARGES: You agree to pay a $20.00 charge (plus applicable taxes) for all rejected payments, whether by Payment Card, or Pre-Authorized/credit card auto debit system. Any arrears of dues owed to Modern Round will bear interest at 18% per annum (subject to applicable usury laws).</p>
+<p style="text-align:justify">b. ANNUAL PAYMENT</p>
+<p style="text-align:justify">Members have the option of paying for the entire 12-month initial term (rather than monthly billing) upon signing this agreement, and will pay their 12 month term and initiation fee in full by corporate check, VISA<sup>&reg;</sup>, MASTERCARD<sup>&reg;</sup>, or AMERICAN EXPRESS<sup>&reg;</sup> credit card or VISA or MASTERCARD check card (check card must bear the VISA or MASTERCARD logo).&nbsp; Upon the completion of the initial 12-month term, Member may choose to provide payment as stated in sections 3 and 4a for monthly billing, or remit payment in full for an additional 12 month term.&nbsp; Payments made to Modern Round for Monthly Membership are non-refundable.</p>
+<p style="text-align:justify">If a Monthly Membership is paid in full by the Member’s employer, the employer holds the right to the Membership account in the event the member is no longer employed by said company, for any reason, through the end of the paid term</p> 
+<p style="text-align:justify">c. MEMBERSHIP FREEZE: Modern Round offers Platinum and Platinum Hero Members the ability to temporarily suspend, or “freeze,” their Monthly Membership when they know in advance they will not be using any Modern Round for an extended period.&nbsp; A Platinum or Platinum Hero Membership may be placed on freeze with a 30-day written notice from a Member to Modern Round.&nbsp; Months on freeze do not apply toward the Member’s 12 month initial term.&nbsp; During the freeze period, Members will be charged $50 per month, plus applicable tax, and are not permitted to use their Monthly Membership at any Modern Round location.&nbsp; Freeze fee is not applicable toward Modern Round or cancellation fee and is non-refundable.&nbsp; Members may still visit a Modern Round on a purchase-per-visit basis; Monthly Membership perks will not apply on these visits.&nbsp; A membership freeze cannot begin prior to Modern Round receiving written notice from the Member stating his/her intent to freeze and the intended duration of the freeze; an end-freeze date is required at the time of the request.&nbsp; This request can be submitted to your Membership Director.&nbsp; Corporate Platinum Memberships are not eligible for freeze.</p>
+<p style="text-align:justify">&nbsp;</p>
+<p style="text-align:justify">5. SUSPENSION/TERMINATION: Modern Round may suspend or terminate your membership at any time for any breach of this Agreement or for any other reason by giving you written or oral notice of such termination, with or without cause. If Modern Round terminates your membership, you must immediately surrender your membership card and you will remain liable for all unpaid dues (including any Monthly Membership charges and all other charges against your account).&nbsp; If your membership is terminated by Modern Round, you will not receive a refund on any amounts paid under any type of membership.&nbsp;</p>
+<p style="text-align:justify">6. CO-SIGNER: If a Member is under 18 years of age at the date the terms and conditions of this Agreement are accepted, a Co-signer is required.&nbsp; As Modern Round would not have agreed to enter into this Agreement without the promises of the Co-signer, the Co-signer promises to pay all amounts due to Modern Round under this Agreement when due, and to keep and perform all the Member's promises and agreements. The Co-signer’s promises and agreements are joint and several with the Member's promises and agreements. If more than one person signs this Agreement as Co-signer, the promises are both joint and several.</p> 
+<p style="text-align:justify">7. DEFAULT: If you default on any payment due under this Agreement, Modern Round may declare all or any of the future payments to be made under this Agreement immediately due and payable.</p>
+<p style="text-align:justify">8. CHANGES TO POLICIES, FACILITIES, AND PROGRAM: Modern Round may introduce new facilities or programs from time to time, available to Members for an additional fee. Modern Round may publish and amend policies and regulations for the facilities, or modify its fees for membership, from time to time. You acknowledge that Modern Round may change membership fees at any time; provided, however, that Modern Round will give prior notice via e-mail to Monthly Membership holders of any change to the periodic membership fees.&nbsp; You agree that, unless you cancel your applicable Monthly Membership prior to the effective date of the change, you will be charged the new applicable periodic Monthly Membership Fee (plus applicable taxes) on each periodic anniversary date after the effective date of such change, and you authorize Modern Round to charge the new periodic Monthly Membership Fee (plus applicable taxes) to your Payment Card. Modern Round reserves the right to suspend, modify or end the membership program without prior notice, in its sole discretion.&nbsp; You agree that membership at Modern Round does not involve an extension of credit or a retail installment sale since Modern Round does not impose a finance charge and you may cancel membership at any time.&nbsp; Void where prohibited.</p> 
+<p style="text-align:justify">9. MEMBERSHIP CARDS: You agree for lost Membership cards you will pay a $1.00 fee for each replacement card required, the cost of which may be changed by Modern Round at any time without prior notice.&nbsp; You agree that you will not share or loan your Monthly Membership playing card at any time.</p>
+<p style="text-align:justify">10. HOURS OF OPERATION: From time to time, Modern Round may make reasonable changes to the days and hours that the&nbsp; facility is open for business.&nbsp; You understand that Modern Round will be busier at some times than others on different days of the week.</p>
+<p style="text-align:justify">&nbsp;</p>
+<p style="text-align:justify">11. PICTURE IDENTIFICATION/SIGN IN: You agree to have your picture taken for Modern Round’sinternal purposes upon joining if requested by Modern Round.&nbsp; Members and guests must check-in at the front desk upon entering Modern Round. Members must show their membership cards to the receptionist and may be required to leave their membership cards at the front desk and/or insert their cards into the card reader. Members may not loan their membership cards to anyone. We may require members and guests to show additional photo identification prior to admittance to Modern Round.&nbsp; Members must be in good standing (that is, paid to date) to use Modern Round as a Member.</p>
+<p style="text-align:justify">12. WAIVER: You understand that your use of Modern Round facilities will be undertaken at your sole risk. You agree that you are voluntarily participating in activities and use of the facilities and premises (including the parking lot) and assume all risk of injury, illness, damage or loss to you or your property that might result, including, without limitation, any loss or theft of any personal property.</p>
+<p>You agree that Modern Round, its officers, directors, employees, and agents will not be liable for any claims, demands, injuries, damages, actions or causes of actions whatsoever in respect of you or your property (including lost or damaged ersonal possessions), arising out of or connected with the use of any of the services and/or facilities of Modern Round. You expressly release and discharge Modern Round, its officers, directors, employees, and agents from all such claims, demands, injuries, damages, actions or cause of action, notwithstanding any negligence on the part of one or more of them.</p> 
+<p>&nbsp;</p>
+<p style="text-align:justify">13. SAFETY: By playing at any Modern Round facility, you agree to abide by the following safety rules, as well as other safety rules posted at the facility and/or online:</p> 
+<p>
+</p>
+<p>&nbsp;</p>
+<p style="text-align:justify">14. VIOLATION OF POSTED RULES AND REGULATIONS: All Members and guests are subject to compliance with any rules and regulations of Modern Round that may be posted from time to time at the facility and/or online. In the event that a Member fails to comply with said rules and regulations, Modern Round may (1) suspend all membership privileges or (2) void this Agreement and revoke all membership privileges. Modern Round reserves the right to amend or alter these rules and regulations at any time in our sole discretion.&nbsp; All amendments to these rules and regulations are effective immediately.</p>
+<p style="text-align:justify">15. INJURIES: You will immediately report any accident or injury suffered in Modern Round’s facilities to a staff person, and you will provide a written report from your doctor within a reasonable time, if requested by Modern Round.</p>
+<p style="text-align:justify">16. DRESS CODE/PERSONAL CONDUCT: Appropriate clothing and footwear is required within the facility at all times.&nbsp; Bare feet are not acceptable anywhere at Modern Round.&nbsp; Inappropriate, foul and/or lewd language or behavior is not acceptable and will result in suspension of your membership.</p>
+<p style="text-align:justify">Members and guests are subject to the control and guidance of the Modern Round staff and must follow their instructions while at Modern Round. Members and guests agree to conduct themselves in a well-mannered fashion when in or about Modern Round and not cause any disturbances or interfere with the safe use or enjoyment of Modern Round by other members and guests.</p>
+<p style="text-align:justify">17. DAMAGE TO FACILITIES: You agree to pay for damage to Modern Round equipment and premises and third party property outside of Modern Round caused by you and/or your guests (or guests’) careless use of equipment or other intentional or negligent acts.</p>
+<p style="text-align:justify">18. TEMPORARY CLOSURE: Modern Round may temporarily close the facilities in its sole discretion for any reason including, without limitation, in the case of inclement weather.&nbsp; Members and guests are immediately required to comply with announcements and staff instructions regarding weather-related stoppages.</p>
+<p style="text-align:justify">19. EARLY TERMINATION BY Modern Round: Modern Round may terminate this Agreement for breach of terms and conditions, or policies or regulations adopted by Modern Round from time to time.&nbsp; Modern Round may terminate this Agreement without cause if a 90 day notice is given to the Member.</p>
+<p style="text-align:justify">20. TERMINATION BY MEMBER: Termination by Members shall be in accordance with the following:</p> 
+<p style="text-align:justify">Memberships still in the Initial Term may be terminated with thirty (30) days written notice with a single payment equal to two (2) months membership fee plus applicable tax (the "Early Termination Fee").&nbsp; If the Early Termination Fee is paid within thirty (30) days of the next regular billing date, then the next month’s dues will be billed and are payable.&nbsp; Monthly dues previously owing and/or already paid monthly dues will not be considered as part of the Early Termination Fee under any circumstances.&nbsp; A Monthly Membership past the Monthly Membership Initial Term may also be terminated with thirty (30) days written notice, however, you will be charged for any additional renewals that occur within the 30 day notice period.&nbsp; To cancel your Monthly Membership, contact your Membership Director.&nbsp; There are no refunds for any time period (or portions thereof) already billed or paid for.&nbsp;</p> 
+<p style="text-align:justify">21. LIMITATION OF LIABILITY: Recovery for any breach of this Agreement by Modern Round is strictly limited to the amount you have paid to Modern Round, and you agree that recovery of incidental and consequential damages are not a remedy available to you.&nbsp;</p>
+<p style="text-align:justify">22. MISCELLANEOUS: </p>
+<p style="text-align:justify">NON WAIVER: No waiver of any provision in this Agreement shall constitute a waiver of any other provision nor shall any</p>
+<p style="text-align:justify">ASSIGNMENT: Modern Round may assign this Agreement, and, provided that the assignee agrees to assume the obligations of Modern Round in this Agreement, then Modern Round will be fully relieved of those obligations upon notice to you of the assignment. You understand that you may not assign your membership to another person.</p>
+<p style="text-align:justify">GOVERNING LAW:&nbsp;&nbsp; This Agreement is governed by the laws of the State of Texas, and the parties hereto agree to the venue of the District Court of Dallas County.</p>
+<p style="text-align:justify">INVALID PROVISIONS: If any part of this Agreement is found to be invalid or unenforceable, the remainder of the Agreement will remain in full force and effect.</p> 
+<p style="text-align:justify">ENTIRE AGREEMENT &amp; DEFINITION:&nbsp; This document incorporates the entire Agreement between Members and Modern Round. Modern Round reserves the right to modify this Agreement from time to time. There are no representations, warranties, terms, conditions, undertakings or collateral agreements express, implied or statutory, between us except as specified in this document</p>
+<p>&nbsp;</p>
+</div>
+</div>
+<div class="form-group">
+<div class="col-sm-3 col-md-3">
+<a id="cancelbtn" class="termcancel" >Cancel</a>
+</div>
+<div class="col-sm-3 col-md-3">
+<a id="cancelbtn" class="termaccept" onclick="user_getInformation();" >Accept</a>
+</div>
+</div>
+</form>
+</div>
+</div>
+<div id="revireprofile" class="panel panel-default hide">
+<div class="panel-heading clearfix" style="position:relative;">
+<i class="icon-calendar"></i>
+<h3 class="panel-title">Review Profile</h3>
+<div id="upeditbtn"><a id="editbtn" class="updateditprofile">Edit</a></div>
+</div>
+<div class="panel-body">
+<form class="form-horizontal row-border" action="#">
+<div id="showuserdetails"></div>
+<div class="form-group">
+<div class="col-sm-3 col-md-3">
+<a id="cancelbtn" class="purchasecancel" >Cancel</a>
+</div>
+<div class="col-sm-3 col-md-3">
+<a id="cancelbtn" onclick="update_junior_membership();" >Purchase</a>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<?php //} ?>
+<?php get_footer(); ?>	

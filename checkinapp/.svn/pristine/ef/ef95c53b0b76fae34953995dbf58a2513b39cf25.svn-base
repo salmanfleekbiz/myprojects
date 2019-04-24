@@ -1,0 +1,276 @@
+<?php 
+/*
+	Template Name: Support
+*/
+
+
+get_header(); ?>
+<?php global $post; ?>
+<?php if (has_post_thumbnail( $post->ID ) ): ?>
+<?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' ); ?>
+<section id="inner-banner" class="wow fadeIn" style="background:url('<?php echo $image[0]; ?>'); background-repeat: no-repeat; background-color: #525969; background-size:100% 100%;" >
+<div class="container">
+<div class="col-sm-12 col-lg-12 headline wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+<h1><?php the_title(); ?></h1>
+</div>
+</div>
+</div>
+</section>
+<?php endif; ?>
+<?php if($_SESSION['firstname'] == ''){ ?>
+<script type="text/javascript">
+window.location.href = '<?php echo site_url(); ?>/?page_id=25';
+</script>
+<?php }else{ ?>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+$("#membername").keypress(function (e){
+var code =e.keyCode || e.which;
+if((code<65 || code>90)
+&&(code<97 || code>122)&&code!=32&&code!=46)  
+{
+return false;
+}
+});
+});
+$('#phonenumber').mask('(000) 000-0000');
+$.validator.addMethod("phoneFormat",
+function(value, element) {
+return value.match(/^\(?[0-9]{3}(\-|\)) ?[0-9]{3}-[0-9]{4}$/);
+},
+"Please enter a phone in the format (xxx) xxx-xxxx.");
+$.ajax({
+url: "<?php echo $site_locations_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {
+apicode: "<?php echo $apicode; ?>"
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+hide_load();
+var options = "<option value=''>Select Location</option>";
+$.each(result, function(i, item) {
+options = options + "<option value='"+item.siteid+"'>"+item.sitename+"</option>";
+});
+$("#site_location_div").html("<div class='arrow'></div><select id='support_site_locations' name='support_site_locations'>"+options+"</select>");
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+$.ajax({
+url: "<?php echo $memberinformation_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>",token:'<?php echo $_SESSION['token']; ?>'},
+data: {},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+document.getElementById('emai').value = result.email_address;
+document.getElementById('membernumber').value = result.membership_number;
+document.getElementById('phonenumber').value = result.phone_number;
+document.getElementById('membername').value = result.name;
+hide_load();	
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+</script>
+<section>
+<div class="container">
+<div class="row">
+<div class="col-sm-12 col-lg-12">
+<div class="col-md-4 col-lg-4 column wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+<ul class="nav nav-pills nav-stacked">
+<li><a href="?page_id=170">MY STATS</a></li>
+<li><a href="?page_id=190">LEADERBOARD</a></li>
+<li><a href="?page_id=192">MY ACCOUNT</a></li>
+<li><a href="?page_id=194" class="active2">SUPPORT</a></li>
+</ul>
+<div class="middle-logo"><a href="#"><img src="<?php bloginfo('template_directory'); ?>/images/logo.png"></a></div>
+<div class="quick-links">
+<a class="buttonText" id="button2" href="?page_id=23">Frequently Asked Questions</a>
+<a class="buttonText" id="button2" href="?page_id=196">Purchase a Gift Card</a>
+<a class="buttonText" id="button2" href="<?php echo site_url(); ?>">Return to modernround.com</a>
+</div>
+</div>
+<div class="col-lg-8 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="900ms">
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-8 col-lg-12">
+<div class="panel panel-default">
+<div class="panel-heading clearfix">
+<i class="icon-calendar"></i>
+<h3 class="panel-title">Support</h3>
+</div>
+<div class="panel-body">
+<div class="col-md-10"><div id="haswarning"></div></div>
+<div class="col-md-10"><div id="haserror"></div></div>
+<div class="col-md-10"><div id="hassuccess"></div></div>
+<div id="fancybox-loading"><div><img src="<?php bloginfo('template_directory'); ?>/images/apiloading.gif" alt="Loading" width="75%" /></div></div>
+<div id="fancybox-overlay"></div>
+<form name="supportForm" id="supportForm" class="form-horizontal row-border" action="" method="post">
+<div class="form-group">
+<label class="col-md-3 control-label">Subject</label>
+<div class="col-md-7">
+<div class="happySelectContainer">
+<div class="arrow"></div>
+<select name="subject" id="subject">
+<option value="">Select Subject</option>
+<option value="I can't log in">I can't log in</option>
+<option value="I'm having problems submitting a payment">I'm having problems submitting a payment</option>
+<option value="I'm having trouble accessing my online account">I'm having trouble accessing my online account</option>
+<option value="My account details aren't correct">My account details aren't correct</option>
+<option value="I have a question about memberships">I have a question about memberships</option>
+<option value="How do I cancel my membership">How do I cancel my membership</option>
+<option value="I'm not receiving emails">I'm not receiving emails</option>
+<option value="Other">Other</option>
+</select>
+</div>
+</div>
+</div>
+
+
+<div class="form-group">
+<label class="col-md-3 control-label">Site Location</label>
+<div class="col-md-7">
+<div id="site_location_div" class="happySelectContainer"></div>
+</div>
+</div>
+<div class="form-group">
+<label class="col-md-3 control-label">My Email Address</label>
+<div class="col-md-7">
+<input name="emai" id="emai" class="form-control" type="text">
+</div>
+</div>
+<div class="form-group">
+<label class="col-md-3 control-label">Member Number</label>
+<div class="col-md-7">
+<input name="membernumber" id="membernumber" class="form-control" type="text" readonly="readonly">
+</div>
+</div>
+<div class="form-group">
+<label class="col-md-3 control-label">Phone Number</label>
+<div class="col-md-7">
+<input name="phonenumber" id="phonenumber" class="form-control" type="text" placeholder="(000) 000-0000">
+</div>
+</div>
+<div class="form-group">
+<label class="col-md-3 control-label">Name</label>
+<div class="col-md-7">
+<input name="membername" id="membername" class="form-control" type="text">
+</div>
+</div>
+<div class="form-group">
+<label class="col-md-3 control-label">Question</label>
+<div class="col-md-7">
+<textarea name="question" id="question" class="form-control" rows="3"></textarea>
+</div>
+</div>
+<div class="form-group">
+<div class="col-sm-3 col-md-3">
+<a id="backbtn" href="?page_id=170">Back</a>
+</div>
+<div class="col-sm-3 col-md-3">
+<button title="" id="cancelbtn" type="submit">Submit</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<script type="text/javascript">
+function send_support(){
+var subject = $('#subject').val();		
+var support_site_locations = $('#support_site_locations').val();
+var emai = $('#emai').val();
+var membernumber = $('#membernumber').val();
+var phonenumber = $('#phonenumber').val();
+var membername = $('#membername').val();
+var question = $('#question').val();
+$.ajax({
+url: "<?php echo $member_support_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>",token:'<?php echo $_SESSION['token']; ?>'},
+data: {
+subject: subject,
+sitelocation: support_site_locations,
+emailaddress: emai,
+membership_number: membernumber,
+phone: phonenumber,
+name: membername,
+question: question
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+	if(result.issuccess == true){
+    document.getElementById('haserror').innerHTML='';		
+	document.getElementById('hassuccess').innerHTML='<p>Your email has been sent successfully.</p>';
+	hide_load();
+	}else if(result.issuccess == false){
+	document.getElementById('hassuccess').innerHTML='';	
+	document.getElementById('haserror').innerHTML='<p>Email not send try again.</p>';
+	hide_load();	
+	}
+},
+error: function(){
+hide_load();
+$("#servererror").html("<?php echo $error_msg; ?>");
+}
+});	
+}
+$("#supportForm").validate({
+rules: {
+subject: 'required',
+support_site_locations: 'required',
+emai: {
+		required: true,
+		email: true
+	},
+membernumber: 'required',
+phonenumber: {
+		required:true,
+		phoneFormat:true
+	},
+membername: 'required',
+question: 'required'
+},
+messages: {
+	subject: 'Subject required',
+	support_site_locations: 'Select location',
+	emai: 'Enter correct email address',
+	membernumber: 'Member number required',
+	phonenumber: 'Phone number required',
+	membername: 'Member name required',
+	question: 'Question required'
+},
+submitHandler: function() {
+	send_support();
+},
+success: function(label) {
+	label.remove();
+}
+});
+</script>
+<?php } ?>
+<?php get_footer(); ?>	

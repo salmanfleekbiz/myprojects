@@ -1,0 +1,96 @@
+<?php 
+/*
+	Template Name: Forgot Password
+*/
+
+
+get_header(); ?>
+<?php global $post; ?>
+<?php if (has_post_thumbnail( $post->ID ) ): ?>
+<?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' ); ?>
+<section id="inner-banner" class="wow fadeIn" style="background:url('<?php echo $image[0]; ?>'); background-repeat: no-repeat; background-color: #525969; background-size:100% 100%;" >
+<div class="container">
+<div class="col-sm-12 col-lg-12 headline wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+<h1><?php the_title(); ?></h1>
+</div>
+</div>
+</div>
+</section>
+<?php endif; ?>
+<?php if($_SESSION['firstname'] == ''){ ?>
+<section>
+<div class="container">
+<div class="row">
+<div class="col-sm-12 col-lg-12">
+<div class="col-md-4 col-lg-4 column wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+<div class="middle-logo"><a href="#"><img src="<?php bloginfo('template_directory'); ?>/images/logo.png"></a></div>
+<div class="quick-links">
+<a class="buttonText" id="button2" href="#">Frequently Asked Questions</a>
+<a class="buttonText" id="button2" href="#">Purchase a Gift Card</a>
+<a class="buttonText" id="button2" href="#">Return to modernround.com</a>
+</div>
+</div>
+<div class="col-lg-8 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="900ms">
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-8 col-lg-12">
+<div class="panel panel-default">
+<div class="panel-heading clearfix">
+<i class="icon-calendar"></i>
+<h3 class="panel-title"><?php the_title(); ?></h3>
+</div>
+<div class="panel-body">
+<div id="fancybox-loading"><div><img src="<?php bloginfo('template_directory'); ?>/images/apiloading.gif" alt="Loading" width="75%" /></div></div>
+<div id="fancybox-overlay"></div>
+<form class="form-horizontal row-border" name="forgotpassword" id="forgotpassword" method="post" action="">
+<input type="hidden" name="action" id="action" value="forgotpassword">
+<div class="form-group">
+<label class="col-md-4 control-label">Enter your email address to send your password.</label>
+<div class="col-md-7">
+<input name="email" class="form-control" id="email" type="text">
+<label id="emailerror" class="haserror"></label>
+</div>
+</div>
+<div class="form-group">
+<div class="col-sm-3 col-md-3">
+<a id="backbtn" href="<?php echo site_url(); ?>/?page_id=25">Cancel</a>
+</div>
+<div class="col-sm-3 col-md-3">
+<input id="submit" name="submit" type="submit" value="Submit">
+</div>
+</div>
+</form>
+<div class="col-md-10"><div id="hassuccess"></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<?php }else{ ?>
+<script type="text/javascript">
+window.location.href = '<?php echo site_url(); ?>/?page_id=170';
+</script>
+<?php } ?>
+<script type="text/javascript">
+$("#forgotpassword").validate({
+rules: {
+email: {
+	required: true,
+	email: true
+}
+},
+messages: {
+	email: "please enter correct email address"
+},
+submitHandler: function() {
+	user_forgot();
+},
+success: function(label) {
+	label.remove();
+}
+});
+</script>
+<?php get_footer(); ?>	

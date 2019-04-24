@@ -1,0 +1,123 @@
+<?php 
+
+/*
+
+Template Name: landing
+
+*/
+
+
+
+
+
+get_header(); ?>
+<style type="text/css">
+#rev_slider_6_1_wrapper {
+    padding: 0 !important;
+}
+</style>
+<?php echo do_shortcode('[rev_slider home]'); ?>
+<section id="feature" >
+<div class="container">
+<div class="col-sm-12 col-lg-4">
+<img src="<?php bloginfo( 'template_url' ); ?>/images/abticon.png" class="img-responsive targetimg wow fadeInDown" ></div>
+<div class="col-sm-12 col-lg-8">
+<div class="center wow fadeInDown" style="padding-bottom:20px !important;">
+<h1>Virtual Shooting + Upscale Lounge</h1>
+<h2><div class="docenterline"><div class="leftline"></div> Ready. Aim. Fun. <div class="rightline"></div></div></h2>
+<p class="lead">Modern Round is a place to shoot and be social. It's just like shooting a real gun, but without the live ammo. Simulated scenarios put you in the center of the action. And the crafted food and drinks will ensure both your taste buds and trigger finger stay happy.</p>
+</div>
+</div>
+</div>
+</section>
+<section style="padding:0;">
+<div align="center">
+<img src="<?php bloginfo( 'template_url' ); ?>/images/porofolio_all.jpg" class="img-responsive wow fadeInDown" >
+</div>
+</section>
+<section id="middle">
+<div class="container">
+<div class="row">
+<div class="col-sm-12 col-md-8 wow fadeInDown">
+<img src="<?php bloginfo( 'template_url' ); ?>/images/guns.png" class="img-responsive" >
+</div>
+<div class="col-sm-12 col-md-4 wow fadeInDown">
+<div class="shooting">
+<h1>Realistic Shooting in a Safe Environment</h1>
+<p>Experience advanced technology in shooting simulation originally created for military and police training. Our replica firearms are incredibly realistic, accurate and most importantly safe to learn and play with.</p>
+</div>
+</div>
+</div>
+</div>
+</section> 
+<section id="content">
+<div class="container">
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6  wow fadeInDown">
+<div class="releases spacer" id="album">
+<div class="col-sm-6 col-xs-12 col-md-3 col-lg-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms"><div class="album">
+<img id="blue-image"  alt="" class="img-responsive img-response img-landscape" src="<?php bloginfo( 'template_url' ); ?>/images/post0.jpg">
+<div class="albumbg">
+  <div class='square-box'>
+    <div class='square-content'>
+      <div>
+        <p>
+          <span id='blue-paragraph-1'>
+            Enhance Your Shooting &amp; Social Skills
+          </span>
+          <span id="blue-paragraph">Immerse yourself in multiple exercises, missions and games designed for all levels of shooters.</span>
+        </p>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+</div></div>
+<div class="col-sm-6 col-xs-12 col-md-3 col-lg-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms" ><div class="album"><img alt="" class="img-responsive img-response" src="<?php bloginfo( 'template_url' ); ?>/images/post1.jpg"><div class="albumdetail"><a href="#"><img alt="music theme" class="img-responsive" src="<?php bloginfo( 'template_url' ); ?>/images/hover_arrow.png"></a><h5>take your </h5><h5>first shot </h5></div></div></div>
+<div class="col-sm-6 col-xs-12 col-md-3 col-lg-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="900ms"><div class="album"><img alt="" class="img-responsive img-response" src="<?php bloginfo( 'template_url' ); ?>/images/post2.jpg"><div class="albumdetail"><a href="#"><img alt="music theme" class="img-responsive" src="<?php bloginfo( 'template_url' ); ?>/images/hover_arrow.png"></a><h5>sharpen </h5><h5>your skills </h5></div></div></div>
+<div class="col-sm-6 col-xs-12 col-md-3 col-lg-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="1200ms"><div class="album"><img alt="" class="img-responsive img-response" src="<?php bloginfo( 'template_url' ); ?>/images/post3.jpg"><div class="albumdetail"><a href="#"><img alt="music theme" class="img-responsive" src="<?php bloginfo( 'template_url' ); ?>/images/hover_arrow.png"></a><h5>master </h5><h5>marksmanship </h5></div></div></div>
+</div>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 wow fadeInDown">
+<div class="bemember">
+<div class="bechild">
+<h2>Become a Modern Round Member Today</h2>
+<p>Join the shooters' circle to receive exclusive news, offers and track your progress.</p>
+<a href="#inline_contents2" class="butn3 skip blutop2">
+<span class="hover-bg2 reset">
+<span class="hover-text2 reset">Join Now ></span>
+</span>
+</a>
+
+<!--<a class="butn2 skip" href="#inline_contents2">
+  <span class="hover-bg2 reset reset2">
+    <span class="hover-text2 reset reset2">Join Now</span>
+  </span>
+  Join Now <span style="font-family: 'latoregular'; font-size:28px !important; float:right; margin-right:10px; line-height:45px;" class="reset2">&gt;</span>
+</a>-->
+
+<div style='display:none'>
+<div id='inline_contents2' style='padding:10px; background:#fff;'>
+<p class="popup"><strong>Membership registration coming soon!</strong></p>
+</div>
+</div>    
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="partner">
+<div class="container">
+<div class="row">
+<div class="partners">
+<div class="col-xs-12 col-sm-12">
+<a href=""><img class="img-responsive wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="1200ms" src="<?php bloginfo( 'template_url' ); ?>/images/partners/partner4.png"> PARTY</a>
+</div>
+</div>
+</div>     
+</div>
+</section>
+<?php get_footer(); ?>	

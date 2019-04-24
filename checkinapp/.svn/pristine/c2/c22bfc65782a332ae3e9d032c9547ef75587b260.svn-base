@@ -1,0 +1,80 @@
+/* lg */ 
+@media (min-width: 1200px) {
+ /* Make Navigation Toggle on Desktop Hover */
+  .dropdown:hover .dropdown-menu {
+      display: block;
+      -webkit-animation: fadeInUp 400ms;
+      animation: fadeInUp 400ms;
+  }
+
+  
+
+}
+
+/* md */
+@media (min-width: 992px) and (max-width: 1199px) {
+  
+ /* Make Navigation Toggle on Desktop Hover */
+  .dropdown:hover .dropdown-menu {
+      display: block;
+      -webkit-animation: fadeInUp 400ms;
+      animation: fadeInUp 400ms;
+  }
+
+  
+}
+
+
+/* sm */
+@media (min-width: 768px) and (max-width: 991px) {
+  /* Make Navigation Toggle on Desktop Hover */
+  .dropdown:hover .dropdown-menu {
+      display: block;
+      -webkit-animation: fadeInUp 400ms;
+      animation: fadeInUp 400ms;
+  }
+
+  .navbar-collapse {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .navbar-nav > li {
+    margin-left: 0;
+   
+  }
+
+  
+}
+
+/* xs */
+@media (max-width: 767px) {
+ 
+
+  
+}
+
+/* XS Portrait */
+@media (max-width: 240px) {
+   #feature h1 { font-size: 30px !important;}
+  .docenterline { width: 6em !important;}
+  .butn { min-width: 190px !important;}
+  .albumbg h5 { font-size: 14px !important;}
+  .albumbg p { font-size: 12px !important;}
+  .bechild { padding: 0 !important;}
+  .albumbg { height: 13em !important;}
+}
+
+@media (max-width: 320px) {
+  .docenterline { width: 6em !important;}
+}
+
+@media only screen and (min-width : 480px) and (max-width : 568px) { 
+/*  .col-xs-12 { padding: 0 4.5em;}*/
+  .img-landscape { height: auto !important;  }
+  .albumbg { height: auto !important; margin: 0.5em auto auto auto !important; }
+ }
+@media only screen and (min-width : 600px) and (max-width : 640px) { /*.col-xs-12 { padding: 0 5em;}*/  }
+ @media (max-width: 1024px) {
+  .albumbg { height: auto !important; margin: 0.5em auto auto auto !important; }
+}

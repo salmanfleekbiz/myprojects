@@ -1,0 +1,131 @@
+jQuery(function($) {'use strict',
+
+	//#main-slider
+	$(function(){
+		$('#main-slider.carousel').carousel({
+			interval: 8000
+		});
+	});
+
+	// accordian
+	$('.accordion-toggle').on('click', function(){
+		$(this).closest('.panel-group').children().each(function(){
+		$(this).find('>.panel-heading').removeClass('active');
+		 });
+
+	 	$(this).closest('.panel-heading').toggleClass('active');
+	});
+
+	//Initiat WOW JS
+	new WOW().init();
+/*
+	// portfolio filter
+	$(window).load(function(){'use strict';
+		var $portfolio_selectors = $('.portfolio-filter >li>a');
+		var $portfolio = $('.portfolio-items');
+		$portfolio.isotope({
+			itemSelector : '.portfolio-item',
+			layoutMode : 'fitRows'
+		});
+		
+		$portfolio_selectors.on('click', function(){
+			$portfolio_selectors.removeClass('active');
+			$(this).addClass('active');
+			var selector = $(this).attr('data-filter');
+			$portfolio.isotope({ filter: selector });
+			return false;
+		});
+	});
+*/
+	// Contact form
+	var form = $('#main-contact-form');
+	form.submit(function(event){
+		event.preventDefault();
+		var form_status = $('<div class="form_status"></div>');
+		$.ajax({
+			url: $(this).attr('action'),
+
+			beforeSend: function(){
+				form.prepend( form_status.html('<p><i class="fa fa-spinner fa-spin"></i> Email is sending...</p>').fadeIn() );
+			}
+		}).done(function(data){
+			form_status.html('<p class="text-success">' + data.message + '</p>').delay(3000).fadeOut();
+		});
+	});
+
+	
+	//goto top
+	$('.gototop').click(function(event) {
+		event.preventDefault();
+		$('html, body').animate({
+			scrollTop: $("body").offset().top
+		}, 500);
+	});	
+
+	//Pretty Photo
+	//$("a[rel^='prettyPhoto']").prettyPhoto({
+		//social_tools: false
+	//});	
+});
+
+	//Animated Button
+var hoverSpan = $('.butn span');
+
+$(".butn").mouseenter(function() {
+    //add class enter on hover
+
+    $(hoverSpan).removeClass('reset').addClass('enter');
+
+  })
+  .mouseleave(function() {
+    //remove class enter
+    //add class leave and reset on complete
+
+    $(hoverSpan).removeClass('enter').addClass('leave');
+
+    setTimeout(function() {
+      $(hoverSpan).removeClass('leave').addClass('reset');
+    }, 500);
+
+  });
+
+
+  var hoverSpan1 = $('.butn1 span');
+
+$(".butn1").mouseenter(function() {
+    //add class enter on hover
+
+    $(hoverSpan1).removeClass('reset1').addClass('enter1');
+
+  })
+  .mouseleave(function() {
+    //remove class enter
+    //add class leave and reset on complete
+
+    $(hoverSpan1).removeClass('enter1').addClass('leave1');
+
+    setTimeout(function() {
+      $(hoverSpan1).removeClass('leave1').addClass('reset1');
+    }, 500);
+
+  });
+
+  var hoverSpan2 = $('.butn2 span');
+
+$(".butn2").mouseenter(function() {
+    //add class enter on hover
+
+    $(hoverSpan2).removeClass('reset2').addClass('enter2');
+
+  })
+  .mouseleave(function() {
+    //remove class enter
+    //add class leave and reset on complete
+
+    $(hoverSpan2).removeClass('enter2').addClass('leave2');
+
+    setTimeout(function() {
+      $(hoverSpan2).removeClass('leave2').addClass('reset2');
+    }, 500);
+
+  });

@@ -1,0 +1,106 @@
+<?php 
+/*
+	Template Name: Career
+*/
+
+
+get_header(); ?>
+<section id="inner-banner" class="wow fadeIn" >
+<div class="container">
+<div class="col-sm-12 col-lg-12 headline wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+<h1><?php the_title(); ?></h1>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="container">
+<div class="row">
+<div class="col-sm-12 col-lg-12">
+
+
+<form class="form-horizontal row-border wow fadeInDown" action="#" data-wow-duration="1000ms" data-wow-delay="300ms" >
+
+<div class="form-group">
+<div class="col-md-5">
+<!-- select -->
+<div class="happySelectContainer">
+<div class="arrow"></div>
+<select name="title" id="title">
+<option value="">Select</option>
+<option value="Position of Interest">Position of Interest</option>
+<option value="Management">Management</option>
+<option value="Marketing">Marketing</option>
+<option value="Event/Membership Sales">Event/Membership Sales</option>
+<option value="Golf Professionals">Golf Professionals</option>
+<option value="Culinary Leadership (Executive Chef / Executive Sous Chef / Sous Chef)">Culinary Leadership (Executive Chef / Executive Sous Chef / Sous Chef)</option>
+<option value="Front of House Hourly (Server / Bartender / Busser / Food &amp; Beverage Runner)">Front of House Hourly (Server / Bartender / Busser / Food &amp; Beverage Runner)</option>
+<option value="Guest Services Hourly">Guest Services Hourly</option>
+<option value="Maintenance Hourly">Maintenance Hourly</option>
+<option value="Kitchen Hourly">Kitchen Hourly</option>
+</select>
+</div>
+<!-- select -->
+</div>
+</div>
+<div class="form-group">
+<div class="col-md-3">
+<button title="" id="cancelbtn" type="submit">Select Position</button>
+</div>
+</div>
+</form>
+
+<article class="wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms" >
+<p>Think you have what it takes to work at Modern Round? We are hiring safety oriented smiling personalities in all departments. Modern Round hires only top shelf people to provide the best customer experience in the market. If you think your skills are on mark then take aim at one of our open positions by sending us your resume and a summary of why you think Modern Round is the adventure for you. </p>
+
+</article>
+
+<!-- sections boxes -->
+<div class="row wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="900ms">
+
+<div class="col-sm-4 col-lg-4 col-md-4">
+<div class="thumbnail">
+<img alt="" src="<?php bloginfo( 'template_url' ); ?>/images/career_img_01.jpg">
+<div class="caption">
+    
+    <h4 class="career-heading"><a href="#">The Scottsdale 360° Tour</a>
+    </h4>
+    <p>We couldn’t wait to show off our 1st facility in the Phoenix metroplex.</p>
+</div>
+</div>
+</div>
+
+<div class="col-sm-4 col-lg-4 col-md-4">
+<div class="thumbnail">
+<img alt="" src="<?php bloginfo( 'template_url' ); ?>/images/career_img_02.jpg">
+<div class="caption">
+    
+    <h4 class="career-heading"><a href="#">Scottsdale Facility Photos</a>
+    </h4>
+    <p>Take a photographic tour of one of our newest facilities.</p>
+</div>
+</div>
+</div>
+
+<div class="col-sm-4 col-lg-4 col-md-4">
+<div class="thumbnail">
+<img alt="" src="<?php bloginfo( 'template_url' ); ?>/images/career_img_01.jpg">
+<div class="caption">
+    
+    <h4 class="career-heading"><a href="#">What is Modern Round?</a>
+    </h4>
+    <p>See what everyone has been talking <br>about!</p>
+</div>
+</div>
+</div>
+
+</div>       
+
+
+
+</div><!--/.span-->
+
+</div><!--/.row-->
+</div>
+</section>
+<?php get_footer(); ?>	

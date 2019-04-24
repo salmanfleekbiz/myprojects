@@ -1,0 +1,54 @@
+<?php 
+/*
+Template Name: Location
+*/
+
+
+get_header(); ?>
+<style type="text/css">
+a:hover { text-decoration: underline; }
+</style>
+<?php global $post; ?>
+<?php if (has_post_thumbnail( $post->ID ) ): ?>
+<?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' ); ?>
+<section id="inner-banner" class="wow fadeIn" style="background:url('<?php echo $image[0]; ?>'); background-size: 100% 120%; height: auto; max-width: 100%;">
+<div class="container">
+<div class="col-sm-12 col-lg-12 headline wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+<h1><?php the_title(); ?></h1>
+</div>
+</div>
+</div>
+</section>
+<?php endif; ?>
+<section>
+<div class="container">
+<div class="row">
+<div class="col-sm-12 col-lg-12">
+<div class="col-lg-12" id="allocation">
+<div class="row loc_bg">
+<div class="col-sm-4 loc_sections">
+<h2>Scottsdale (Coming Soon)</h2>
+</div>
+<div class="col-sm-4 loc_sections">
+<h2>HOURS OF OPERATION</h2>
+<p>Want to be the first to know when the site will open? <a href="?page_id=62"><strong>Click here</strong></a> to sign up for Modern Round email list!</p>
+</div>
+<div class="col-sm-4">
+<div class="middlebtn">
+<a href="<?php echo site_url(); ?>" id="appbtn" class="col-sm-3 col-md-3">Visit Site</a>
+<a href="#" onClick="submitDirection(); return false;" id="appbtn" class="col-sm-3 col-md-3">Directions</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<script type="text/javascript">
+function submitDirection()
+{
+$.colorbox({html:'<p style="font-size:15px;text-align:center;padding:20px;"><strong>Locations Coming Soon!</strong></p>'});
+}
+</script>
+<?php get_footer(); ?>	

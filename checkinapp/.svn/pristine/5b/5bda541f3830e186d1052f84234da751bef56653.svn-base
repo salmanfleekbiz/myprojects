@@ -1,0 +1,136 @@
+.shhot {
+    width: 126.1% !important;
+}
+.opennew {
+	  background:#009e0f;
+	  color:#FFF;
+	  border: 2px solid #000;
+      height: 270px;
+      overflow: hidden;
+	  padding: 95px;
+	  text-align: center;
+   }
+   .inactivenew {
+	  background:purple;
+	  color:#FFF;
+	  border: 2px solid #000;
+       height: 270px;
+       overflow: hidden;
+	  padding: 75px;
+	  text-align: center;
+   }
+   .assignednew {
+	  /*background:#ffff00;*/
+	  background:#000;
+	  color:#fff;
+	  border: 2px solid #000;
+       height: 270px;
+       overflow: hidden;
+	  padding: 90px;
+	  text-align: center;
+   } 
+   .remainfiveminutenew{
+	  background:#ffff00;
+	  color:#fff;
+	  border: 2px solid #000;
+       height: 270px;
+       overflow: hidden;
+	  padding: 12px;
+	  text-align: center;  
+	}
+	.timeovernew{
+	  background:#cf2a27;
+	  color:#fff;
+	  border: 2px solid #000;
+       height: 270px;
+       overflow: hidden;
+	  padding: 12px;
+	  text-align: center;  
+	}
+	.actionneedednew {
+    background: #cf2a27 none repeat scroll 0 0;
+    border: 2px solid #000000;
+    color: #ffffff;
+    height: 270px;
+    overflow: hidden;
+    padding: 86px;
+    text-align: center;
+}
+.usenew {
+    background: #2b78e4 none repeat scroll 0 0;
+    border: 2px solid #000000;
+    color: #ffffff;
+    height: 270px;
+    overflow: hidden;
+    padding: 67px;
+    text-align: center;
+}
+body {
+    background-color: #000000;
+    color: #333333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 20px;
+    line-height: 1.42857;
+    overflow-y: auto;
+}
+.bayname {
+    font-size: 24px !important;
+}
+.hover3 {
+    
+    	-webkit-transform: scale(1.1);
+        transform: scale(1.1); 
+        height: auto;
+        margin: -86px 0 0 -70px; 
+        padding-top: 85px;
+		padding-bottom: 75px;
+		padding-left: 16px; 
+        position: absolute; 
+        text-align: center; 
+        width: 33%; 
+        border: 2px solid #000;
+        font-size:22px;}
+.hover4 {
+    
+    	-webkit-transform: scale(1.1);
+        transform: scale(1.1); 
+        height: auto;
+        margin: -98px 0 0 -62px; 
+        padding-top: 50px;
+		padding-bottom: 46px;
+		padding-left: 16px; 
+        position: absolute; 
+        text-align: center; 
+        width: 33.4%; 
+        border: 2px solid #000;
+        font-size:22px;}	
+.inUseYellow {
+    background: #ffff00 none repeat scroll 0 0;
+    border: 2px solid #000000;
+    color: #000000;
+    height: 270px;
+    overflow: hidden;
+    padding: 45px;
+    text-align: center;
+}			
+.resp-tab-content {
+    display: none;
+    padding: 0 !important;
+	position:relative;
+	top:-46px;
+	left: -76px;
+}
+.middleBayGroup {
+    border: medium none;
+    left: -32px !important;
+    position: relative;
+    text-align: center;
+    width: 86.8% !important;
+}
+.rightBayGroup {
+    border: medium none;
+    left: -68px;
+    position: relative;
+    text-align: center;
+    width: 87.1% !important;
+}		

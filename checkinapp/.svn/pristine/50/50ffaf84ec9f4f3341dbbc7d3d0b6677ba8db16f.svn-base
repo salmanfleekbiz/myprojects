@@ -1,0 +1,103 @@
+<?php 
+/*
+Template Name: Pricing
+*/
+get_header(); ?>
+<script type="text/javascript">
+  function call_cboxpop()
+  {
+  $.colorbox({html:'<p class="popup"><strong style="font-size:12px;">Membership registration coming soon!</strong></p>'});
+  }
+</script>
+<?php global $post; ?>
+<?php if (has_post_thumbnail( $post->ID ) ): ?>
+<?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' ); ?>
+<section id="inner-banner" class="wow fadeIn" style="background:url('<?php echo $image[0]; ?>'); background-size: 100% 120%; height: auto; max-width: 100%;" >
+<div class="container">
+<div class="col-sm-12 col-lg-12 headline wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+<h1><?php the_title(); ?></h1>
+</div>
+</div>
+</div>
+</section>
+<?php endif; ?>
+<section>
+<div class="container">
+<div class="row">
+<div class="col-sm-12 col-lg-12">
+<div class="pricing_table pricing_six">
+<ul class="pricing_column_first">
+<li class="pricing_header1"><div class="titleprice pricemember"> Membership Comparison </div></li>
+<li class="Odd head-value"><span>Benefits</span></li>
+<li class="odd bg">Smartphone Application Access</li>
+<li class="odd bg">$10 Credit on Member Birthday </li>
+<li class="odd bg">Advanced Simulation Access </li>
+<li class="pricing_footer"></li>
+</ul>
+<div class="pricing_hover_area">
+<ul class="pricing_column gradient_black">
+<li class="pricing_header1">
+<div id="mainwrap">
+<div class="header1bg">
+<h1>ANNUAL *</h1>
+<h2>$5/yr.</h2>
+<img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/annual.png" width="100%" >
+</div>
+<button title="" id="pricebtn" type="submit" onClick="call_cboxpop(); return false;">Join Now!</button>
+</div>
+</li>
+<li class="odd head-value"></li>
+<li class="odd" data-table="Smartphone Application Access"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/annualtick.png"></li>
+<li class="odd" data-table="$10 Credit on Member Birthday"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/annualtick.png"></li>
+<li class="odd" data-table="Real Life Scenario Access"></li>
+<li class="pricing_footer">
+<button title="" id="pricebtn" type="submit" onClick="call_cboxpop(); return false;">Join Now!</button></li>
+</ul>
+<ul class="pricing_column gradient_black">
+<li class="pricing_header1">
+<div id="mainwrap">
+<div class="header3bg">
+<h1>EXPERT TRAINING</h1>
+<h2>$100/yr.</h2>
+<img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/silver.png" width="100%" >
+</div>
+<button title="" id="pricebtn" type="submit" onClick="call_cboxpop(); return false;">Join Now!</button>
+</div>
+</li>
+<li class="odd head-value"></li>
+<li class="odd" data-table="Smartphone Application Access"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/silvertick.png"></li>
+<li class="odd" data-table="$10 Credit on Member Birthday"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/silvertick.png"></li>
+<li class="odd" data-table="Real Life Scenario Access"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/silvertick.png"></li>
+<li class="pricing_footer">
+<button title="" id="pricebtn" type="submit" onClick="call_cboxpop(); return false;">Join Now!</button></li>
+</ul>
+<ul class="pricing_column gradient_black">
+<li class="pricing_header1">
+<div id="mainwrap">
+<div class="header4bg">
+<h1>AMERICAN HERO **</h1>
+<h2>$50/yr.</h2>
+<img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/gold.png" width="100%" >
+</div>
+<button title="" id="pricebtn" type="submit" onClick="call_cboxpop(); return false;">Join Now!</button>
+</div>
+</li>
+<li class="odd head-value"></li>
+<li class="odd" data-table="Smartphone Application Access"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/goldtick.png"></li>
+<li class="odd" data-table="$10 Credit on Member Birthday "><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/goldtick.png"></li>
+<li class="odd" data-table="Real Life Scenario Access"><img src="<?php bloginfo( 'template_url' ); ?>/images/pricing/goldtick.png"></li>
+<li class="pricing_footer">
+<button title="" id="pricebtn" type="submit" onClick="call_cboxpop(); return false;">Join Now!</button></li>
+</ul>
+<br /><br /><br />
+</div>
+<p class="p">*Annual (basic) Membership is required for shooting lounge access.<br>
+**American Hero Membership provides 50% off Expert Training Memberships for Police, Military, EMT, and Fire (identification required) </p>
+</div>
+
+</div>
+</div>
+
+</div>
+</section>
+<?php get_footer(); ?>	

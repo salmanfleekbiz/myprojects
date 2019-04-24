@@ -1,0 +1,1488 @@
+<script type="text/javascript">
+function show_load() {
+jQuery('#fancybox-loading').css('display', 'block');
+jQuery('#fancybox-overlay').css('display', 'block');
+}
+
+function hide_load(){
+jQuery('#fancybox-loading').css('display', 'none');
+jQuery('#fancybox-overlay').css('display', 'none');
+}
+function site_details(site_id){
+if(site_id != 0){
+$.ajax({
+url: "<?php echo $site_details_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {
+siteid : site_id
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+hide_load();
+var div_html = "<h3>LOCATION DETAILS</h3>";
+div_html += "<h4>"+result[0].sitename+"</h4>";
+if(result[0].siteaddress == null){}else{
+div_html += "<p>"+result[0].siteaddress+"</p>";
+}
+div_html += "<p>"+result[0].phone+"</p>";
+$("#site_details_div").html(div_html);
+showlocationBtns();
+$("#haswarning").html("");
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+}
+}
+function showlocationBtns(){
+$("#showlocationButtons").removeClass("hide");	
+$("#showlocationButtons").addClass("show");	
+}
+function onestep(){
+$(document).on("click", "#onstep", function(){
+$("#locationpanel").removeClass("hide");	
+$("#locationpanel").addClass("show");
+$("#profileform").removeClass("show");	
+$("#profileform").addClass("hide");
+$("#profileimageform").removeClass("show");	
+$("#profileimageform").addClass("hide");
+$("#selectuserPackages").removeClass("show");	
+$("#selectuserPackages").addClass("hide");
+$("#juniormemberDescp").removeClass("show");	
+$("#juniormemberDescp").addClass("hide");
+$("#juniorprofiles").removeClass("show");	
+$("#juniorprofiles").addClass("hide");
+$("#termscondit").removeClass("show");	
+$("#termscondit").addClass("hide");
+$("#revireprofile").removeClass("show");	
+$("#revireprofile").addClass("hide");
+$(".nav li #onstep").addClass("active2");
+$(".nav li #secstep").removeClass("active2");
+$(".nav li #thrstep").removeClass("active2");
+$(".nav li #fortep").removeClass("active2");
+$(".nav li #fivstep").removeClass("active2");
+$(".nav li #sxstep").removeClass("active2");
+$(".nav li #svntep").removeClass("active2");
+$(".nav li #eightstep").removeClass("active2");
+});
+}
+function secondstep(){
+$(document).on("click", "#secstep", function(){
+$("#profileform").removeClass("hide");	
+$("#profileform").addClass("show");
+$("#locationpanel").removeClass("show");	
+$("#locationpanel").addClass("hide");
+$("#profileimageform").removeClass("show");	
+$("#profileimageform").addClass("hide");
+$("#selectuserPackages").removeClass("show");	
+$("#selectuserPackages").addClass("hide");
+$("#juniormemberDescp").removeClass("show");	
+$("#juniormemberDescp").addClass("hide");
+$("#juniorprofiles").removeClass("show");	
+$("#juniorprofiles").addClass("hide");
+$("#termscondit").removeClass("show");	
+$("#termscondit").addClass("hide");
+$("#revireprofile").removeClass("show");	
+$("#revireprofile").addClass("hide");
+$(".nav li #secstep").addClass("active2");
+$(".nav li #onstep").removeClass("active2");
+$(".nav li #thrstep").removeClass("active2");
+$(".nav li #fortep").removeClass("active2");
+$(".nav li #fivstep").removeClass("active2");
+$(".nav li #sxstep").removeClass("active2");
+$(".nav li #svntep").removeClass("active2");
+$(".nav li #eightstep").removeClass("active2");
+});
+}
+function thirdstep(){
+$(document).on("click", "#thrstep", function(){
+$("#profileimageform").removeClass("hide");	
+$("#profileimageform").addClass("show");	
+$("#selectuserPackages").removeClass("show");	
+$("#selectuserPackages").addClass("hide");
+$("#locationpanel").removeClass("show");	
+$("#locationpanel").addClass("hide");
+$("#profileform").removeClass("show");	
+$("#profileform").addClass("hide");
+$("#juniormemberDescp").removeClass("show");	
+$("#juniormemberDescp").addClass("hide");
+$("#juniorprofiles").removeClass("show");	
+$("#juniorprofiles").addClass("hide");
+$("#termscondit").removeClass("show");	
+$("#termscondit").addClass("hide");
+$("#revireprofile").removeClass("show");	
+$("#revireprofile").addClass("hide");
+$(".nav li #thrstep").addClass("active2");
+$(".nav li #onstep").removeClass("active2");
+$(".nav li #secstep").removeClass("active2");
+$(".nav li #fortep").removeClass("active2");
+$(".nav li #fivstep").removeClass("active2");
+$(".nav li #sxstep").removeClass("active2");
+$(".nav li #svntep").removeClass("active2");
+$(".nav li #eightstep").removeClass("active2");
+});
+}
+function fourthstep(){
+$(document).on("click", "#fortep", function(){
+$("#selectuserPackages").removeClass("hide");	
+$("#selectuserPackages").addClass("show");
+$("#locationpanel").removeClass("show");	
+$("#locationpanel").addClass("hide");
+$("#profileform").removeClass("show");	
+$("#profileform").addClass("hide");
+$("#profileimageform").removeClass("show");	
+$("#profileimageform").addClass("hide");
+$("#juniormemberDescp").removeClass("show");	
+$("#juniormemberDescp").addClass("hide");
+$("#juniorprofiles").removeClass("show");	
+$("#juniorprofiles").addClass("hide");
+$("#termscondit").removeClass("show");	
+$("#termscondit").addClass("hide");
+$("#revireprofile").removeClass("show");	
+$("#revireprofile").addClass("hide");
+$(".nav li #fortep").addClass("active2");
+$(".nav li #onstep").removeClass("active2");
+$(".nav li #secstep").removeClass("active2");
+$(".nav li #thrstep").removeClass("active2");
+$(".nav li #fivstep").removeClass("active2");
+$(".nav li #sxstep").removeClass("active2");
+$(".nav li #svntep").removeClass("active2");
+$(".nav li #eightstep").removeClass("active2");
+});
+}
+function fivestep(){
+$(document).on("click", "#fivstep", function(){
+$("#juniormemberDescp").removeClass("hide");	
+$("#juniormemberDescp").addClass("show");
+$("#locationpanel").removeClass("show");	
+$("#locationpanel").addClass("hide");
+$("#profileform").removeClass("show");	
+$("#profileform").addClass("hide");
+$("#profileimageform").removeClass("show");	
+$("#profileimageform").addClass("hide");
+$("#selectuserPackages").removeClass("show");	
+$("#selectuserPackages").addClass("hide");
+$("#juniorprofiles").removeClass("show");	
+$("#juniorprofiles").addClass("hide");
+$("#termscondit").removeClass("show");	
+$("#termscondit").addClass("hide");
+$("#revireprofile").removeClass("show");	
+$("#revireprofile").addClass("hide");
+$(".nav li #fivstep").addClass("active2");
+$(".nav li #onstep").removeClass("active2");
+$(".nav li #secstep").removeClass("active2");
+$(".nav li #thrstep").removeClass("active2");
+$(".nav li #fortep").removeClass("active2");
+$(".nav li #sxstep").removeClass("active2");
+$(".nav li #svntep").removeClass("active2");
+$(".nav li #eightstep").removeClass("active2");
+});
+}
+function sixstep(){
+$(document).on("click", "#sxstep", function(){
+$("#juniorprofiles").removeClass("hide");	
+$("#juniorprofiles").addClass("show");
+$("#locationpanel").removeClass("show");	
+$("#locationpanel").addClass("hide");
+$("#profileform").removeClass("show");	
+$("#profileform").addClass("hide");
+$("#profileimageform").removeClass("show");	
+$("#profileimageform").addClass("hide");
+$("#selectuserPackages").removeClass("show");	
+$("#selectuserPackages").addClass("hide");
+$("#juniormemberDescp").removeClass("show");	
+$("#juniormemberDescp").addClass("hide");
+$("#termscondit").removeClass("show");	
+$("#termscondit").addClass("hide");
+$("#revireprofile").removeClass("show");	
+$("#revireprofile").addClass("hide");
+$(".nav li #sxstep").addClass("active2");
+$(".nav li #onstep").removeClass("active2");
+$(".nav li #secstep").removeClass("active2");
+$(".nav li #thrstep").removeClass("active2");
+$(".nav li #fortep").removeClass("active2");
+$(".nav li #fivstep").removeClass("active2");
+$(".nav li #svntep").removeClass("active2");
+$(".nav li #eightstep").removeClass("active2");
+});
+}
+function sevenstep(){
+$(document).on("click", "#svntep", function(){
+$("#termscondit").removeClass("hide");	
+$("#termscondit").addClass("show");
+$("#locationpanel").removeClass("show");	
+$("#locationpanel").addClass("hide");
+$("#profileform").removeClass("show");	
+$("#profileform").addClass("hide");
+$("#profileimageform").removeClass("show");	
+$("#profileimageform").addClass("hide");
+$("#selectuserPackages").removeClass("show");	
+$("#selectuserPackages").addClass("hide");
+$("#juniormemberDescp").removeClass("show");	
+$("#juniormemberDescp").addClass("hide");
+$("#juniorprofiles").removeClass("show");	
+$("#juniorprofiles").addClass("hide");
+$("#revireprofile").removeClass("show");	
+$("#revireprofile").addClass("hide");
+$(".nav li #svntep").addClass("active2");
+$(".nav li #onstep").removeClass("active2");
+$(".nav li #secstep").removeClass("active2");
+$(".nav li #thrstep").removeClass("active2");
+$(".nav li #fortep").removeClass("active2");
+$(".nav li #fivstep").removeClass("active2");
+$(".nav li #sxstep").removeClass("active2");
+$(".nav li #eightstep").removeClass("active2");
+});
+}
+function removeAllSteps(){
+jQuery(document).ready(function(){
+$('#onstep').removeAttr('onclick');
+$("#onstep").css("cursor", "none");
+$('#secstep').removeAttr('onclick');
+$("#secstep").css("cursor", "none");
+$('#thrstep').removeAttr('onclick');
+$("#thrstep").css("cursor", "none");
+$('#fortep').removeAttr('onclick');
+$("#fortep").css("cursor", "none");
+$('#fivstep').removeAttr('onclick');
+$("#fivstep").css("cursor", "none");
+$('#sxstep').removeAttr('onclick');
+$("#sxstep").css("cursor", "none");
+$('#svntep').removeAttr('onclick');
+$("#svntep").css("cursor", "none");
+});	
+}
+jQuery(document).ready(function(){	
+$(".selectuserProfile").click(function(){
+$("#locationpanel").removeClass("show");	
+$("#locationpanel").addClass("hide");
+$("#profileform").removeClass("hide");
+$("#profileform").addClass("show");
+$(".nav li #onstep").removeClass("active2");
+$(".nav li #secstep").addClass("active2");
+$('#onstep').attr('onclick', 'onestep();');
+$("#onstep").css("cursor", "pointer");
+});
+});
+jQuery(document).ready(function(){	
+$(".backlocation").click(function(){
+$("#profileform").removeClass("show");	
+$("#profileform").addClass("hide");
+$("#locationpanel").removeClass("hide");
+$("#locationpanel").addClass("show");
+$(".nav li #secstep").removeClass("active2");
+$(".nav li #onstep").addClass("active2");
+});
+});
+jQuery(document).ready(function(){	
+$(".backuserprofile").click(function(){
+$("#selectuserPackages").removeClass("show");	
+$("#selectuserPackages").addClass("hide");
+$("#profileimageform").removeClass("hide");
+$("#profileimageform").addClass("show");
+$(".nav li #fortep").removeClass("active2");
+$(".nav li #thrstep").addClass("active2");
+});
+});
+jQuery(document).ready(function(){	
+$(".selectjuniors").click(function(){
+$("#selectuserPackages").removeClass("show");	
+$("#selectuserPackages").addClass("hide");
+$("#juniormemberDescp").removeClass("hide");
+$("#juniormemberDescp").addClass("show");
+$(".nav li #thrstep").removeClass("active2");
+$(".nav li #fortep").addClass("active2");
+});
+});
+jQuery(document).ready(function(){	
+$(".juniorback").click(function(){
+$("#juniormemberDescp").removeClass("show");	
+$("#juniormemberDescp").addClass("hide");
+$("#selectuserPackages").removeClass("hide");
+$("#selectuserPackages").addClass("show");
+$(".nav li #fivstep").removeClass("active2");
+$(".nav li #fortep").addClass("active2");
+});
+});
+jQuery(document).ready(function(){	
+$(".junioryes").click(function(){
+$("#juniormemberDescp").removeClass("show");	
+$("#juniormemberDescp").addClass("hide");
+$("#juniorprofiles").removeClass("hide");
+$("#juniorprofiles").addClass("show");
+$(".nav li #fivstep").removeClass("active2");
+$(".nav li #sxstep").addClass("active2");
+$('#fivstep').attr('onclick', 'fivestep();');
+$("#fivstep").css("cursor", "pointer");
+});
+});
+jQuery(document).ready(function(){	
+$(".juniorno").click(function(){
+$("#juniormemberDescp").removeClass("show");	
+$("#juniormemberDescp").addClass("hide");
+$("#termscondit").removeClass("hide");
+$("#termscondit").addClass("show");
+$(".nav li #fivstep").removeClass("active2");
+$(".nav li #svntep").addClass("active2");
+$('#sxstep').attr('onclick', 'sixstep();');
+$("#sxstep").css("cursor", "pointer");
+});
+});
+jQuery(document).ready(function(){	
+$(".juniorprofileback").click(function(){
+$("#juniorprofiles").removeClass("show");	
+$("#juniorprofiles").addClass("hide");
+$("#juniormemberDescp").removeClass("hide");
+$("#juniormemberDescp").addClass("show");
+$(".nav li #sxstep").removeClass("active2");
+$(".nav li #fivstep").addClass("active2");
+});
+});
+jQuery(document).ready(function(){	
+$(".juniorprofileskip").click(function(){
+$("#juniorprofiles").removeClass("show");	
+$("#juniorprofiles").addClass("hide");
+$("#termscondit").removeClass("hide");
+$("#termscondit").addClass("show");
+$(".nav li #sxstep").removeClass("active2");
+$(".nav li #svntep").addClass("active2");
+$('#sxstep').attr('onclick', 'sixstep();');
+$("#sxstep").css("cursor", "pointer");
+});
+});
+jQuery(document).ready(function(){	
+$(".termcancel").click(function(){
+$("#termscondit").removeClass("show");	
+$("#termscondit").addClass("hide");
+$("#juniorprofiles").removeClass("hide");
+$("#juniorprofiles").addClass("show");
+$(".nav li #svntep").removeClass("active2");
+$(".nav li #sxstep").addClass("active2");
+});
+});
+jQuery(document).ready(function(){	
+$(".termaccept").click(function(){
+$("#termscondit").removeClass("show");	
+$("#termscondit").addClass("hide");
+$("#revireprofile").removeClass("hide");
+$("#revireprofile").addClass("show");
+$(".nav li #svntep").removeClass("active2");
+$(".nav li #eightstep").addClass("active2");
+});
+});
+jQuery(document).ready(function(){	
+$(".purchasecancel").click(function(){
+$("#revireprofile").removeClass("show");	
+$("#revireprofile").addClass("hide");
+$("#termscondit").removeClass("hide");
+$("#termscondit").addClass("show");
+$(".nav li #svntep").removeClass("active2");
+$(".nav li #sxstep").addClass("active2");
+});
+});
+jQuery(document).ready(function(){	
+$(".purchaseaccept").click(function(){
+$("#revireprofile").removeClass("show");	
+$("#revireprofile").addClass("hide");
+$("#congrates").removeClass("hide");
+$("#congrates").addClass("show");
+});
+});
+jQuery(document).ready(function(){	
+$(".editprofile").click(function(){
+$("#revireprofile").removeClass("show");	
+$("#revireprofile").addClass("hide");
+$("#profileform").removeClass("hide");
+$("#profileform").addClass("show");
+$(".nav li #eightstep").removeClass("active2");
+$(".nav li #secstep").addClass("active2");
+});
+});
+jQuery(document).ready(function(){	
+$(".updateditprofile").click(function(){
+$("#revireprofile").removeClass("show");	
+$("#revireprofile").addClass("hide");
+$("#selectuserPackages").removeClass("hide");
+$("#selectuserPackages").addClass("show");
+});
+});
+jQuery(document).ready(function(){	
+$(".updatejuniorback").click(function(){
+$("#juniormemberDescp").removeClass("show");	
+$("#juniormemberDescp").addClass("hide");
+$("#selectuserPackages").removeClass("hide");
+$("#selectuserPackages").addClass("show");
+});
+});
+jQuery(document).ready(function(){	
+$(".updatejuniorprofileback").click(function(){
+$("#juniorprofiles").removeClass("show");	
+$("#juniorprofiles").addClass("hide");
+$("#juniormemberDescp").removeClass("hide");
+$("#juniormemberDescp").addClass("show");
+});
+});
+jQuery(document).ready(function(){	
+$(".cancelprofileimage").click(function(){
+$("#profileimageform").removeClass("show");	
+$("#profileimageform").addClass("hide");
+$("#profileform").removeClass("hide");
+$("#profileform").addClass("show");
+$(".nav li #thrstep").removeClass("active2");
+$(".nav li #secstep").addClass("active2");
+});
+});
+jQuery(document).ready(function(){	
+$(".nextpackages").click(function(){
+submit_userProfile();	
+});
+});
+jQuery(document).ready(function(){
+$("#first_name").keypress(function (e){
+var code =e.keyCode || e.which;
+if((code<65 || code>90)
+&&(code<97 || code>122)&&code!=32&&code!=46&&code!=8&&code!=9)  
+{
+return false;
+}
+});
+});
+jQuery(document).ready(function(){
+$("#last_name").keypress(function (e){
+var code =e.keyCode || e.which;
+if((code<65 || code>90)
+&&(code<97 || code>122)&&code!=32&&code!=46&&code!=8&&code!=9)  
+{
+return false;
+}
+});
+});
+jQuery(document).ready(function(){
+$("#city").keypress(function (e){
+var code =e.keyCode || e.which;
+if((code<65 || code>90)
+&&(code<97 || code>122)&&code!=32&&code!=46&&code!=8&&code!=9)  
+{
+return false;
+}
+});
+});
+var specialKeys = new Array();
+specialKeys.push(8); //Backspace
+specialKeys.push(9); //Tab
+specialKeys.push(46); //Delete
+specialKeys.push(36); //Home
+specialKeys.push(35); //End
+specialKeys.push(37); //Left
+specialKeys.push(39); //Right
+function IsAlphaNumeric(e) {
+var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
+var ret = ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
+return ret;
+}
+jQuery(document).ready(function(){
+$('#dob').mask('00/00/0000');
+var dates = $("#dob").datepicker({
+	buttonImage: '<?php echo site_url(); ?>/wp-content/themes/modernround/images/date.png',
+    buttonImageOnly: true,
+    changeYear: true,
+	dateFormat: 'mm/dd/yy',
+	yearRange: '1945:'+(new Date).getFullYear(),
+	showOn: 'button',
+	onSelect: function(selected,evnt) {
+         getAge(selected);
+    }
+});
+$('#cell_ph').mask('(000) 000-0000');
+$.validator.addMethod("dateFormat",
+    function(value, element) {
+        return value.match(/^(?:(0[1-9]|1[012])[\/.](0[1-9]|[12][0-9]|3[01])[\/.](19|20)[0-9]{2})$/);
+    },
+    "Please enter a date in the format mm/dd/yyyy.");
+$.validator.addMethod("phoneFormat",
+    function(value, element) {
+        return value.match(/^\(?[0-9]{3}(\-|\)) ?[0-9]{3}-[0-9]{4}$/);
+    },
+    "Please enter a phone in the format (xxx) xxx-xxxx.");
+});
+function isNumber(evt) {
+evt = (evt) ? evt : window.event;
+var charCode = (evt.which) ? evt.which : evt.keyCode;
+if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+return false;
+}
+return true;
+}
+function userprofile_validate(){
+$('#userprfileForm').validate({
+rules: {
+title: "required",
+first_name: {
+	required: true,
+	lettersonly: true
+},
+last_name: {
+	required: true,
+	lettersonly: true
+},
+gamer_tag: "required",
+email: {
+	required: true,
+	email: true
+},
+dob: {
+	required:true,
+	dateFormat: true
+},
+st_add_1: 'required',
+city: {
+	required: true,
+	lettersonly: true
+},
+state: 'required',
+zip: {
+	required: true,
+	number: true
+},
+cell_ph: {
+	required:true,
+	phoneFormat:true
+},
+pwd1: {
+      required: true,
+      minlength: 8
+    },
+retypepassword: {
+   equalTo: "#pwd1"
+}
+
+}, messages: {
+title:'Select title',	
+first_name:'First name is required',
+last_name: 'Last name is required' ,
+gamer_tag: "Nick name is required",
+email: 'Enter correct email address.',
+dob: 'Date of Birth is required (mm/dd/yyyy)' ,
+st_add_1: 'Address is required' ,
+city: 'City is required' ,
+state: 'State is required' ,
+zip: 'Zip is required' ,
+cell_ph: 'Phone number is required' ,
+pwd1: 'Password is required' ,
+retypepassword: 'Password does not match' 
+},
+submitHandler: function() {
+	//user_check();
+	check_usersubmitData();
+},
+success: function(label) {
+	label.remove();
+}
+});
+}
+function userGenerateNickName(){
+var action = 'usergenratenick';
+var first_name = $('#first_name').val();
+var last_name = $('#last_name').val();
+var last_name_hidden = $('#last_name_hidden').val();
+if(first_name != '' && last_name != '' && last_name != last_name_hidden){
+$.ajax({
+url: "<?php echo site_url(); ?>/wp-content/themes/modernround/process.php",
+data: {action:action,first_name:first_name,last_name:last_name},
+type: 'POST',
+beforeSend: function(){
+$("#mesgnickname").html("");	
+$("#loadingnickname").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+},
+success: function (result) {
+user_GenerateNickNameverifyinDb(result);
+document.getElementById('last_name_hidden').value = last_name;
+},
+error: function(){
+$("#loadingnickname").html('');
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+}else{}
+}
+function user_GenerateNickNameverifyinDb(gamer_tag){
+$.ajax({
+url: "<?php echo $user_gamertag_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {
+gamertag: gamer_tag
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+$("#loadingnickname").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+},
+success: function (result) {
+if(result.isavailable == false){
+		$("#mesgnickname").html("");
+		auto_generateNickName(gamer_tag);
+}else if(result.isavailable == true){
+		$("#loadingnickname").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/verified.png">');
+		$("#mesgnickname").html("<span style='color:#8bbd41'>Nickname is available for registration</span>");
+		document.getElementById('gamer_tag').value = gamer_tag;
+		document.getElementById('gamer_tag_hidden').value = gamer_tag;
+}
+},
+error: function(){
+$("#loadingnickname").html('');
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});	
+}
+function auto_generateNickName(gamValue){
+$("#loadingnickname").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+var getCharac = gamValue;
+var removeLastcharac = getCharac.substring(0, getCharac.length - 1);
+var getLastcharac = getCharac.slice(-1);
+var incrementLastcharac = parseInt(getLastcharac) + parseInt(1);
+var finalGamerTag = removeLastcharac + incrementLastcharac;
+user_GenerateNickNameverifyinDb(finalGamerTag);
+}
+function user_changeNickname(gamer_tag){
+var gamer_tag_hidden = $('#gamer_tag_hidden').val();	
+if(gamer_tag != gamer_tag_hidden && gamer_tag != ''){	
+$.ajax({
+url: "<?php echo $user_gamertag_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {
+gamertag: gamer_tag
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+$("#mesgnickname").html("");	
+$("#loadingnickname").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+},
+success: function (result) {
+if(result.isavailable == false){
+		$("#mesgnickname").html("");
+		auto_generateNickName(gamer_tag);
+}else if(result.isavailable == true){
+		$("#loadingnickname").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/verified.png">');
+		$("#mesgnickname").html("<span style='color:#8bbd41'>Nickname is available for registration</span>");
+		document.getElementById('gamer_tag').value = gamer_tag;
+		document.getElementById('gamer_tag_hidden').value = gamer_tag;
+}
+},
+error: function(){
+$("#mesgnickname").html("");
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});	
+}if(gamer_tag == ''){
+	document.getElementById('gamer_tag_hidden').value = '';
+	$("#haswarning").html("");
+	$("#loadingnickname").html('');
+	$("#mesgnickname").html('');
+}
+}
+function user_emailVerified(useremail){
+var checkValidemail = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+if(checkValidemail.test(useremail)){	
+var email = useremail;
+$.ajax({
+url: "<?php echo $user_verify_email; ?>",
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {
+emailaddress: email
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+$("#loadingemail").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/loaddata.gif">');
+},
+success: function (result) {
+	if(result.isavailable == false){
+	$("#loadingemail").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/cross.png">');
+	$("#mesgemail").html("Email address already in use");
+	}else{
+	$("#loadingemail").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/verified.png">');
+	$("#mesgemail").html("<span style='color:#8bbd41'>Email address is available for registration</span>");	
+	}
+},
+error: function(){}
+});	
+}else{
+	$("#loadingemail").html('');
+	$("#mesgemail").html("");
+}
+}
+function getAge(dateString) 
+{
+    var x=new Date(dateString);
+    var Cnow=new Date();//current Date
+    if(Cnow.getFullYear()- x.getFullYear()<18){
+      $("#mesgdate").html("You must be at least 18 years of age");
+    }else{
+      $("#mesgdate").html('');
+    }	
+}
+function checkUser_date(userDate) 
+{
+    var x=new Date(userDate);
+    var Cnow=new Date();//current Date
+    if(Cnow.getFullYear()- x.getFullYear()<18){
+	  hide_load();	
+      $("#mesgdate").html("You must be at least 18 years of age");
+    }else{
+	  hide_load();	
+	  $('#secstep').attr('onclick', 'secondstep();');
+	  $("#secstep").css("cursor", "pointer");
+	  $("#profileform").removeClass("show");	
+	  $("#profileform").addClass("hide");
+	  $(".nav li #secstep").removeClass("active2");
+	  $(".nav li #thrstep").addClass("active2");
+	  $("#profileimageform").removeClass("hide");	
+	  $("#profileimageform").addClass("show");
+    }	
+}
+function check_usersubmitData()
+{
+var email = $('#email').val();
+var dob = $('#dob').val();
+$.ajax({
+url: "<?php echo $user_verify_email; ?>",
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {
+emailaddress: email
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+	if(result.isavailable == false){
+	$("#loadingemail").html('<img src="<?php echo site_url(); ?>/wp-content/themes/modernround/images/cross.png">');
+	$("#mesgemail").html("Email address already in use");
+	hide_load();
+	}else{
+	checkUser_date(dob);	
+	}
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});	
+}
+function submit_userProfile()
+{
+$.ajax({
+url: "<?php echo $membership_details_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {
+apicode : "<?php echo $apicode; ?>"
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+hide_load();
+var membertypes_name = new Array();
+var pck_annual_rate = new Array();
+$.each(result, function(i, item) {
+	membertypes_name[i] = item.membershiptype;
+	pck_annual_rate[i] = item.annularate;
+});
+$('#firstpckname').html(membertypes_name[0]);
+$('#firstpckprice').html('$'+pck_annual_rate[0]);
+$('#firstpckbuton').html('<input type="button" value="Select" id="'+membertypes_name[0]+'" class="right membershiptype pricebtn" pakgename="annual" rel="'+pck_annual_rate[0]+'">');
+$('#firstpckbutonbotom').html('<input type="button" value="Select" id="'+membertypes_name[0]+'" class="right membershiptype pricebtn" pakgename="annual" rel="'+pck_annual_rate[0]+'">');
+$('#secondpckname').html(membertypes_name[1]);
+$('#secondpckprice').html('$'+pck_annual_rate[1]);
+$('#secondpckbuton').html('<input type="button" value="Select" id="'+membertypes_name[1]+'" class="right membershiptype pricebtn" pakgename="annual" rel="'+pck_annual_rate[1]+'">');
+$('#secondpckbutonbotom').html('<input type="button" value="Select" id="'+membertypes_name[1]+'" class="right membershiptype pricebtn" pakgename="annual" rel="'+pck_annual_rate[1]+'">');
+$('#thirdpckname').html(membertypes_name[2]);
+$('#thirdpckprice').html('$'+pck_annual_rate[2]);	
+$('#thirdpckbuton').html('<input type="button" value="Select" id="'+membertypes_name[2]+'" class="right membershiptype pricebtn" pakgename="annual" rel="'+pck_annual_rate[2]+'">');
+$('#thirdpckbutonbotom').html('<input type="button" value="Select" id="'+membertypes_name[2]+'" class="right membershiptype pricebtn" pakgename="annual" rel="'+pck_annual_rate[2]+'">');
+$( ".membershiptype" ).click(function() {
+var contentPanelId = $(this).attr("id");
+var membership_amnt = $(this).attr("rel");
+var checksubscription = $(this).attr("pakgename");
+document.getElementById('membershipamnt').value = membership_amnt;
+document.getElementById('membershiptype').value = contentPanelId;
+membership_details(checksubscription);
+//window.scrollTo(0, 100);
+$('#fortep').attr('onclick', 'fourthstep();');
+$("#fortep").css("cursor", "pointer");
+});
+$("#profileimageform").removeClass("show");	
+$("#profileimageform").addClass("hide");
+$("#selectuserPackages").removeClass("hide");
+$("#selectuserPackages").addClass("show");
+$(".nav li #thrstep").removeClass("active2");
+$(".nav li #fortep").addClass("active2");
+$('#thrstep').attr('onclick', 'thirdstep();');
+$("#thrstep").css("cursor", "pointer");
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+}
+function membership_details(subscrip){
+var site_id = $('#site_locations').val();
+var title = $('#title').val();
+var first_name = $('#first_name').val();
+var last_name = $('#last_name').val();
+var gamer_tag = $('#gamer_tag').val();
+var email = $('#email').val();
+var dob = $('#dob').val();
+var st_add_1 = $('#st_add_1').val();
+var st_add_2 = $('#st_add_2').val();
+var city = $('#city').val();
+var state = $('#state').val();
+var zip = $('#zip').val();
+var cell_ph = $('#cell_ph').val();
+var pwd1 = $('#pwd1').val();
+var membership_type = subscrip;
+var byemail = '';
+var bytext = '';
+if($("#by_email").is(':checked')){
+	byemail = 'true';
+}else{
+	byemail = 'false';
+}
+if($("#by_text").is(':checked')){
+	bytext = 'true';
+}else{
+	bytext = 'false';
+}
+$.ajax({
+url: "<?php echo $register_member_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {
+siteid: site_id,
+title: title,
+firstname: first_name,
+lastname: last_name,
+gamertag: gamer_tag,
+emailaddress: email,
+dateofbirth: dob,
+streetaddress1: st_add_1,
+streetaddress2: st_add_2,
+city: city,
+state: state,
+zipCode: zip,
+cell: cell_ph,
+password: pwd1,
+optIn_email_marketing: byemail,
+optIn_sms_marketing: bytext,
+membershiptype: membership_type
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+hide_load();
+$('#token').val(result.token);
+updateUserImage();
+junior_membership();
+$("#haswarning").html("");
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});	
+}
+function junior_membership(){
+var token = $('#token').val();
+var membershiptype = $('#membershiptype').val();
+$.ajax({
+url: "<?php echo $membership_selection_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>",token : token},
+data: {membershiptype : membershiptype},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+hide_load();
+var junior_div = "<p>"+result.jrbenefits+"</p>";
+$("#jr_membership_type_div").html(junior_div);
+$("#selectuserPackages").removeClass("show");	
+$("#selectuserPackages").addClass("hide");
+$("#juniormemberDescp").removeClass("hide");
+$("#juniormemberDescp").addClass("show");
+$(".nav li #fortep").removeClass("active2");
+$(".nav li #fivstep").addClass("active2");
+$("#haswarning").html("");
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});	
+}
+function juniorFormfield(){
+var action = 'juniorfield';
+var jnuniornumber = $('#jnuniornumber').val();
+$.ajax({
+url: "<?php echo site_url(); ?>/wp-content/themes/modernround/process.php",
+data: {action:action,jnuniornumber:jnuniornumber},
+type: 'POST',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+hide_load();
+$("#showjuniorfields").html(result);
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+}
+function myTrim(x) {
+    return x.replace(/^\s+|\s+$/gm,'');
+}
+function juniorformFieldValidat(){	
+var date_regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/ ;	
+var juniorfirst_name = document.getElementsByName('juniorfirst_name[]');
+var juniorlast_name = document.getElementsByName('juniorlast_name[]');
+var juniorgamer_tag = document.getElementsByName('juniorgamer_tag[]');
+var juniordob = document.getElementsByName('juniordob[]');
+var Cnow=new Date();//current Date
+for (i=0; i<juniorfirst_name.length; i++)
+{
+var x=new Date(juniordob[i].value);
+if (myTrim(juniorfirst_name[i].value) == "")
+{
+$("#juniorfirst_name"+i).html("First name is required");
+var fname_error_field = 1;
+}
+if (myTrim(juniorlast_name[i].value) == "")
+{
+$("#juniorlast_name"+i).html("Last name is required");
+var lname_error_field = 1;
+}
+if (myTrim(juniorgamer_tag[i].value) == "")
+{
+$("#juniorgamer_tag"+i).html("Nick name is required");
+var gmtages_error_field = 1;
+}
+if (juniordob[i].value == "" || !(date_regex.test(juniordob[i].value)))
+{
+$("#juniordob"+i).html("Date of Birth is required");
+var jundob_error_field = 1;
+}
+if(Cnow.getFullYear()- x.getFullYear()>18)
+{
+$("#juniordob"+i).html("Must be under 18 to register as a Junior Member");
+var jundobage_error_field = 1;
+}
+}
+if(fname_error_field == 1){
+	return false;
+}else if(lname_error_field == 1){
+	return false;
+}else if(gmtages_error_field == 1){
+	return false;
+}else if(jundob_error_field == 1){
+	return false;
+}else if(jundobage_error_field == 1){
+	return false;
+}else{
+	for (i=0; i<juniorfirst_name.length; i++)
+	{
+		$("#juniorfirst_name"+i).html("");
+		$("#juniorlast_name"+i).html("");
+		$("#juniordob"+i).html("");
+	}
+	juniorgistration();
+	return true;
+}
+}
+function juniorgistration(){
+var juniorfirst_name = Array;
+var juniorlast_name = Array;
+var juniorgamer_tag = Array;
+var juniordob = Array;
+var token = $('#token').val();
+var jnuniornumber = $('#jnuniornumber').val();
+var ageaggree = $('#ageaggree:checked').val();
+juniortitle = document.getElementsByName('juniortitle[]');
+juniorfirst_name = document.getElementsByName('juniorfirst_name[]');
+juniorlast_name = document.getElementsByName('juniorlast_name[]');
+juniorgamer_tag = document.getElementsByName('juniorgamer_tag[]');
+juniordob = document.getElementsByName('juniordob[]');
+var isfirst = '';
+for (var i = 0, len = juniorfirst_name.length; i < len; i++) {
+if(i == 0){
+	isfirst = 'true';
+}else{
+	isfirst = 'false';
+}
+$.ajax({
+url: "<?php echo $junior_membership_selection_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>",token : token},
+data: {
+isfirst:isfirst,	
+firstname: juniorfirst_name[i].value,
+lastname: juniorlast_name[i].value,
+gamertag: juniorgamer_tag[i].value,
+dateofbirth: juniordob[i].value,
+authorize:ageaggree
+},
+type: 'POST',
+async:false,
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+hide_load();
+$("#haswarning").html("");
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+$(this).delay(5000 * i);
+}
+$("#juniorprofiles").removeClass("show");	
+$("#juniorprofiles").addClass("hide");
+$("#termscondit").removeClass("hide");	
+$("#termscondit").addClass("show");
+$("#juniorselect").addClass("hide");
+$("#morejunior").removeClass("hide");	
+$("#morejunior").addClass("show");
+$(".nav li #sxstep").removeClass("active2");
+$(".nav li #svntep").addClass("active2");
+$('#sxstep').attr('onclick', 'sixstep();');
+$("#sxstep").css("cursor", "pointer");
+//addjuniorSixStep();
+//getAlljunior();
+}
+function user_getInformation(){
+var token = $('#token').val();
+$.ajax({
+url: "<?php echo $user_information_show; ?>",
+headers: {apicode: "<?php echo $apicode; ?>",token : token},
+data: {},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+hide_load();
+var junior_div = '';
+if(Object.keys(result.junior).length > 0){
+junior_div = '<div class="subheading"><h1 class="panel-title">Junior Member Information</h1></div>';
+}else{
+junior_div = '';	
+}
+$.each(result.junior, function(i, item) {junior_div += '<div class="form-group"><label class="col-sm-4 col-md-4 control-label">First Name</label><div class="col-sm-7 col-md-7"><label class="control-label">'+item.firstname+'</label></div></div><div class="form-group"><label class="col-sm-4 col-md-4 control-label">Last Name</label><div class="col-sm-7 col-md-7"><label class="control-label">'+item.lastname+'</label></div></div><div class="form-group"><label class="col-sm-4 col-md-4 control-label">Nickname</label><div class="col-sm-7 col-md-7"><label class="control-label">'+item.gamertag+'</label></div></div><div class="form-group"><label class="col-sm-4 col-md-4 control-label">Date of Birth</label><div class="col-sm-7 col-md-7"><label class="control-label">'+item.dob+'</label></div></div>';});
+$("#showuserdetails").html('<div class="subheading"><h1 class="panel-title">Personal Information</h1></div><div class="form-group"><label class="col-sm-4 col-md-4 control-label">Member Name</label><div class="col-sm-7 col-md-7"><label class="control-label">'+result.membername+'</label></div></div><div class="form-group"><label class="col-sm-4 col-md-4 control-label">Nickname</label><div class="col-sm-7 col-md-7"><label class="control-label">'+result.gamertag+'</label></div></div><div class="form-group"><label class="col-sm-4 col-md-4 control-label">Email</label><div class="col-sm-7 col-md-7"><label class="control-label">'+result.emailaddress+'</label></div></div><div class="form-group"><label class="col-sm-4 col-md-4 control-label">Membership Level</label><div class="col-sm-7 col-md-7"><label class="control-label">'+result.membershipname+'</label></div></div><div class="form-group"><label class="col-sm-4 col-md-4 control-label">Date of Birth</label><div class="col-sm-7 col-md-7"><label class="control-label">'+result.dateofbirth+'</label></div></div><div class="form-group"><label class="col-sm-4 col-md-4 control-label">Street Address 1</label><div class="col-sm-7 col-md-7"><label class="control-label">'+result.streetaddress1+'</label></div></div><div class="form-group"><label class="col-sm-4 col-md-4 control-label">Street Address 2</label><div class="col-sm-7 col-md-7"><label class="control-label">'+result.streetaddress2+'</label></div></div><div class="form-group"><label class="col-sm-4 col-md-4 control-label">City</label><div class="col-sm-7 col-md-7"><label class="control-label">'+result.city+'</label></div></div><div class="form-group"><label class="col-sm-4 col-md-4 control-label">State</label><div class="col-sm-7 col-md-7"><label class="control-label">'+result.state+'</label></div></div><div class="form-group"><label class="col-sm-4 col-md-4 control-label">Zip Code</label><div class="col-sm-7 col-md-7"><label class="control-label">'+result.zipcode+'</label></div></div><div class="form-group"><label class="col-sm-4 col-md-4 control-label">Cell Phone</label><div class="col-sm-7 col-md-7"><label class="control-label">'+result.cellphone+'</label></div></div>'+junior_div+'<input type="hidden" name="counjuniortotal" id="counjuniortotal" value="'+result.junior.length+'" />');
+$('#svntep').attr('onclick', 'sevenstep();');
+$("#svntep").css("cursor", "pointer");
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});	
+}
+function user_finalpurchas(){
+var token = $('#token').val();
+$.ajax({
+url: "<?php echo $user_finalpurchase; ?>",
+headers: {apicode: "<?php echo $apicode; ?>",token : token},
+data: {
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+if(result.issuccess == true){
+hide_load();
+var totjuniorcount = document.getElementById('totaljunioradd').value;
+$("#totalamountshow").html("$"+result.totalamount);
+$("#membershipshow").html("1 "+result.membership+" Membership and "+totjuniorcount+" Junior Memberships");
+$("#haswarning").html("");
+$("#revireprofile").removeClass("show");	
+$("#revireprofile").addClass("hide");
+$("#congrates").removeClass("hide");
+$("#congrates").addClass("show");
+removeAllSteps();
+}else if(result.issuccess == false){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});	
+}
+function user_redirectDashboard(){
+show_load();
+var action = 'login';
+var email = jQuery('#email').val();
+var password = jQuery('#pwd1').val();
+var remember = '1';
+var formid = 'login';
+jQuery.ajax({
+url : '<?php echo $user_login_url; ?>',
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {action:action,login:email,pwd:password,remember:remember},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+success : function(result) {
+if(result.issuccess == true){
+user_loginsession(result.token,result.firstname,result.lastname);
+hide_load();
+}else if(result.issuccess == false){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}else{}		
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+}
+function user_loginsession(token,fname,lname,emaild,passd,rememb){
+show_load();
+var action = 'loginsession';
+jQuery.ajax({
+url : '<?php echo site_url(); ?>/wp-content/themes/modernround/process.php',
+data: {action:action,token:token,fname:fname,lname:lname,emaild:emaild,passd:passd,rememb:rememb},
+type: 'POST',
+success : function(data) {
+if(data == 'loginsucess'){
+hide_load();
+window.location.href = '<?php echo site_url(); ?>/?page_id=170';
+}else{}		
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+}
+function user_login(){
+show_load();
+var action = jQuery('#login #action').val();
+var email = jQuery('#login #email').val();
+var password = jQuery('#login #password').val();
+var remember = jQuery('#login #remember:checked').val();
+if(remember == '1'){
+remember = 'Yes';
+} else {
+remember = 'No';
+}
+var formid = document.getElementById('login');
+
+jQuery.ajax({
+url : '<?php echo $user_login_url; ?>',
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {action:action,login:email,pwd:password,remember:remember},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+success : function(result) {
+if(result.issuccess == true){
+document.getElementById('haserror').innerHTML='';
+user_loginsession(result.token,result.firstname,result.lastname,email,password,remember);
+}else if(result.issuccess == false){
+document.getElementById('haserror').innerHTML='<p>Error : User name and Password does not match.Please enter valid email/password</p>';	
+hide_load();
+}else{}		
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+}
+function user_forgot(){
+show_load();
+var action = jQuery('#forgotpassword #action').val();
+var email = jQuery('#forgotpassword #email').val();
+var formid = document.getElementById('forgotpassword');
+jQuery.ajax({
+url : '<?php echo $user_forgot_url; ?>',
+headers: {apicode: "<?php echo $apicode; ?>"},
+data: {action:action,emailaddress:email},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+success : function(result) {
+show_load();	
+if(result.issuccess == true){
+hide_load();	
+document.getElementById('emailerror').innerHTML='';
+document.getElementById('hassuccess').innerHTML='<p>A link to reset your password has been sent to the email address above.</p>';
+}else if(result.issuccess == false){
+hide_load();	
+document.getElementById('hassuccess').innerHTML='';
+document.getElementById('emailerror').innerHTML='<p>please enter correct email address</p>';	
+}else{}		
+},
+error: function(){
+hide_load();
+document.getElementById('hassuccess').innerHTML='';
+document.getElementById('emailerror').innerHTML='<p>please enter correct email address</p>';	
+}
+});
+}
+function getAlljuniorupdate(){
+var token = '<?php echo $_SESSION['token']; ?>';	
+$.ajax({
+url: "<?php echo $user_getalljuniors_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>",token:token},
+data: {
+apicode: "<?php echo $apicode; ?>"
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+var junior_div = '';
+var i = 0;
+if(Object.keys(result.junior).length > 0){
+$.each(result.junior, function(i, item) {	
+var date = item.dob;
+var mm = date.slice(0,-7);
+var mm2 = date.slice(0,-8);
+var dd = date.slice(2,-5);
+var dd2 = date.slice(3,-5);
+var yy = date.substr(date.length - 4);
+var admm = '';
+var addd = '';
+if(mm >= 10 ){
+	admm = mm;
+}else if(mm < 10){
+	admm = '0'+mm;
+}else if(mm2 >= 10){
+	admm = mm2;
+}else if(mm2 < 10){
+	admm = '0'+mm2;
+}
+if(dd >= 10){
+	addd = dd;
+}else if(dd < 10){
+	addd = '0'+dd;
+}else if(dd2 >= 10){
+	addd = dd2;
+}else if(dd2 < 10){
+	addd = '0'+dd2;
+}
+var showdate = admm+'/'+addd+'/'+yy;	
+junior_div += '<div class="jnios"><a id="'+i+'" href="#" class="remove_field">Delete Junior</a><div class="form-group"><label class="col-md-4 control-label">First Name:<span style="color:#F00;">*</span></label><div class="col-md-7"><input name="juniorfirst_name[]" id="juniorfirstname'+i+'" class="form-control" type="text"  value="'+item.firstname+'"><label id="juniorfirst_name'+i+'" class="haserror"></label></div></div><div class="form-group"><label class="col-md-4 control-label">Last Name:<span style="color:#F00;">*</span></label><div class="col-md-7"><input name="juniorlast_name[]" id="juniorlastname'+i+'" class="form-control" type="text" value="'+item.lastname+'"><input name="juniorlast_name_hidden[]" id="juniorlast_name_hidden'+i+'" class="form-control" type="hidden"><label id="juniorlast_name'+i+'" class="haserror"></label></div></div><div class="form-group"><label class="col-md-4 control-label">Nickname:<span style="color:#F00;">*</span></label><div class="col-md-7"><input name="juniorgamer_tag[]" id="junigamtag'+i+'" class="form-control" type="text" value="'+item.gamertag+'"  readonly="readonly"><input name="juniorgamer_tag_hidden[]" id="juniorgamer_tag_hidden'+i+'" class="form-control cb" type="hidden"  value="'+item.gamertag+'"><div id="loadingjuniornickname'+i+'"></div><label id="juniorgamer_tag'+i+'" class="haserror"></label></div></div><div class="form-group"><label class="col-md-4 control-label">Date of Birth:<span style="color:#F00;">*</span></label><div class="col-md-7"><input type="text" class="form-control" name="juniordob[]" id="juniordbth'+i+'" value="'+showdate+'" /><label id="juniordob'+i+'" class="haserror"></label></div></div></div>';
+i++;
+});
+$("#showjuniorfields").html(junior_div);
+updated_Deletjunior();
+countmorjuniorOne = result.junior.length;
+document.getElementById('totaljunioradd').value = countmorjuniorOne;
+}else{
+junior_div = '<div id="juniorselect" class="form-group"><label class="col-md-4 control-label">Number of Junior Members</label><div class="col-md-7"><div class="happySelectContainer"><div class="arrow"></div><select name="jnuniornumber" id="jnuniornumber" onchange="juniorFormfield();"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div></div></div>';	
+$("#showjuniorfields").html(junior_div);
+}
+$("#juniormemberDescp").removeClass("show");	
+$("#juniormemberDescp").addClass("hide");
+$("#juniorprofiles").removeClass("hide");
+$("#juniorprofiles").addClass("show");
+hide_load();
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});	
+}
+function updated_Deletjunior(){
+$(document).ready(function() {
+$(".input_fields_wrap").on("click",".remove_field", function(e){
+var gtnum = $(this).attr('id');
+var shovalu = $('#junigamtag'+gtnum).val();
+if(shovalu != ''){
+updatedelete_junior(shovalu);	  
+e.preventDefault(); $(this).parent('div').remove();
+document.getElementById('totaljunioradd').value = parseInt(document.getElementById('totaljunioradd').value)-parseInt(1);
+}else{
+e.preventDefault(); $(this).parent('div').remove();
+document.getElementById('totaljunioradd').value = parseInt(document.getElementById('totaljunioradd').value)-parseInt(1);  
+}
+});
+});
+}
+function updatedelete_junior(gamer_tag_junior){	
+var token = $('#token').val();
+$.ajax({
+url: "<?php echo $junior_membership_delete; ?>",
+headers: {apicode: "<?php echo $apicode; ?>",token:token},
+data: {
+gamertag: gamer_tag_junior
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+hide_load();	
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+}
+function update_junior_membership(){
+var token = $('#token').val();
+var membershiptype = $('#membershiptype').val();
+$.ajax({
+url: "<?php echo $membership_selection_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>",token : token},
+data: {membershiptype : membershiptype},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+if(result.issuccess == true){
+	document.getElementById('haserror').innerHTML = '';	
+	document.getElementById('hassuccess').innerHTML = '<p>Membership Update: Your membership has been changed successfully.</p>';
+	window.location.href = '<?php echo site_url(); ?>/?page_id=192';
+	hide_load();	
+	}else if(result.issuccess == false){
+	document.getElementById('hassuccess').innerHTML = '';	
+	document.getElementById('haserror').innerHTML = '<p>Sorry your membership is not updated.</p>';
+	hide_load();		
+	}
+/*var junior_div = "<p>"+result.jrbenefits+"</p>";
+$("#jr_membership_type_div").html(junior_div);
+$("#selectuserPackages").removeClass("show");	
+$("#selectuserPackages").addClass("hide");
+$("#juniormemberDescp").removeClass("hide");
+$("#juniormemberDescp").addClass("show");
+$("#haswarning").html("");*/
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});	
+}
+function showjuniorDescription(){
+var token = $('#token').val();	
+$.ajax({
+url: "<?php echo $junior_description_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>",token:token},
+data: {
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+	var junior_div = "<p>"+result.jrbenefits+"</p>";
+	$("#jr_membership_type_div").html(junior_div);
+	$("#selectuserPackages").removeClass("show");	
+	$("#selectuserPackages").addClass("hide");
+	$("#juniormemberDescp").removeClass("hide");
+	$("#juniormemberDescp").addClass("show");
+	$("#haswarning").html("");
+	hide_load();
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});	
+}
+function setDefaultImage(){
+var action = $('#action').val();
+var default1 = $('#default1:checked').val();
+$.ajax({
+url: "<?php echo site_url(); ?>/wp-content/themes/modernround/process.php",
+data: {action:action,default1:default1},
+type: 'POST',
+beforeSend: function(){
+show_load();	
+},
+success: function (result) {
+$("#showimg").html(result);	
+hide_load();	
+},
+error: function(){
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+hide_load();
+}
+});
+}
+function updateUserImage(){
+var token = $('#token').val();
+var imgurl = $('#imgurl').val();
+$.ajax({
+url: "<?php echo $user_image_url; ?>",
+headers: {apicode: "<?php echo $apicode; ?>",token:token},
+data: {
+imageurl: imgurl
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+hide_load();	
+},
+error: function(){
+hide_load();
+$("#haswarning").html("<p><?php echo $error_msg; ?></p>");
+}
+});
+}
+</script>

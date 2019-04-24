@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <?php require_once("head.inc.php"); ?>
+</head>
+<body class="header" style="overflow-x:hidden; overflow-y:hidden;">
+<!--header-->
+<div class="header2">
+    <div class="header-top">
+        <div class="social-icons">
+
+            <img src="<?php echo base_url(); ?>images/logo.png" alt="">
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="banner-center">
+        <div class="container">
+            <div class="logo">
+                <h1><img src="<?php echo base_url(); ?>images/lo.png" alt=""></h1>
+            </div>
+
+        </div>
+    </div>
+    <!--services-->
+    <div class="content">
+        <div class="service">
+            <div class="container">
+                <h2></h2>
+                <div class="service-grids">
+                    <div class="col-md-3 service-grid bg">
+                        <h4><span class="glyphicon" aria-hidden="true"></span><a href="checkinmember/">Check-In Member</a></h4>
+                        <span class="img-icon"><img src="<?php echo base_url(); ?>images/right-icon.png" class="img-responsive" alt="music theme"></span>
+                        <p><img src="<?php echo base_url(); ?>images/icon.png" class="img-responsive img" alt="music theme"></p>
+
+                    </div>
+                    <!--<div class="col-md-3 service-grid bg ">
+                        <h4><span class="glyphicon" aria-hidden="true"></span><a href="http://aws.modernround.com/responsive/join/">Member Registration</a></h4>
+                        <span class="img-icon"><img src="<?php echo base_url(); ?>images/left-icon.png" class="img-responsive" alt="music theme"></span>
+                        <p><img src="<?php echo base_url(); ?>images/icon.png" class="img-responsive img" alt="music theme"> </p>
+                    </div>-->
+                    <div class="col-md-3 service-grid bg">
+                        <h4><span class="glyphicon" aria-hidden="true"></span><a href="shooting_lounge/">Wait List & Shooting Lounges</a></h4>
+                        <span class="img-icon"><img src="<?php echo base_url(); ?>images/left-icon.png" class="img-responsive" alt="music theme"></span>
+                        <p><img src="<?php echo base_url(); ?>images/icon.png" class="img-responsive img" alt="music theme"></p>
+                    </div>
+                    <div class="col-md-3 service-grid bg fullwidth">
+                        <h4><span class="glyphicon" aria-hidden="true"></span>Admin</h4>
+                        <span class="img-icon"><img src="<?php echo base_url(); ?>images/right-icon.png" class="img-responsive" alt="music theme"></span>
+                        <p><img src="<?php echo base_url(); ?>images/icon.png" class="img-responsive img" alt="music theme"></p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+        </div>
+        <!--services-->
+    </div>
+
+</div>
+<!--header-->
+
+</body>
+</html>

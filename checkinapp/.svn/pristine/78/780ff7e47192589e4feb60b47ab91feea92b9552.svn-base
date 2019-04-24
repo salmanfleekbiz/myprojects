@@ -1,0 +1,31 @@
+/*
+
+Theme Name: Modern Round
+
+Description: A business, portfolio and blog theme.
+
+Author: Noma Tech
+
+Theme URI: http://www.nomatech.com
+
+Author URI: http://www.nomatech.com
+
+Version: 1.2
+
+License: GNU General Public License
+
+License URI: license.txt
+
+*/
+
+
+
+@import url("stylesheets/bootstrap.min.css");
+
+@import url("stylesheets/responsive.css");
+
+/*@import url("stylesheets/animate.min.css");*/
+
+@import url("stylesheets/custom.css");
+
+@import url("stylesheets/pricingtable.css");

@@ -1,0 +1,92 @@
+<?php
+global $apicode;
+$apicode = "C5D39F3A-5601-41B2-B107-0B70BFCEA713";
+
+global $error_msg;
+$error_msg = "Warning: Not able to connect to Server refresh your page and try again";
+
+global $server_url;
+$server_url = "http://54.149.64.10:8084";
+$server_url_dashboard = "http://54.149.64.10:8085";
+
+//get Registration Process urls
+
+global $site_locations_url;
+$site_locations_url = $server_url . "/api/v1/sitelocations";
+
+global $site_details_url;
+$site_details_url = $server_url . "/api/v1/sitedetails";
+
+global $user_gamertag_url;
+$user_gamertag_url = $server_url . "/api/v1/VerifyGamerTag";
+
+global $user_verify_email;
+$user_verify_email = $server_url . "/api/v1/VerifyEmail";
+
+global $membership_details_url;
+$membership_details_url = $server_url . "/api/v1/membershipdetails";
+
+global $register_member_url;
+$register_member_url = $server_url . "/api/v1/registermember";
+
+global $membership_selection_url;
+$membership_selection_url = $server_url . "/api/v1/membershipselection";
+
+global $junior_membership_selection_url;
+$junior_membership_selection_url = $server_url . "/api/v1/jrmembershipselection";
+
+global $junior_membership_delete;
+$junior_membership_delete = $server_url . "/api/v1/JrMemberDeactive";
+
+global $user_information_show;
+$user_information_show = $server_url . "/api/v1/PersonalInformation";
+
+global $user_finalpurchase;
+$user_finalpurchase = $server_url . "/api/v1/activatemember";
+
+global $user_login_url;
+$user_login_url = $server_url . "/api/v1/userlogin";
+
+global $user_forgot_url;
+$user_forgot_url = $server_url . "/api/v1/ForgotPassword";
+
+global $user_verifypassword_url;
+$user_verifypassword_url = $server_url . "/api/v1/VerifyResetPasswordKey";
+
+global $user_resetpassword_url;
+$user_resetpassword_url = $server_url . "/api/v1/PasswordReset";
+
+global $user_image_url;
+$user_image_url = $server_url . "/api/v1/UpdateProfileImage";
+
+global $member_support_url;
+$member_support_url = $server_url_dashboard . "/api/v1/supportemail";
+
+global $memberinformation_url;
+$memberinformation_url = $server_url_dashboard . "/api/v1/memberinformation";
+
+global $member_personalinformation_url;
+$member_personalinformation_url = $server_url_dashboard . "/api/v1/personalinformation";
+
+global $member_updatepersonalinformation_url;
+$member_updatepersonalinformation_url = $server_url_dashboard . "/api/v1/updatepersonalinformation";
+
+global $member_resetpasswordwithold_url;
+$member_resetpasswordwithold_url = $server_url_dashboard . "/api/v1/resetpasswordwithold";
+
+global $member_getlocation_url;
+$member_getlocation_url = $server_url_dashboard . "/api/v1/memberlocation";
+
+global $member_updatelocation_url;
+$member_updatelocation_url = $server_url_dashboard . "/api/v1/updatememberlocation";
+
+global $user_getalljuniors_url;
+$user_getalljuniors_url = $server_url . "/api/v1/GetAlljuniors";
+
+global $member_updatepurchase_url;
+$member_updatepurchase_url = $server_url_dashboard . "/api/v1/purchasemembership";
+
+global $junior_description_url;
+$junior_description_url = $server_url_dashboard . "/api/v1/JuniorInfo";
+
+?>

@@ -1,0 +1,10 @@
+Install Laravel
+----------------------
+
+composer create-project --prefer-dist laravel/laravel blog
+
+
+Create Controller Command
+------------------------------------
+
+php artisan make:controller PhotoController --resource

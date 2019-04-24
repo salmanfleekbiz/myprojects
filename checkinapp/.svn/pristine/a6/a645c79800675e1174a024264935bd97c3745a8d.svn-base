@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <?php require_once("head.inc.php"); ?>
+</head>
+<body class="header" style="overflow-x:hidden; overflow-y:hidden;">
+<!--header-->
+<div class="header2">
+    <div class="header-top">
+        <div class="social-icons">
+
+            <img src="<?php echo base_url(); ?>images/logo.png" alt="">
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="banner-center">
+        <div class="container">
+            <div class="logo">
+                <h1><img src="<?php echo base_url(); ?>images/lo.png" alt=""></h1>
+            </div>
+
+        </div>
+    </div>
+    <!--services-->
+    <div class="content">
+        <div class="service">
+            <div class="container">
+                <h2>Login</h2>
+                <div class="service-grids">
+                <div id="loginerror"></div>
+                <form name="loginForm" id="loginForm" action="" method="post">
+                <input type="hidden" name="action" id="action" value="loogin">
+                	<table>
+                    <tr>
+                    <td>User Name</td>
+                    <td><input type="text" name="username" id="username"></td>
+                    </tr>
+                    <tr>
+                    <td>User Password</td>
+                    <td><input type="password" name="userpassword" id="userpassword"></td>
+                    </tr>
+                    <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="submit" name="submit" id="submit" value="Login"></td>
+                    </tr>
+                    </table>
+                 </form>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+        </div>
+        <!--services-->
+    </div>
+
+</div>
+<!--header-->
+<script type="text/javascript">
+$("#loginForm").validate({
+rules: {
+	username: "required",
+	userpassword: "required"
+},
+messages: {
+	username: "Enter user name",
+	userpassword: "Enter your password"
+},
+submitHandler: function() {
+user_login();
+},
+success: function(label) {
+	label.remove();
+}
+});
+</script>
+</body>
+</html>

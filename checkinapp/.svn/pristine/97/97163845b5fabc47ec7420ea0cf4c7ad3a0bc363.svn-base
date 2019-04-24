@@ -1,0 +1,54 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Checkinmember extends CI_Controller {
+
+	/**
+	 * Index Page for this controller.
+	 *
+	 * Maps to the following URL
+	 * 		http://example.com/index.php/welcome
+	 *	- or -  
+	 * 		http://example.com/index.php/welcome/index
+	 *	- or -
+	 * Since this controller is set as the default controller in 
+	 * config/routes.php, it's displayed at http://example.com/
+	 *
+	 * So any other public methods not prefixed with an underscore will
+	 * map to /index.php/welcome/<method_name>
+	 * @see http://codeigniter.com/user_guide/general/urls.html
+	 */
+	public function __construct() {
+		parent::__construct();
+	}
+	 
+	public function index()
+	{
+		if($this->user_lib->is_logged_waqas()){
+			//$access = $this->session->userdata('permisioncheckin');
+			$access = $_COOKIE['checkinpage'];
+			if($access == 'checkinmember'){
+				$this->load->view('v_checkin_member');
+			}else{
+				redirect('main');
+			}
+		}else{
+
+            $controller_redirect_name = $this->uri->segment(1);
+            $redirect_session_data = array(
+                'redirect'  => $controller_redirect_name
+            );
+            $this->session->set_userdata($redirect_session_data);
+
+			$this->load->view('login');
+		}
+	}
+	
+	public function abc()
+	{
+		$this->load->view('welcome_message');
+	}
+	
+	public function process(){
+		$this->load->view('process');
+	}
+}

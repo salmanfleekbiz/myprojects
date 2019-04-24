@@ -1,0 +1,66 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+include_once("passwords.inc.php");
+/*
+|--------------------------------------------------------------------------
+| File and Directory Modes
+|--------------------------------------------------------------------------
+|
+| These prefs are used when checking and setting modes when working
+| with the file system.  The defaults are fine on servers with proper
+| security, but you may wish (or even need) to change the values in
+| certain environments (Apache running a separate process for each
+| user, PHP under CGI with Apache suEXEC, etc.).  Octal values should
+| always be used to set the mode correctly.
+|
+*/
+define('FILE_READ_MODE', 0644);
+define('FILE_WRITE_MODE', 0666);
+define('DIR_READ_MODE', 0755);
+define('DIR_WRITE_MODE', 0777);
+
+/*
+|--------------------------------------------------------------------------
+| File Stream Modes
+|--------------------------------------------------------------------------
+|
+| These modes are used when working with fopen()/popen()
+|
+*/
+
+define('FOPEN_READ',							'rb');
+define('FOPEN_READ_WRITE',						'r+b');
+define('FOPEN_WRITE_CREATE_DESTRUCTIVE',		'wb'); // truncates existing file data, use with care
+define('FOPEN_READ_WRITE_CREATE_DESTRUCTIVE',	'w+b'); // truncates existing file data, use with care
+define('FOPEN_WRITE_CREATE',					'ab');
+define('FOPEN_READ_WRITE_CREATE',				'a+b');
+define('FOPEN_WRITE_CREATE_STRICT',				'xb');
+define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
+
+
+/* End of file constants.php */
+/* Location: ./application/config/constants.php */
+
+
+/*
+|--------------------------------------------------------------------------
+| Custom defined Global Variables
+|--------------------------------------------------------------------------
+*/
+define('API_URL_BAY_LIST', 'http://54.149.64.10:8087/api/v1/BayList');
+define('API_URL_WAITING_QUEUE', 'http://54.149.64.10:8087/api/v1/WaitingQueue');
+define('API_URL_POST_WAITING_QUEUE', 'http://54.149.64.10:8087/api/v1/WaitingList');
+define('API_URL_BAY_SELECTION', 'http://54.149.64.10:8087/api/v1/BaySelection');
+define('API_URL_BAY_RELEASE', 'http://54.149.64.10:8087/api/v1/BayRelease');
+define('API_CODE', 'C5D39F3A-5601-41B2-B107-0B70BFCEA713');
+define('API_URL_QRCODES', 'http://54.149.64.10:8087/api/v1/CheckIn_v1');
+
+/*
+|--------------------------------------------------------------------------
+| Salman's Custom defined Global Variables
+|--------------------------------------------------------------------------
+*/
+//define('MAC_ADDRESS', '98-7A-BC-DE-F6-55');
+define('MAC_ADDRESS', '00-1C-C0-82-DF-F8');
+define('API_URL_CHECKIN', 'http://54.149.64.10:8087/api/v1/CheckIn');
+define('API_URL', 'http://54.149.64.10:8087/api/');
+define('API_VERSION', 'v1/');

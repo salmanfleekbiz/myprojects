@@ -1,0 +1,104 @@
+<?php 
+/*
+	Template Name: Login
+*/
+
+
+get_header(); ?>
+<style type="text/css">
+    .panel-info { border-color: #ebeae6; }
+    .panel-info > .panel-heading { background: #d7d0c2; font-family: 'latoregular'; color: #666; font-weight: bold; border-color: #d7d0c2; } 
+        
+    </style>
+<?php global $post; ?>
+<?php if (has_post_thumbnail( $post->ID ) ): ?>
+<?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' ); ?>
+<section id="inner-banner" class="wow fadeIn" style="background:url('<?php echo $image[0]; ?>'); background-repeat: no-repeat; background-color: #525969; background-size:100% 100%;" >
+<div class="container">
+<div class="col-sm-12 col-lg-12 headline wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+<h1><?php the_title(); ?></h1>
+</div>
+</div>
+</div>
+</section>
+<?php endif; ?>
+<?php if($_SESSION['firstname'] == ''){ ?>
+<section>
+<div class="container">
+<div class="row">
+<div class="col-sm-12 col-lg-12">
+<div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">                    
+<div class="panel panel-info" >
+<div class="panel-heading">
+<div class="panel-title">Sign In</div>
+</div>    
+<div class="col-md-10"><div id="haswarning"></div></div>
+<div class="col-md-10"><div id="haserror"></div></div>
+<div style="padding-top:30px" class="panel-body" >
+<div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+<div id="fancybox-loading"><div><img src="<?php bloginfo('template_directory'); ?>/images/apiloading.gif" alt="Loading" width="75%" /></div></div>
+<div id="fancybox-overlay"></div>
+<form id="login" name="login" method="post" action="" class="form-horizontal">
+<div style="margin-bottom: 1em" class="input-group">
+<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+<input id="email" type="text" class="form-control" name="email" placeholder="Email/Nickname">
+</div>
+<div style="margin-bottom: 1em" class="input-group">
+<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+<input id="password" type="password" class="form-control" name="password" placeholder="Password">
+</div>
+<div class="input-group">
+<div class="checkbox">
+<label><input id="remember" type="checkbox" name="remember" value="1"> Remember me</label>
+</div>
+</div>
+<div style="margin-top:10px" class="form-group">
+<div class="col-xs-12 col-sm-12 controls">
+<div class="col-xs-12 col-sm-6 godown">
+<input type="submit" id="submit" name="submit" class="btn log-btn" value="Login"></div>
+<div class="col-xs-12 col-sm-6">
+<a id="btn-fblogin" href="<?php echo site_url(); ?>/?page_id=186" class="btn btn-fogot" style="float:right;">Forgot password?</a></div>
+</div>
+</div>
+<div class="form-group">
+<div class="col-md-12 control">
+<div class="col-xs-12 btn-more" style="border-top: 1px solid#888; padding-top:15px; font-size:85%; font-family: 'roboto_slabbold'; color:#666;" >Don't have an account!<a href="<?php echo site_url(); ?>/?page_id=145" >Become a Member
+</a>
+</div>
+<div class="col-xs-12 btn-more" style="padding-top:15px; font-size:85%" >
+<a href="#">Already a Member, but don't have a Login</a>
+</div>
+</div>
+</div>    
+</form>
+</div>                     
+</div>  
+</div>
+</div>
+</div>
+</div>
+</section>
+<?php }else{ ?>
+<script type="text/javascript">
+window.location.href = '<?php echo site_url(); ?>/?page_id=170';
+</script>
+<?php } ?>
+<script type="text/javascript">
+$("#login").validate({
+rules: {
+	email: "required",
+	password: "required"
+},
+messages: {
+	email: "Enter your login email/Nickname",
+	password: "Enter your password"
+},
+submitHandler: function() {
+	user_login();
+},
+success: function(label) {
+	label.remove();
+}
+});
+</script>
+<?php get_footer(); ?>	

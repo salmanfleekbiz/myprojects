@@ -1,0 +1,1780 @@
+function userGenerateNickName(){
+$(document).on("click", ".member", function(){	
+var action = 'selectmember';
+var time = '';
+var member = $(this).attr("rel");
+var item=$('.active'+member).parent();
+$('.member').removeClass('current');
+item.addClass("current");
+$.ajax({
+url: baseUrl+"checkinmember/process",
+data: {action:action,member:member},
+type: 'POST',
+beforeSend: function(){
+},
+success: function (result) {
+if(result == '1'){
+	time = '30 Mins';
+}else if(result == '2'){
+	time = '1 Hour';
+}else if(result == '3'){
+	time = '1 Hour 30 Mins';
+}else if(result == '4'){
+	time = '2 Hours';
+}else if(result == '5'){
+	time = '2 Hours 30 Mins';
+}else if(result == '6'){
+	time = '3 Hours';
+}	
+document.getElementById('totalmember').value = result;	
+$("#showmemberselect").html('<p>'+result+' Member(s) have been selected, please click Continue</p>');
+$("#showqty").html(result);
+$("#showtim").html(time);
+$('.time').removeClass('current');
+$("#tm"+result).addClass("current");
+$("#showtimeselect").html(time+' has been selected, please click Continue');
+},
+error: function(){
+}
+});
+});
+}
+function timeSelect(){
+$(document).on("click", ".time", function(){
+var action = 'selecttime';
+var memberid = $(this).attr("rel");
+var time = $(this).attr("time");
+var item=$('.activess'+memberid).parent();
+$('.time').removeClass('current');
+item.addClass("current");
+$.ajax({
+url: baseUrl+"checkinmember/process",
+data: {action:action,memberid:memberid},
+type: 'POST',
+beforeSend: function(){
+},
+success: function (result) {
+document.getElementById('expId').value = result;	
+$("#showtimeselect").html(time+' has been selected, please click Continue');
+$("#showtimeselect2").html(time+' has been selected, please click Continue');
+if(memberid == 8){
+$("#shoot").removeClass("showshooting");	
+$("#shoot").addClass("showshootingpop");	
+}else{
+$("#shoot").removeClass("showshootingpop");	
+$("#shoot").addClass("showshooting");	
+}
+},
+error: function(){
+}
+});
+});
+}
+function secondstep(){
+$(document).on("click", "#secstep", function(){
+var totalmember = $('#totalmember').val();	
+if(totalmember == ''){
+$("#showmemberselect").html('<p style="color:#F00;">Please select a member</p>');	
+}else{
+$("#showallsearchby").html('');	
+document.getElementById('exist').value = 0;	
+$("#secondstep").removeClass("hide");	
+$("#secondstep").addClass("show");
+$("#firststep").removeClass("show");	
+$("#firststep").addClass("hide");
+/*$(".steps #one").removeClass("active");
+$(".steps #two").addClass("active");*/
+}
+});
+}
+function secondstepadparty(){
+$(document).on("click", "#secstep", function(){
+var totalmember = $('#totalmember').val();	
+var partysize = $('#partysize').val();
+var checkpartysize = parseInt(totalmember) + parseInt(partysize);
+if(totalmember == ''){
+$("#showmemberselect").html('<p style="color:#F00;">Please select a member</p>');	
+}else if(checkpartysize > 6){
+$("#showmemberselect").html('<p style="color:#F00;">A maximum of 6 members are allowed in a party.</p>');	
+}else{
+$("#showallsearchby").html('');	
+document.getElementById('exist').value = 0;	
+$("#secondstep").removeClass("hide");	
+$("#secondstep").addClass("show");
+$("#firststep").removeClass("show");	
+$("#firststep").addClass("hide");
+/*$(".steps #one").removeClass("active");
+$(".steps #two").addClass("active");*/
+}
+});
+}
+function addExistingMethod(){
+$(document).on("click", "#secsteptwo", function(){
+var totalmember = $('#totalmember').val();	
+if(totalmember == ''){
+$("#showmemberselect").html('<p style="color:#F00;">Please select a member</p>');	
+}else{
+document.getElementById('exist').value = 1;	
+$("#secondstep").removeClass("hide");	
+$("#secondstep").addClass("show");
+$("#firststep").removeClass("show");	
+$("#firststep").addClass("hide");
+$('#nextbtnad2').removeClass('showtime');
+$('#nextbtnad2').addClass('timeskip');
+/*$(".steps #one").removeClass("active");
+$(".steps #two").addClass("active");*/
+}
+});
+}
+function getMemberInfo(){
+show_load();	
+var qrcode = $('#qrcode').val();	
+$.ajax({
+url: checkinUrl,
+headers: {apicode: apiCode},
+data: {
+membership_number : qrcode,mac_address:macAddress
+},
+type: 'GET',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+},
+success: function (result) {
+//searchQr(result.member_name);
+$("#notqr").html('');
+//checkMember(result.firstname+' '+result.lastname,result.gamertag);
+check_in_baymember(result.gamertag,result.firstname+' '+result.lastname,result.gamertag,result.isjunior,result.isauthorized,result.primary_gamertag);
+//checkjunior_isfirst(result.firstname+' '+result.lastname,result.gamertag,result.isjunior,result.isauthorized,result.primary_gamertag);	
+},
+error: function(){
+$("#alreadyadded").html('');
+$("#againsrch").html('');	
+//$("#showallsearchby").html('');	
+$("#notqr").html('Membership number does not exist.');	
+hide_load();	
+}
+});
+}
+function check_in_baymember(membergamertag,name,gamer,isjunior,authoriz,primarygamer){
+show_load();	
+var membergamertag = membergamertag;
+var name = name;
+var gamer = gamer;
+var isjunior = isjunior;
+var authoriz = authoriz;
+var primarygamer = primarygamer;
+$.ajax({
+url: api_url+api_version+'AuthorizeCheckIn',
+headers: {apicode:apiCode},
+data: {gamertag:membergamertag
+},
+type: 'GET',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+	if(result.status == true){
+	$("#baymsgmember").html('The member '+result.memberinfo.firstname+'&nbsp;'+result.memberinfo.lastname+' already assigned at '+result.memberinfo.activity_type);
+	$("#checkinmemberbaypop").click();	
+	hide_load();	
+	}else{
+		checkjunior_isfirst(name,gamer,isjunior,authoriz,primarygamer);
+	}
+},
+error: function(){
+hide_load();
+}
+});
+}
+function checkjunior_isfirst(name,gamertag,junior,authoriz,primary_member){
+var action = 'checkjuniorisfirst';
+var searchingids = $('#memberids').val();
+var allmembersIds = searchingids.substring(1);	
+var name = name;
+var gamertag = gamertag;
+var isjuniors = junior;
+var isauthoriz = authoriz;
+var primarymember = primary_member;
+$.ajax({
+url: baseUrl+"checkinmember/process",
+data: {action:action,allmembersIds:allmembersIds,isjuniors:isjuniors},
+type: 'POST',
+beforeSend: function(){
+},
+success: function (result) {
+	if(result == 'firstjunior'){
+		$("#juniorfirstpop").click();
+		hide_load();	
+	}else{
+		//checkMember(name,gamertag);
+		checkjunior_isauthorizedfirst(name,gamertag,junior,isauthoriz,primarymember);
+	}
+},
+error: function(){
+hide_load();	
+}
+});	
+}
+function checkjunior_isauthorizedfirst(name,gamertag,junior,isauthoriz,primarymember){
+var action = 'checkjuniorauthoriz';
+var searchingids = document.getElementById('memberids').value;
+var isauthoriz = isauthoriz;
+var primarymember_gamertag = primarymember;
+var allmembersIds = searchingids.substring(1);	
+var name = name;
+var gamertag = gamertag;
+var isjuniors = junior;
+$.ajax({
+url: baseUrl+"checkinmember/process",
+data: {action:action,allmembersIds:allmembersIds,isjuniors:isjuniors,isauthoriz:isauthoriz,primarymember_gamertag:primarymember_gamertag},
+type: 'POST',
+beforeSend: function(){
+},
+success: function (result) {
+	if(result == 'primarymembernotadded'){
+		$("#primarymemberpop").click();
+		hide_load();
+	}else{
+		checkMember(name,gamertag);
+	}	
+},
+error: function(){
+hide_load();	
+}
+});	
+}
+function checkMember(membername,memberid){
+show_load();	
+var action = 'checkmember';
+var searchingresults = $('#searchingresults').val();
+var searchArray = searchingresults.substring(1);
+var searchingids = $('#memberids').val();
+var allmembersIds = searchingids.substring(1);
+var totalmember = $('#totalmember').val();
+var addmembertotal = $('#addmembertotal').val();
+var showtotdmember = parseInt(addmembertotal) + parseInt("1");
+var showtotdmemberminus = parseInt(addmembertotal) - parseInt("1");
+var member_name = membername;
+var member_id = memberid;
+$.ajax({
+url: baseUrl+"checkinmember/process",
+data: {action:action,searchArray:searchArray,member_name:member_name,member_id:member_id,allmembersIds:allmembersIds},
+type: 'POST',
+beforeSend: function(){
+},
+success: function (result) {
+	if(result == 'Match not found'){
+		if(addmembertotal > totalmember && addmembertotal == '7'){
+			hide_load();
+			$("#againsrch").html('');
+			$("#alreadyadded").html('');
+			$("#notqr").html('');
+			$("#showsrcherror").html('');
+			$("#outofname").html(member_name);
+			$("#outofchecking").html('Maximum of 6 members allowed per shooting lounge');
+			$("#nextbtn2").css("display","none");
+			$("#clickaddmoreplayes").click();
+		}else if(addmembertotal == totalmember){
+			if(addmembertotal == '6'){
+			hide_load();
+			$("#alreadyadded").html('');
+			$("#againsrch").html('');
+			$("#showsrcherror").html('');
+			document.getElementById('addmembertotal').value = showtotdmember;
+			searchQrOne(member_name,memberid);
+			$("#outofname").html(member_name+' Added');
+			$("#outofchecking").html(addmembertotal+' out of '+totalmember+' Members have been received.');
+			$("#nextbtn2").css("display","none");
+			$("#clickaddmoreplayes").click();	
+			}else{
+			hide_load();
+			$("#alreadyadded").html('');
+			$("#againsrch").html('');
+			$("#showsrcherror").html('');
+			document.getElementById('addmembertotal').value = showtotdmember;
+			searchQrOne(member_name,memberid);
+			$("#outofname").html(member_name+' Added');
+			$("#outofchecking").html(addmembertotal+' out of '+totalmember+' Members have been received. Would you like to Scan/Search for more members?');
+			$("#clickaddmoreplayes").click();
+			}
+		}else if(addmembertotal > totalmember && addmembertotal != '7'){
+			hide_load();
+			$("#alreadyadded").html('');
+			$("#againsrch").html('');
+			$("#showsrcherror").html('');
+			$("#outofname").html(member_name);
+			$("#outofchecking").html(showtotdmemberminus+' out of '+totalmember+' Members have been received. Would you like to add more players?');
+			$("#clickaddmoreplayes").click();
+			
+		}else{
+			$("#alreadyadded").html('');
+			$("#againsrch").html('');
+			$("#showsrcherror").html('');
+			document.getElementById('addmembertotal').value = showtotdmember;
+			searchQr(member_name,memberid);
+		}
+	}else{
+		hide_load();
+		$("#againsrch").html('');
+		$("#showsrcherror").html('');
+		$("#alreadyadded").html('<span class="eror">Please select different Member ID.</span>');
+	}
+},
+error: function(){
+hide_load();	
+}
+});
+}
+function checkMember_second(membername,memberid){
+show_load();	
+var action = 'checkmember';
+var searchingresults = $('#searchingresults').val();
+var searchArray = searchingresults.substring(1);
+var searchingids = $('#memberids').val();
+var allmembersIds = searchingids.substring(1);
+var totalmember = $('#totalmember').val();
+var addmembertotal = $('#addmembertotal').val();
+var showtotdmember = parseInt(addmembertotal) + parseInt("1");
+var showtotdmemberminus = parseInt(addmembertotal) - parseInt("1");
+var member_name = membername;
+var member_id = memberid;
+$.ajax({
+url: baseUrl+"checkinmember/process",
+data: {action:action,searchArray:searchArray,member_name:member_name,member_id:member_id,allmembersIds:allmembersIds},
+type: 'POST',
+beforeSend: function(){
+},
+success: function (result) {
+	if(result == 'Match not found'){
+		if(addmembertotal > totalmember && addmembertotal == '7'){
+			hide_load();
+			$("#againsrch").html('');
+			$("#alreadyadded").html('');
+			$("#notqr").html('');
+			$("#showsrcherror").html('');
+			$("#outofname").html(member_name);
+			$("#outofchecking").html('Maximum of 6 members allowed per shooting lounge');
+			$("#nextbtn2").css("display","none");
+			$("#clickaddmoreplayes").click();
+		}else if(addmembertotal == totalmember){
+			if(addmembertotal == '6'){
+			hide_load();
+			$("#againsrch").html('');
+			$("#alreadyadded").html('');
+			$("#notqr").html('');
+			$("#showsrcherror").html('');
+			document.getElementById('addmembertotal').value = showtotdmember;
+			searchQrOne(member_name,memberid);
+			$("#outofname").html(member_name+' Added');
+			$("#outofchecking").html(addmembertotal+' out of '+totalmember+' Members have been received.');
+			$("#nextbtn2").css("display","none");
+			$("#clickaddmoreplayes").click();	
+			}else{
+			hide_load();
+			$("#againsrch").html('');
+			$("#alreadyadded").html('');
+			$("#notqr").html('');
+			$("#showsrcherror").html('');
+			document.getElementById('addmembertotal').value = showtotdmember;
+			searchQrOne(member_name,memberid);
+			$("#outofname").html(member_name+' Added');
+			$("#outofchecking").html(addmembertotal+' out of '+totalmember+' Members have been received. Would you like to Scan/Search for more members?');
+			$("#clickaddmoreplayes").click();
+			}
+		}else if(addmembertotal > totalmember && addmembertotal != '7'){
+			hide_load();
+			$("#againsrch").html('');
+			$("#alreadyadded").html('');
+			$("#notqr").html('');
+			$("#showsrcherror").html('');
+			$("#outofname").html(member_name);
+			$("#outofchecking").html(showtotdmemberminus+' out of '+totalmember+' Members have been received. Would you like to add more players?');
+			$("#clickaddmoreplayes").click();
+		}else{
+			$("#againsrch").html('');
+			$("#alreadyadded").html('');
+			$("#notqr").html('');
+			$("#showsrcherror").html('');
+			document.getElementById('addmembertotal').value = showtotdmember;
+			searchQr(member_name,memberid);
+		}
+	}else{
+		hide_load();
+		$("#alreadyadded").html('');
+		$("#notqr").html('');
+		$("#showsrcherror").html('');
+		$("#againsrch").html('<p style="color:#F00;">This member has already been added.</p>');
+	}
+},
+error: function(){
+hide_load();	
+}
+});
+}
+function searchQrOne(qrcodename,memid){
+show_load();	
+var action = 'searchqrcode';
+var searchingresults = $('#searchingresults').val();
+var totalmemberselect = $('#totalmember').val();
+var addmembertotal = $('#addmembertotal').val();
+var memberid = $('#memberids').val();
+var qrcode = qrcodename;
+var showtotaladdedmember = parseInt(addmembertotal) - parseInt("1");
+var formid = document.getElementById('searchqrcode');
+$.ajax({
+url: baseUrl+"checkinmember/process",
+data: {action:action,searchingresults:searchingresults,qrcode:qrcode},
+type: 'POST',
+beforeSend: function(){
+},
+success: function (result) {
+var allmembers = searchingresults+','+result;	
+document.getElementById('searchingresults').value = allmembers;
+document.getElementById('memberids').value = memberid+','+memid;
+$("#memname").html(qrcode+' Added');
+$("#totalmemberadd").html(showtotaladdedmember+'/'+totalmemberselect+' players checked-In, Scan or Search for More Players?');
+showSearchQrresultOne(result);
+formid.reset();
+},
+error: function(){
+}
+});
+}
+function showSearchQrresultOne(newmember){
+show_load();	
+var action = 'showsearchresult';
+var searchingresults = $('#searchingresults').val();
+var searchArray = searchingresults.substring(1);
+var memberids = $('#memberids').val();
+var memberidsArray = memberids.substring(1);
+var newmembers = newmember;
+$.ajax({
+url: baseUrl+"checkinmember/process",
+data: {action:action,searchArray:searchArray,memberidsArray:memberidsArray},
+type: 'POST',
+beforeSend: function(){
+},
+success: function (result) {
+hide_load();		
+$("#showallmembers").html(result);
+$("#showallmemberstwo").html(result);
+//$("#clickqrcodes").click();
+},
+error: function(){
+}
+});
+}
+function searchQr(qrcodename,memid){
+show_load();	
+var action = 'searchqrcode';
+var searchingresults = $('#searchingresults').val();
+var totalmemberselect = $('#totalmember').val();
+var addmembertotal = $('#addmembertotal').val();
+var qrcode = qrcodename;
+var memberid = $('#memberids').val();
+var showtotaladdedmember = parseInt(addmembertotal) - parseInt("1");
+var formid = document.getElementById('searchqrcode');
+$.ajax({
+url: baseUrl+"checkinmember/process",
+data: {action:action,searchingresults:searchingresults,qrcode:qrcode},
+type: 'POST',
+beforeSend: function(){
+},
+success: function (result) {
+var allmembers = searchingresults+','+result;	
+document.getElementById('searchingresults').value = allmembers;
+document.getElementById('memberids').value = memberid+','+memid;
+$("#memname").html(qrcode+' Added');
+$("#totalmemberadd").html(showtotaladdedmember+'/'+totalmemberselect+'  Members have been received. Would you like to Scan/Search for more members?');
+showSearchQrresult(result);
+formid.reset();
+},
+error: function(){
+}
+});
+}
+function showSearchQrresult(newmember){
+show_load();	
+var action = 'showsearchresult';
+var searchingresults = $('#searchingresults').val();
+var exist = $('#exist').val();
+var searchArray = searchingresults.substring(1);
+var memberids = $('#memberids').val();
+var memberidsArray = memberids.substring(1);
+var newmembers = newmember;
+$.ajax({
+url: baseUrl+"checkinmember/process",
+data: {action:action,searchArray:searchArray,memberidsArray:memberidsArray},
+type: 'POST',
+beforeSend: function(){
+},
+success: function (result) {
+hide_load();		
+$("#showallmembers").html(result);
+$("#showallmemberstwo").html(result);
+if(exist == 1){
+$("#timeseldt").removeClass("timeselect");	
+$("#timeseldt").addClass("timeskip");	
+$("#clickqrcodes").click();
+}else{
+$("#timeseldt").removeClass("timeskip");	
+$("#timeseldt").addClass("timeselect");		
+$("#clickqrcodes").click();	
+}
+},
+error: function(){
+}
+});
+}
+
+function userSearchBy(){
+show_load();	
+var action = $('#searchmembers #action').val();
+var srchby = $('#searchmembers #srchby').val();
+var searchby = $('#searchmembers #searchby:checked').val();
+$.ajax({
+url: api_url+api_version+"PlayerSearch?filter="+searchby+"&value="+srchby,
+headers: {apicode:apiCode},
+data: {
+},
+type: 'GET',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+if(result.members.length > 0){	
+var showSrch = '';	
+showSrch += '<div class="overflow"><table id="example" class="display">';
+showSrch += '<thead>';
+showSrch += '<tr>';
+showSrch += '<th>First Name</th>';
+showSrch += '<th>Last Name</th>';
+showSrch += '<th>Email</th>';
+showSrch += '<th>Nickname</th>';
+showSrch += '<th>Phone</th>';
+showSrch += '<th>DOB</th>';
+showSrch += '</tr>';
+showSrch += '</thead>';
+showSrch += '<tbody>';
+for (var i = 0; i < result.members.length; i++) {
+showSrch += '<tr id=memlist'+i+' class="addmembs" primary_gamertag='+result.members[i].primary_gamertag+' authoriz='+result.members[i].isauthorized+' junior='+result.members[i].isjunior+' gamertag="'+result.members[i].gamertag+'" name='+result.members[i].firstname+'&nbsp;'+result.members[i].lastname+' onclick="single_click_function('+i+');" ondblclick="double_click_function('+i+');">';
+showSrch += '<td>'+result.members[i].firstname+'</td>';
+showSrch += '<td>'+result.members[i].lastname+'</td>';
+showSrch += '<td>'+result.members[i].email+'</td>';
+showSrch += '<td>'+result.members[i].gamertag+'</td>';
+showSrch += '<td>'+result.members[i].phone+'</td>';
+showSrch += '<td>'+result.members[i].dob+'</td>';
+showSrch += '</tr>';
+}
+showSrch += '</tbody>';
+showSrch += '</table></div>';
+showSrch += '<div class="footer-button"><input type="hidden" name="primarymember_gamertag" id="primarymember_gamertag" value=""><input type="hidden" name="isauthorizeds" id="isauthorizeds" value=""><input type="hidden" name="isjunior" id="isjunior" value=""><a id="nextbtn" class="btn btn-default active1 addsearchingmembers">Add Selected Member</a></div>';
+$("#showsrcherror").html('');
+$("#showallsearchby").html(showSrch);	
+$('#example').DataTable();
+}else{
+$("#showallsearchby").html('');	
+$("#showsrcherror").html('<p>Unable to find any members with this criteria</p>');	
+}
+hide_load();	
+},
+error: function(){
+$("#showallsearchby").html('');		
+$("#showsrcherror").html('<p>Unable to find any members with this criteria</p>');		
+hide_load();
+}
+});
+}
+
+function single_click_function(id){
+$(document).on("click", "#memlist"+id, function(){	
+var name = $(this).attr("name");
+var junior = $(this).attr("junior");
+var gamertag = $(this).attr("gamertag");	
+var isauthriz = $(this).attr("authoriz");
+var primary_gamertag = $(this).attr("primary_gamertag");
+$('.display td').removeClass('green_row');
+$('#memlist'+id+' td').addClass('green_row');
+document.getElementById('selectmemid').value = gamertag;
+document.getElementById('selectmemname').value = name;
+document.getElementById('isjunior').value = junior;
+document.getElementById('isauthorizeds').value = isauthriz;
+document.getElementById('primarymember_gamertag').value = primary_gamertag;
+});
+}
+function double_click_function(id){
+//$(document).on("click", "#memlist"+id, function(){	
+//$( "#memlist"+id ).click(function() {
+var name = $("#memlist"+id).attr("name");	
+var junior = $("#memlist"+id).attr("junior");
+var gamertag = $("#memlist"+id).attr("gamertag");	
+var isauthriz = $("#memlist"+id).attr("authoriz");
+var primary_gamertag = $("#memlist"+id).attr("primary_gamertag");
+$('.scroll td').removeClass('green_row');
+$('#memlist'+id+' td').addClass('green_row');
+document.getElementById('selectmemid').value = gamertag;
+document.getElementById('selectmemname').value = name;
+document.getElementById('isjunior').value = junior;
+document.getElementById('isauthorizeds').value = isauthriz;
+document.getElementById('primarymember_gamertag').value = primary_gamertag;
+
+check_in_baymember2(gamertag,name,gamertag,junior);
+//checkjunior_isfirst2(name,gamertag,junior);
+//checkMember_second(name,gamertag);
+//});
+}
+function showTimeSelection(){
+show_load();	
+var totalmember = $('#totalmember').val();
+$.ajax({
+url: api_url+api_version+"TimeSelect?siteid=1&playercount="+totalmember,
+headers: {apicode:apiCode},
+data: {
+},
+type: 'GET',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+var time_div = '';	
+var unlimited = '';
+time_div += '<div class="bs-example">';
+for (var i = 0; i < result.experiences.length; i++) {
+if(result.experiences[i].expname == '1 Hour'){
+time_div += '<a id="tm'+result.experiences[i].id+'" class="time current" time="'+result.experiences[i].expname+'" rel="'+result.experiences[i].id+'" onClick="timeSelect();"><button type="button" id="nextbtn" class="btn btn-default timeselectbtn activess'+result.experiences[i].id+'">'+result.experiences[i].expname+' </button></a>';
+document.getElementById('expId').value = result.experiences[i].id;
+}else if(result.experiences[i].expname == 'Unlimited'){
+unlimited += '<a id="tm'+result.experiences[i].id+'" class="time unlimit" time="'+result.experiences[i].expname+'" rel="'+result.experiences[i].id+'" onClick="timeSelect();"><button type="button" id="nextbtn" class="btn btn-default timeselectbtn activess'+result.experiences[i].id+'">'+result.experiences[i].expname+' </button></a>';	
+}else{
+time_div += '<a id="tm'+result.experiences[i].id+'" class="time" time="'+result.experiences[i].expname+'" rel="'+result.experiences[i].id+'" onClick="timeSelect();"><button type="button" id="nextbtn" class="btn btn-default timeselectbtn activess'+result.experiences[i].id+'">'+result.experiences[i].expname+' </button></a>';	
+}
+}
+time_div += unlimited;
+time_div += '</div>';
+$("#timetoshow").html(time_div);
+hide_load();	
+},
+error: function(){
+hide_load();
+}
+});
+}
+function checkjunior_isfirst2(name,gamertag,junior){
+var action = 'checkjuniorisfirst';
+var searchingids = document.getElementById('memberids').value;
+var allmembersIds = searchingids.substring(1);	
+var name = name;
+var gamertag = gamertag;
+var isjuniors = junior;
+var first_jn = document.getElementById('first_junior').value;
+$.ajax({
+url: baseUrl+"checkinmember/process",
+data: {action:action,allmembersIds:allmembersIds,isjuniors:isjuniors},
+type: 'POST',
+beforeSend: function(){
+},
+success: function (result) {
+	if(result == 'firstjunior'){
+		if(first_jn == 'ok'){
+		checkjunior_isauthorized(name,gamertag,junior);	
+		}else{
+		$("#juniorfirstpop").click();
+		hide_load();	
+		}
+	}else{
+		checkjunior_isauthorized(name,gamertag,junior);
+		//checkMember_second(name,gamertag);
+	}
+},
+error: function(){
+hide_load();	
+}
+});	
+}
+function checkjunior_isauthorized(name,gamertag,junior){
+var action = 'checkjuniorauthoriz';
+var searchingids = document.getElementById('memberids').value;
+var isauthoriz = document.getElementById('isauthorizeds').value;
+var primarymember_gamertag = document.getElementById('primarymember_gamertag').value;
+var allmembersIds = searchingids.substring(1);	
+var name = name;
+var gamertag = gamertag;
+var isjuniors = junior;
+$.ajax({
+url: baseUrl+"checkinmember/process",
+data: {action:action,allmembersIds:allmembersIds,isjuniors:isjuniors,isauthoriz:isauthoriz,primarymember_gamertag:primarymember_gamertag},
+type: 'POST',
+beforeSend: function(){
+},
+success: function (result) {
+	if(result == 'primarymembernotadded'){
+		$("#primarymemberpop").click();
+		hide_load();
+	}else{
+		checkMember_second(name,gamertag);
+	}	
+},
+error: function(){
+hide_load();	
+}
+});	
+}
+function check_in_baymember2(gamertag,name,id,junior){
+show_load();	
+var gamertag = gamertag;
+var name = name;
+var id = id;
+var junior = junior;
+$.ajax({
+url: api_url+api_version+"AuthorizeCheckIn",
+headers: {apicode:apiCode},
+data: {gamertag:gamertag
+},
+type: 'GET',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+	if(result.status == true){
+	$("#baymsgmember").html('The member '+result.memberinfo.firstname+'&nbsp;'+result.memberinfo.lastname+' already assigned at '+result.memberinfo.activity_type);
+	$("#checkinmemberbaypop").click();	
+	hide_load();	
+	}else{
+		checkjunior_isfirst2(name,id,junior);
+		//checkjunior_isfirst(name,gamer,isjunior,authoriz,primarygamer);
+	}
+},
+error: function(){
+hide_load();
+}
+});
+}
+$(document).on("click", ".addsearchingmembers", function(){	
+var junior = document.getElementById('isjunior').value;	
+var id = document.getElementById('selectmemid').value;
+var name = document.getElementById('selectmemname').value;
+if(junior == ''){
+$("#againsrch").html('<p style="color:#F00;">Please Select a Member</p>');	
+}else{
+//checkMember_second(name,id);
+$("#againsrch").html('');	
+check_in_baymember2(id,name,id,junior);
+//checkjunior_isfirst2(name,id,junior);
+}
+});
+$(document).on("click", ".adparty", function(){
+show_load();	
+var action = 'checkpartymember';	
+var waiting_id = $(this).attr("id");
+var partymembername = $(this).attr("name");
+var members = $('#totalmember').val();	
+var partymember = $('#partymembercheck'+waiting_id).val();
+var memberids = $('#memberids').val();
+var searchArraymemberids = memberids.substring(1);
+$.ajax({
+url: baseUrl+"checkinmember/process",
+data: {action:action,membersidsadd:searchArraymemberids,partymember:partymember},
+type: 'POST',
+beforeSend: function(){
+},
+success: function (result) {
+	if(result == "comparenotdone"){
+		$("#adpartymsg").html('<span style="color:#F00">Party Member already added</span>');
+	}else{
+		addpartyMember(waiting_id,partymembername);	
+	}
+hide_load();
+},
+error: function(){
+}
+});	
+});	
+function addpartyMember(waiting_id,partymembername){
+var siteid = '1';
+var members = $('#totalmember').val();	
+var searchingresults = $('#searchingresults').val();
+var searchArray = searchingresults.substring(1);
+var membersnameadd = searchArray.split(",");
+var memberids = $('#memberids').val();
+var searchArraymemberids = memberids.substring(1);
+var membersidsadd = searchArraymemberids.split(",");
+var adednames = '';
+$.ajax({
+url: api_url+api_version+"WaitingQueueAddParty",
+headers: {apicode:apiCode},
+data: {siteid:siteid,waiting_id:waiting_id,gamertag:membersidsadd},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+if(result.success == true){	
+adednames += '<ul class="adname">';	
+for (var i = 0; i < membersnameadd.length; i++) {
+adednames += '<li><b>'+membersnameadd[i]+'</b> has been added to the Wait List under party name <b>'+partymembername+'</b></li>';	
+}
+adednames += '</ul>';
+$("#partymembername").html(adednames);
+//$("#partymembername").html(partymembername);
+hide_load();
+$("#adpartymsg").html('');
+$("#showaddpartypopup").click();
+}else{
+hide_load();
+$("#adpartymsg").html('<span style="color:#F00">Maximum party size allowed is 6</span>');
+//$("#addtopartyover").click();	
+}
+},
+error: function(){
+hide_load();
+$("#adpartymsg").html('<span style="color:#F00">Maximum party size allowed is 6</span>');
+//$("#addtopartyover").click();
+}
+});	
+}
+/*$(document).on("click", ".adparty", function(){
+var waiting_id = $(this).attr("id");
+var partymembername = $(this).attr("name");
+var siteid = '1';
+var members = $('#totalmember').val();	
+var searchingresults = $('#searchingresults').val();
+var searchArray = searchingresults.substring(1);
+var membersnameadd = searchArray.split(",");
+var memberids = $('#memberids').val();
+var searchArraymemberids = memberids.substring(1);
+var membersidsadd = searchArraymemberids.split(",");
+var adednames = '';
+$.ajax({
+url: api_url+api_version+"WaitingQueueAddParty",
+headers: {apicode:apiCode},
+data: {siteid:siteid,waiting_id:waiting_id,members:membersidsadd},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+if(result.success == true){	
+adednames += '<ul class="adname">';	
+for (var i = 0; i < membersnameadd.length; i++) {
+adednames += '<li><b>'+membersnameadd[i]+'</b> has been added to the Wait List under party name <b>'+partymembername+'</b></li>';	
+}
+adednames += '</ul>';
+$("#partymembername").html(adednames);
+//$("#partymembername").html(partymembername);
+hide_load();
+$("#adpartymsg").html('');
+$("#showaddpartypopup").click();
+}else{
+hide_load();
+$("#adpartymsg").html('<span style="color:#F00">Maximum party size allowed is 6</span>');
+//$("#addtopartyover").click();	
+}
+},
+error: function(){
+hide_load();
+$("#adpartymsg").html('<span style="color:#F00">Maximum party size allowed is 6</span>');
+//$("#addtopartyover").click();
+}
+});	
+});*/
+function updatePurchaseInformation(){
+var bayid = $('#boxIDforColorChange').val();	
+$.ajax({
+url: api_url+api_version+"PurchaseInformation",
+headers: {apicode:apiCode},
+data: {bayid:bayid},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+//window.location.href = baseUrl;	
+//hide_load();	
+lastFocus(bayid);
+},
+error: function(){
+hide_load();
+}
+});	
+}
+function lastFocus(id){
+var reservationId = $('#reservationId').val();
+var bayid = id;
+$.ajax({
+type: "POST",
+url: api_url+api_version+"Focus",
+data: JSON.stringify({ method:'SaveCheck',udid:'D4DE4D02-03F6-415E-9D69-4FFD38B5C38D',ReservationId:reservationId}),
+contentType: "application/json; charset=utf-8",
+dataType: "json",
+success: function(data){
+	if(data.message == 'Success' ){
+		//window.location.href = baseUrl;
+		$(".modal-header").css("display","block");
+            $("#heading_modal_open").css("display","block");
+            $("#heading_modal_open").html("Check-In Completed");
+            $("#heading_member_line").css("display","none");
+            $("#finishBtnStatusopen").css("display","inline-block");
+            $(".modal-footer").css("text-align","center");
+            $("#thirdscreen").css("display","none");
+            $("#fourthscreen").css("display","block");
+            $("#backBtn").css("display","none");
+            $("#lastContinueBtnold").css("display","none");
+			$("#closeBtnStatusopen").css("display","none");
+			$("#deactivatBtn").css("display","none");
+			$("#assignBtn").css("display","none");
+			$("#firstscreen").css("display","none");
+
+            clearInterval(everyinterval);
+            everyinterval = 0;
+            $('#openStatusModal').modal();                     // initialized with defaults
+            $('#openStatusModal').modal({ keyboard: false });   // initialized with no keyboard
+            $('#openStatusModal').modal('show');                // initializes and invokes show immediately
+	}else{
+		document.getElementById('txt_focusbayid').value = bayid;
+		document.getElementById('txt_focusreservation').value = reservationId;
+		$("#focusmsg").html('Could not communicate with FOCUS.<br /> Please contact system administrator - Log Ref '+data.corelationID);	
+		$("#focutpop").click();
+		hide_load();
+	}
+//window.location.href = baseUrl;			
+//$("#focusmsg").html('Could not communicate with focus.<br /> Please contact system administrator - Log Ref '+data.corelationID);	
+//$("#focutpop").click();
+hide_load();
+},
+failure: function(errMsg) {
+$("#focusmsg").html('Could not communicate with focus.<br /> Please contact system administrator - Log Ref '+data.corelationID);	
+$("#focutpop").click();
+hide_load();
+}
+});	
+/*$.ajax({
+url: api_url+api_version+"Focus",
+headers: {apicode:apiCode},
+data: {method:"SaveCheck",udid:"D4DE4D02-03F6-415E-9D69-4FFD38B5C38D",ReservationId:reservationId},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+$("#focutpop").click();	
+//window.location.href = baseUrl;	
+hide_load();	
+},
+error: function(){
+$("#focutpop").click();	
+hide_load();
+}
+});*/	
+}
+function existingReservations(id){	
+var searchingresults = $('#memberids').val();
+var searchArray = searchingresults.substring(1);
+var members = searchArray.split(",");
+$.ajax({
+url: api_url+api_version+"ExistingReservation",
+headers: {apicode:apiCode},
+data: {siteid:'1',bayid:id,gamertag:members},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+if(result.issuccessful == true){
+var bayname = $("#bayname"+id).html();
+var membername = $("#membername"+id).html();
+var timeStart = $("#timeStart"+id).html();
+var timeEnd = $("#timeEnd"+id).html();
+var timeExtend = $("#timeExtend"+id).html();
+var timeRemain = $("#timeRemain"+id).html();
+$("#heading_modal_inuse").html(bayname);
+$(".memName").html(membername);
+$(".startTime").html(timeStart);
+$(".endTime").html(timeEnd);
+$(".extendedTime").html(timeExtend);
+$(".remainTime").html(timeRemain);
+$("#boxIDforColorChange").val(id);
+$('#busyStatusModal').modal();                     // initialized with defaults
+$('#busyStatusModal').modal({ keyboard: false });   // initialized with no keyboard
+$('#busyStatusModal').modal('hide');  
+window.location.href = baseUrl;    
+}else{
+window.location.href = baseUrl;
+}
+hide_load();	
+},
+error: function(){
+hide_load();
+}
+});	
+}
+function removeShowresult(){
+show_load();	
+var action = 'showsearchresult';
+var searchingresults = $('#searchingresults').val();
+var exist = $('#exist').val();
+var searchArray = searchingresults.substring(1);
+var memberids = $('#memberids').val();
+var memberidsArray = memberids.substring(1);
+$.ajax({
+url: baseUrl+"checkinmember/process",
+data: {action:action,searchArray:searchArray,memberidsArray:memberidsArray},
+type: 'POST',
+beforeSend: function(){
+},
+success: function (result) {
+hide_load();		
+$("#showallmembers").html(result);
+$("#showallmemberstwo").html(result);
+},
+error: function(){
+}
+});
+}
+//function deleteMember(name,id){
+$(document).on("click", ".removemember", function(){
+var membername = $(this).attr("name");
+var memberid = $(this).attr("id");
+var addmembertotal = $('#addmembertotal').val();
+var showtotaladdedmember = parseInt(addmembertotal) - parseInt("1");
+var searchingresults = $('#memberids').val();
+var searchArray = searchingresults.substring(1);
+var members = searchArray.split(",");
+members.deleteElem = function ( val ) {
+    for ( var i = 0; i < this.length; i++ ) {
+        if ( this[i] === val ) {
+            this.splice( i, 1 );
+            return i;
+        }
+    }
+};
+var searchingresultsname = $('#searchingresults').val();
+var searchnameArray = searchingresultsname.substring(1);
+var membersname = searchnameArray.split(",");
+membersname.deleteElem = function ( val ) {
+    for ( var i = 0; i < this.length; i++ ) {
+        if ( this[i] === val ) {
+            this.splice( i, 1 );
+            return i;
+        }
+    }
+};
+var removeids = members.deleteElem( memberid );
+var removename = membersname.deleteElem( membername );
+//alert(members);
+if(membersname == '' && members == ''){
+document.getElementById('searchingresults').value = '';
+document.getElementById('memberids').value = '';	
+document.getElementById('addmembertotal').value = showtotaladdedmember;
+removeShowresult();
+}else{
+document.getElementById('searchingresults').value = ','+membersname;
+document.getElementById('memberids').value = ','+members;
+document.getElementById('addmembertotal').value = showtotaladdedmember;
+removeShowresult();
+}
+});	
+//}
+/*function deleteMember(){
+$(document).on("click", ".removemember", function(){
+var membername = $(this).attr("name");
+var memberid = $(this).attr("id");
+var addmembertotal = $('#addmembertotal').val();
+var showtotaladdedmember = parseInt(addmembertotal) - parseInt("1");
+var searchingresults = $('#memberids').val();
+var searchArray = searchingresults.substring(1);
+var members = searchArray.split(",");
+members.deleteElem = function ( val ) {
+    for ( var i = 0; i < this.length; i++ ) {
+        if ( this[i] === val ) {
+            this.splice( i, 1 );
+            return i;
+        }
+    }
+};
+var searchingresultsname = $('#searchingresults').val();
+var searchnameArray = searchingresultsname.substring(1);
+var membersname = searchnameArray.split(",");
+membersname.deleteElem = function ( val ) {
+    for ( var i = 0; i < this.length; i++ ) {
+        if ( this[i] === val ) {
+            this.splice( i, 1 );
+            return i;
+        }
+    }
+};
+var removeids = members.deleteElem( memberid );
+var removename = membersname.deleteElem( membername );
+//alert(members);
+if(membersname == '' && members == ''){
+document.getElementById('searchingresults').value = '';
+document.getElementById('memberids').value = '';	
+document.getElementById('addmembertotal').value = showtotaladdedmember;
+removeShowresult();
+}else{
+document.getElementById('searchingresults').value = ','+membersname;
+document.getElementById('memberids').value = ','+members;
+document.getElementById('addmembertotal').value = showtotaladdedmember;
+removeShowresult();
+}
+});	
+}*/
+$(document).on("click", ".removepartyone", function(){
+show_load();	
+var waiting_id = $(this).attr("id");
+var siteid = '1';
+var primarygamer = primarygamer;
+$.ajax({
+url: api_url+api_version+"RemoveQueue",
+headers: {apicode:apiCode},
+data: {siteid:siteid,waitingid:waiting_id
+},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+	if(result.success == true){
+	window.location.href = baseUrl+'shooting_lounge/';		
+	hide_load();	
+	}else{
+	hide_load();	
+	}
+
+},
+error: function(){
+hide_load();
+}
+});
+});
+$(document).on("click", ".bckfst", function(){
+$("#secondstep").removeClass("show");	
+$("#secondstep").addClass("hide");	
+$("#firststep").removeClass("hide");	
+$("#firststep").addClass("show");	
+});
+$(document).on("click", ".bckfirst", function(){
+$("#secondstep").removeClass("show");	
+$("#secondstep").addClass("hide");	
+$("#thirdstep").removeClass("show");	
+$("#thirdstep").addClass("hide");
+$("#firststep").removeClass("hide");	
+$("#firststep").addClass("show");
+$( "ul.resp-tabs-list li:nth-child(2)" ).removeClass("resp-tab-active");
+    $( "ul.resp-tabs-list li:nth-child(2)" ).addClass("gobackstep2");
+    $( "ul.resp-tabs-list li:nth-child(1)" ).addClass("resp-tab-active");
+$('#secondmenu').attr('onclick', 'secdstep();');
+$("#secondmenu").css("cursor", "pointer");
+});
+$(document).on("click", ".addmoreplayes", function(){
+$("#secondstep").removeClass("show");	
+$("#secondstep").addClass("hide");	
+$("#firststep").removeClass("hide");	
+$("#firststep").addClass("show");
+});
+$(document).on("click", ".timeskip", function(){
+ getShootingLounges();
+    fill_wait_list_grid();
+$("#firststep").removeClass("show");	
+$("#firststep").addClass("hide");	
+$("#secondstep").removeClass("show");	
+$("#secondstep").addClass("hide");	
+$("#thirdstep").removeClass("show");	
+$("#thirdstep").addClass("hide");
+$("#forthstep").removeClass("hide");	
+$("#forthstep").addClass("show");
+
+    $( "ul.resp-tabs-list li:nth-child(1)" ).removeClass("resp-tab-active");
+    $( "ul.resp-tabs-list li:nth-child(1)" ).addClass("gobackstep1");
+    $( "ul.resp-tabs-list li:nth-child(3)" ).addClass("resp-tab-active");
+	$('#onemenu').attr('onclick', 'onestep();');
+	$("#onemenu").css("cursor", "pointer");
+});	
+$(document).on("click", ".timeselect", function(){
+showTimeSelection();	
+$("#secondstep").removeClass("show");	
+$("#secondstep").addClass("hide");	
+$("#thirdstep").removeClass("hide");	
+$("#thirdstep").addClass("show");
+    $( "ul.resp-tabs-list li:nth-child(1)" ).removeClass("resp-tab-active");
+    $( "ul.resp-tabs-list li:nth-child(1)" ).addClass("gobackstep1");
+    $( "ul.resp-tabs-list li:nth-child(2)" ).addClass("resp-tab-active");
+	$('#onemenu').attr('onclick', 'onestep();');
+	$("#onemenu").css("cursor", "pointer");
+});
+$(document).on("click", ".showtime", function(){
+showTimeSelection();	
+$("#secondstep").removeClass("show");	
+$("#secondstep").addClass("hide");	
+$("#thirdstep").removeClass("hide");	
+$("#thirdstep").addClass("show");
+
+
+    $( "ul.resp-tabs-list li:nth-child(1)" ).removeClass("resp-tab-active");
+    $( "ul.resp-tabs-list li:nth-child(1)" ).addClass("gobackstep1");
+    $( "ul.resp-tabs-list li:nth-child(2)" ).addClass("resp-tab-active");
+	$('#onemenu').attr('onclick', 'onestep();');
+	$("#onemenu").css("cursor", "pointer");
+});
+$(document).on("click", ".showshooting", function(){
+    getShootingLounges();
+    fill_wait_list_grid();
+$("#firststep").removeClass("show");	
+$("#firststep").addClass("hide");	
+$("#secondstep").removeClass("show");	
+$("#secondstep").addClass("hide");	
+$("#thirdstep").removeClass("show");	
+$("#thirdstep").addClass("hide");
+$("#forthstep").removeClass("hide");	
+$("#forthstep").addClass("show");
+
+    $( "ul.resp-tabs-list li:nth-child(2)" ).removeClass("resp-tab-active");
+    $( "ul.resp-tabs-list li:nth-child(2)" ).addClass("gobackstep2");
+    $( "ul.resp-tabs-list li:nth-child(3)" ).addClass("resp-tab-active");
+	$('#secondmenu').attr('onclick', 'secdstep();');
+	$("#secondmenu").css("cursor", "pointer");
+ /*  everyinterval = setInterval(function(){
+        getShootingLounges(); // this will run after every 10 seconds
+        fill_wait_list_grid();
+    }, 10000);*/
+});
+$(document).on("click", ".continurassing", function(){
+baySelection();	
+
+});
+
+function shownextPop(){
+$(document).on("click", ".nextpop", function(){
+var totalmemberselect = $('#totalmember').val();
+var addmembertotal = $('#addmembertotal').val();	
+var showtotalad = parseInt(addmembertotal) - parseInt("1");
+$("#showaddno").html('Only '+showtotalad+' out of '+totalmemberselect+' players Added');
+});
+}
+$(document).on("click", ".admobile", function(){
+var waitid = $(this).attr("id");	
+var tel = $(this).attr("tel");
+var name = $(this).attr("name");	
+document.getElementById('waitID').value = waitid;
+$("#textname").html(name);
+$("#mobiletel").html(tel);
+});	
+$(document).on("click", ".sendtextmsg", function(){
+var sendtext = $('#sendtext:checked').val();
+var waitID = $('#waitID').val();
+$.ajax({
+url: api_url+api_version+"SendSMSMessage",
+headers: {apicode:apiCode},
+data: {waitingid:waitID,sms_type:sendtext},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+if(result.success == true){
+window.location.href = baseUrl+'shooting_lounge/';	
+}else{
+}
+hide_load();	
+},
+error: function(){
+hide_load();
+}
+});
+
+/*$.ajax({
+url: baseUrl+"checkinmember/process",
+data: {sendtext:sendtext},
+type: 'POST',
+beforeSend: function(){
+},
+success: function (result) {
+},
+error: function(){
+}
+});*/	
+});
+$(document).on("click", ".clear", function(){
+var siteid = '1';
+$.ajax({
+url: api_url+api_version+"ClearQueue",
+headers: {apicode:apiCode},
+data: {siteid:siteid},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+if(result.success == true){
+getShootingLounges(); // this will run after every 10 seconds
+fill_wait_list_grid();	
+hide_load();	
+}else{
+$("#clearmsg").html(result);	
+hide_load();	
+}
+},
+error: function(){
+hide_load();
+}
+});	
+});
+$(document).on("click", ".clear2", function(){
+var siteid = '1';
+$.ajax({
+url: api_url+api_version+"ClearQueue",
+headers: {apicode:apiCode},
+data: {siteid:siteid},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+if(result.success == true){
+//getShootingLounges(); // this will run after every 10 seconds
+fill_wait_list_grid();	
+hide_load();	
+}else{
+$("#clearmsg").html(result);	
+hide_load();	
+}
+},
+error: function(){
+hide_load();
+}
+});	
+});
+$(document).on("click", ".adtiming", function(){
+var id = $(this).attr("byid");	
+var bayname = $("#bayname"+id).html();
+$("#timingname").html(bayname);
+$('#shotingbckpop').attr('bckid', id);
+$('#contpursh').attr('bay', id);
+var totalmember = $('#totalmember').val();
+$.ajax({
+url: api_url+api_version+"TimeSelect?siteid=1&playercount="+totalmember,
+headers: {apicode:apiCode},
+data: {
+},
+type: 'GET',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+},
+success: function (result) {
+var time_div = '';
+var unlimitedtime = '';	
+time_div += '<div class="bs-example">';
+for (var i = 0; i < result.experiences.length; i++) {
+if(result.experiences[i].id == 3){
+time_div += '<a id="tm'+result.experiences[i].id+'" class="time current" time="'+result.experiences[i].expname+'" rel="'+result.experiences[i].id+'" onClick="timeSelect();"><button type="button" id="nextbtn" class="btn btn-default activess'+result.experiences[i].id+'">'+result.experiences[i].expname+' </button></a>';
+document.getElementById('expId').value = result.experiences[i].id;
+}else if(result.experiences[i].id == 8){
+unlimitedtime += '<a id="tm'+result.experiences[i].id+'" class="time" time="'+result.experiences[i].expname+'" rel="'+result.experiences[i].id+'" onClick="timeSelect();"><button type="button" id="nextbtn" class="btn btn-default activess'+result.experiences[i].id+'">'+result.experiences[i].expname+' </button></a>';	
+}else{
+time_div += '<a id="tm'+result.experiences[i].id+'" class="time" time="'+result.experiences[i].expname+'" rel="'+result.experiences[i].id+'" onClick="timeSelect();"><button type="button" id="nextbtn" class="btn btn-default activess'+result.experiences[i].id+'">'+result.experiences[i].expname+' </button></a>';	
+}
+}
+time_div += unlimitedtime;
+time_div += '</div>';
+$("#timetoshow2").html(time_div);
+},
+error: function(){
+hide_load();
+}
+});
+
+$("#showtimingpop").click();	
+});	
+$(document).on("click", ".directadtiming", function(){
+var id = $(this).attr("byid");	
+var reservation = $(this).attr("reservation");
+var bayname = $("#bayname"+id).html();
+$("#timingname").html(bayname);
+$('#shotingbckpop').attr('bckid', id);
+$('#contpursh').attr('bay', id);
+var totalmember = $(this).attr("totalmembers");
+$.ajax({
+url: api_url+api_version+"TimeSelect?siteid=1&playercount="+totalmember,
+headers: {apicode:apiCode},
+data: {
+},
+type: 'GET',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+},
+success: function (result) {
+var time_div = '';	
+var unlimitedtime = '';
+time_div += '<div class="bs-example">';
+for (var i = 0; i < result.experiences.length; i++) {
+if(result.experiences[i].expname == '1 Hour'){
+time_div += '<a id="tm'+result.experiences[i].id+'" class="time current" time="'+result.experiences[i].expname+'" rel="'+result.experiences[i].id+'" onClick="timeSelect();"><button type="button" id="nextbtn" class="btn btn-default activess'+result.experiences[i].id+'">'+result.experiences[i].expname+' </button></a>';
+document.getElementById('expId').value = result.experiences[i].id;
+}else if(result.experiences[i].expname == 'Unlimited'){
+unlimitedtime += '<a id="tm'+result.experiences[i].id+'" class="time" time="'+result.experiences[i].expname+'" rel="'+result.experiences[i].id+'" onClick="timeSelect();"><button type="button" id="nextbtn" class="btn btn-default activess'+result.experiences[i].id+'">'+result.experiences[i].expname+' </button></a>';	
+}else{
+time_div += '<a id="tm'+result.experiences[i].id+'" class="time" time="'+result.experiences[i].expname+'" rel="'+result.experiences[i].id+'" onClick="timeSelect();"><button type="button" id="nextbtn" class="btn btn-default activess'+result.experiences[i].id+'">'+result.experiences[i].expname+' </button></a>';	
+}
+}
+time_div += unlimitedtime;
+time_div += '</div>';
+$("#timetoshow2").html(time_div);
+$("#showtimeselect2").html("1 Hour has been selected, please click Continue");
+document.getElementById('reservationId').value = reservation;
+},
+error: function(){
+hide_load();
+}
+});
+
+$("#showtimingpop").click();	
+});
+$(document).on("click", ".shootingloungbackpop", function(){
+var id = $(this).attr("bckid");	
+rclicked(id);	
+});	
+$(document).on("click", ".gopurchs", function(){
+var id = $(this).attr("bay");	
+var expId = $('#expId').val();
+var games = $('#gamers').val();
+var bayname = $("#bayname"+id).html();
+$("#pushname").html(bayname);
+var bayid = id;	
+$.ajax({
+url: api_url+api_version+"AddTimePurchaseInformation?siteid=1&bayid="+id+"&expid="+expId,
+headers: {apicode:apiCode},
+data: {},
+type: 'GET',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+	$('#finshpop').attr('byid', id);
+	var showTime = '';
+	if(expId == '1'){
+	showTime = '30 Mins';
+	}else if(expId == '3'){
+		showTime = '1 Hour';
+	}else if(expId == '4'){
+		showTime = '1 Hour 30 Mins';
+	}else if(expId == '5'){
+		showTime = '2 Hours';
+	}else if(expId == '6'){
+		showTime = '2 Hours 30 Mins';
+	}else if(expId == '7'){
+		showTime = '3 Hours';
+	}else if(expId == '9'){
+		showTime = '30 Mins Upgrade';
+	}else if(expId == '10'){
+		showTime = '1 Hour Upgrade';
+	}else if(expId == '11'){
+		showTime = '1 Hour 30 Mins Upgrade';
+	}else if(expId == '12'){
+		showTime = '2 Hours Upgrade';
+	}else if(expId == '13'){
+		showTime = '2 Hours 30 Mins Upgrade';
+	}else if(expId == '14'){
+		showTime = '3 Hours Upgrade';
+	}else if(expId == '8'){
+		showTime = 'Unlimited';
+	}
+	var showmemberInfo = '';
+	showmemberInfo += '<div class="order" data-order-summary-section="payment-lines">';
+	showmemberInfo += '<table class="purchasetable">';
+	showmemberInfo += '<tr><th class="cost">Cost</th><th class="desc">Description</th></tr>';
+	showmemberInfo += '<tr><td>Refer to FOCUS</td><td>'+result.bay_name+'&nbsp;('+showTime+')</td></tr>';
+	//showmemberInfo += '<tr><td>$'+result.bay_price.toFixed(2)+'</td><td>'+result.bay_name+'&nbsp;('+showTime+')</td></tr>';
+	//showmemberInfo += '<tr><td>$'+result.total_tax.toFixed(2)+'</td><td>Tax</td></tr>';	
+	showmemberInfo += '</table>';
+	showmemberInfo += '<br><h5 class="dot"></h5>';
+	//showmemberInfo += '<h5 class="heading-h5"><span>'+result.bay_name+'&nbsp;Total:&nbsp;$'+result.total_amount.toFixed(2)+'</h5>';
+	showmemberInfo += '<br><h5 class="line"></h5><br>';
+	showmemberInfo += '</div>';	
+hide_load();	
+	$("#showinfopurshpop").html(showmemberInfo);
+},
+error: function(){
+$("#showinfopurshpop").html('Bay is not available');	
+hide_load();
+}
+});
+$("#showpurshspop").click();	
+//$('#timingpop').modal('hide');
+});
+$(document).on("click", ".fshpops", function(){
+var id = $(this).attr("byid");	
+var expId = $('#expId').val();
+/*var bayname = $("#bayname"+id).html();
+$("#pushname").html(bayname);*/
+var bayid = id;	
+$.ajax({
+url: api_url+api_version+"AddTimePurchaseInformation",
+headers: {apicode:apiCode},
+data: {siteid:"1",bayid:id,expid:expId},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+	if(result.status == true){
+		//hide_load();
+		$("#firstscreen").css("display","none");
+		$("#closeBtnStatusopen").css("display","none");
+		$("#assignBtn").css("display","none");
+		$("#deactivatBtn").css("display","none");
+		$('#timingpop').modal('hide');
+		lastFocus(id);
+		//window.location.href = baseUrl;
+	}else{
+		$("#showinfopurshpop").html('Bay is not available');	
+	}
+},
+error: function(){
+$("#showinfopurshpop").html('Bay is not available');	
+hide_load();
+}
+});
+$("#showpurshspop").click();	
+});
+$(document).on("click", ".existingparty", function(){
+var id = $(this).attr("by_id");	
+var bay_name = $(this).attr("bay_name");
+var searchingresults = $('#memberids').val();
+var searchArray = searchingresults.substring(1);
+var members = searchArray.split(",");
+var searchingresultsname = $('#searchingresults').val();
+var searchArrayname = searchingresultsname.substring(1);
+var membersname = searchArrayname.split(",");
+var adednames = '';
+$.ajax({
+url: api_url+api_version+"ExistingReservation",
+headers: {apicode:apiCode},
+data: {siteid:'1',bayid:id,gamertag:members},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+if(result.issuccessful == true){
+adednames += '<ul class="adname">';	
+for (var i = 0; i < membersname.length; i++) {
+adednames += '<li><b>'+membersname[i]+'</b> has been added to '+bay_name+'</li>';	
+}
+adednames += '</ul>';
+$('#busyStatusModal').modal('hide');
+$("#partymembername").html(adednames);
+hide_load();
+$("#adpartymsg").html('');
+$("#showaddpartypopup").click();
+}else{
+//window.location.href = baseUrl;
+}
+hide_load();	
+},
+error: function(){
+$("#partymaxpop").click();	
+$('#busyStatusModal').modal('hide');	
+hide_load();
+}
+});	
+
+//existingReservations(id);	
+});
+/*$(document).on("click", ".directexistingparty", function(){
+var id = $(this).attr("by_id");	
+var gamer = $(this).attr("gamer");
+var members = gamer.split(",");
+$.ajax({
+url: api_url+api_version+"ExistingReservation",
+headers: {apicode:apiCode},
+data: {siteid:'1',bayid:id,gamertag:members},
+type: 'POST',
+crossDomain: true,
+dataType: 'json',
+beforeSend: function(){
+show_load();
+},
+success: function (result) {
+hide_load();	
+},
+error: function(){
+hide_load();
+}
+});
+});*/
+$(document).on("click", ".disab", function(){
+$("#partymaxpop").click();	
+});
+$(document).on("click", ".showshootingpop", function(){
+$("#shootpopup").click();	
+});
+$(document).on("click", ".checkpassword", function(){
+show_load();	
+var action = 'checkpass';
+var userpass = $('#userpass').val();
+if(userpass == ''){
+$("#passerror").html('<span style="color:#F00">Password is required</span>');
+hide_load();	
+}else{
+$.ajax({
+url: baseUrl+"checkinmember/process",
+data: {action:action,userpass:userpass},
+type: 'POST',
+beforeSend: function(){
+},
+success: function (result) {
+	if(result == 'MoRo@357'){
+	$("#passerror").html('');	
+	$('#shootingpop').modal('hide');	
+	getShootingLounges();
+    fill_wait_list_grid();
+	$("#firststep").removeClass("show");	
+	$("#firststep").addClass("hide");	
+	$("#secondstep").removeClass("show");	
+	$("#secondstep").addClass("hide");	
+	$("#thirdstep").removeClass("show");	
+	$("#thirdstep").addClass("hide");
+	$("#forthstep").removeClass("hide");	
+	$("#forthstep").addClass("show");
+    $( "ul.resp-tabs-list li:nth-child(2)" ).removeClass("resp-tab-active");
+    $( "ul.resp-tabs-list li:nth-child(2)" ).addClass("gobackstep2");
+    $( "ul.resp-tabs-list li:nth-child(3)" ).addClass("resp-tab-active");
+	$('#secondmenu').attr('onclick', 'secdstep();');
+	$("#secondmenu").css("cursor", "pointer");
+	hide_load();		
+	}else{
+		$("#passerror").html('<span style="color:#F00">Please enter a valid password</span>');
+		hide_load();		
+	}
+},
+error: function(){
+hide_load();	
+}
+});
+}
+});
+function onestep(){
+$("#firststep").removeClass("hide");	
+$("#firststep").addClass("show");	
+$("#secondstep").removeClass("show");	
+$("#secondstep").addClass("hide");	
+$("#thirdstep").removeClass("show");	
+$("#thirdstep").addClass("hide");
+$("#forthstep").removeClass("show");	
+$("#forthstep").addClass("hide");
+$("#fifthstep").removeClass("show");	
+$("#fifthstep").addClass("hide");	
+$( "ul.resp-tabs-list li" ).removeClass("resp-tab-active");
+$( "ul.resp-tabs-list li:nth-child(1)" ).addClass("resp-tab-active");
+}
+function secdstep(){
+$("#firststep").removeClass("show");	
+$("#firststep").addClass("hide");	
+$("#secondstep").removeClass("show");	
+$("#secondstep").addClass("hide");	
+$("#thirdstep").removeClass("hide");	
+$("#thirdstep").addClass("show");
+$("#forthstep").removeClass("show");	
+$("#forthstep").addClass("hide");
+$("#fifthstep").removeClass("show");	
+$("#fifthstep").addClass("hide");	
+$( "ul.resp-tabs-list li" ).removeClass("resp-tab-active");
+$( "ul.resp-tabs-list li:nth-child(2)" ).addClass("resp-tab-active");
+}
+function thirdstep(){
+$("#firststep").removeClass("show");	
+$("#firststep").addClass("hide");	
+$("#secondstep").removeClass("show");	
+$("#secondstep").addClass("hide");	
+$("#thirdstep").removeClass("show");	
+$("#thirdstep").addClass("hide");
+$("#forthstep").removeClass("hide");	
+$("#forthstep").addClass("show");
+$("#fifthstep").removeClass("show");	
+$("#fifthstep").addClass("hide");	
+$( "ul.resp-tabs-list li" ).removeClass("resp-tab-active");
+$( "ul.resp-tabs-list li:nth-child(3)" ).addClass("resp-tab-active");
+}
+function showMessage(bgcolor, color, msg)
+{
+    if (!jQuery('#smsg').is(':visible'))
+    {
+            jQuery('html, body').animate({
+             scrollTop: 0
+            }, 500, function(){
+                if (!jQuery('#smsg').length)
+                {
+                    jQuery('<div id="smsg">'+msg+'</div>').appendTo(jQuery('body')).css({
+                        position:'fixed',
+                        top:0,
+                        left:0,
+                        width:'100%',
+                        height:'90px',
+                        lineHeight:'30px',
+                        background:bgcolor,
+                        color:color,
+                        zIndex:1000,
+                        padding:'10px',
+                        fontWeight:'bold',
+                        textAlign:'center',
+                        fontSize:'22px',
+                        opacity:0.8,
+                        margin:'auto',
+                        display:'none'
+                    }).slideDown('show');
+
+                    setTimeout(function(){
+                        jQuery('#smsg').animate({'width':'hide'}, function(){
+                            jQuery('#smsg').remove();
+                        });
+                    }, 8000);
+                }
+            });
+    }
+}
+
+
+
+function show_load() {
+jQuery('#fancybox-loading').css('display', 'block');
+jQuery('#fancybox-overlay').css('display', 'block');
+}
+
+function hide_load(){
+jQuery('#fancybox-loading').css('display', 'none');
+jQuery('#fancybox-overlay').css('display', 'none');
+}

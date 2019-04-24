@@ -1,0 +1,14 @@
+NameCheap Account Details:-
+-----------------------------
+
+https://ap.www.sandbox.namecheap.com
+user: bcdeveloper
+pass: Developer@123
+https://github.com/skpy/Namecheap-REST-PHP
+
+
+
+Godady 
+--------------
+Key: e42fzJfciKCR_PKe5wpTVzJ7ALtvbyxsZtM
+Secret: PKf3wNpvL9TS5uQYYxu353

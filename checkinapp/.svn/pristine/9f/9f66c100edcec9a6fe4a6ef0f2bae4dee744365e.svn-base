@@ -1,0 +1,187 @@
+<?php 
+/*
+	Template Name: User Dashboard
+*/
+
+
+get_header(); ?>
+<?php global $post; ?>
+<?php if (has_post_thumbnail( $post->ID ) ): ?>
+<?php $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' ); ?>
+<section id="inner-banner" class="wow fadeIn" style="background:url('<?php echo $image[0]; ?>'); background-repeat: no-repeat; background-color: #525969; background-size:100% 100%;" >
+<div class="container">
+<div class="col-sm-12 col-lg-12 headline wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+<h1><?php the_title(); ?></h1>
+</div>
+</div>
+</div>
+</section>
+<?php endif; ?>
+<?php if($_SESSION['firstname'] == ''){ ?>
+<script type="text/javascript">
+window.location.href = '<?php echo site_url(); ?>/?page_id=25';
+</script>
+<?php }else{ ?>
+<section>
+<div class="container">
+<div class="row">
+<div class="col-sm-12 col-lg-12">
+<div class="col-md-4 col-lg-4 column wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+<ul class="nav nav-pills nav-stacked">
+<li><a href="?page_id=170" class="active2">MY STATS</a></li>
+<li><a href="?page_id=190">LEADERBOARD</a></li>
+<li><a href="?page_id=192">MY ACCOUNT</a></li>
+<li><a href="?page_id=194">SUPPORT</a></li>
+</ul>
+<div class="middle-logo"><a href="#"><img src="<?php bloginfo('template_directory'); ?>/images/logo.png"></a></div>
+<div class="quick-links">
+<a class="buttonText" id="button2" href="?page_id=23">Frequently Asked Questions</a>
+<a class="buttonText" id="button2" href="?page_id=196">Purchase a Gift Card</a>
+<a class="buttonText" id="button2" href="<?php echo site_url(); ?>">Return to modernround.com</a>
+</div>
+</div>
+<div class="col-lg-8 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="900ms">
+<div class="col-xs-12 col-sm-12 col-md-8 col-lg-12">
+<div class="row">
+<h1 class="welcome-heading">Welcome <?php echo ucfirst($_SESSION['firstname']).' '.ucfirst($_SESSION['lname']); ?></h1>
+</div></div>
+<div class="col-xs-12 col-sm-12 col-md-8 col-lg-12 removepads">
+<div class="row">
+<div id="dash_form_bg">
+<div class="row">
+<div class="col-xs-12 col-sm-6 col-md-6 dash_form_bg_border">
+<div id="get_point">
+<h3>Games played</h3>
+<h1>19</h1>
+</div>
+</div>
+<div class="col-xs-12 col-sm-6 col-md-6 dash_form_bg_border">
+<div id="get_point">
+<h3>Current Level</h3>
+<h1>Intermediate</h1>
+</div>
+</div>
+<div class="col-xs-12 col-sm-6 col-md-6 dash_form_bg_border">
+<div id="get_point">
+<h3>overall score</h3>
+<h1>168</h1>
+</div>
+</div>
+<div class="col-xs-12 col-sm-6 col-md-6 dash_form_bg_border">
+<div id="get_point">
+<h3>% accuracy</h3>
+<h1>25%</h1>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-8 col-lg-12">
+<div class="row">
+<div class="panel panel-default">
+<div class="panel-heading clearfix">
+<i class="icon-calendar"></i>
+<h3 class="panel-title">Your GAME history</h3>
+</div>
+<div class="panel-body"> 
+<div class="panel-body">
+<p class="hasp">Click on a game date to view a detailed scoring summary Select the game you would like to share with up to 5 of your friends via email or post to your social pages.</p>
+</div>
+<form class="form-horizontal row-border" action="#">
+<div class="form-group">
+<div class="col-md-12">
+<div class="row">
+<div class="col-xs-12 col-sm-6 col-md-6 dash-bottom">
+<div class="happySelectContainer">
+<div class="arrow"></div>
+<select name="title" id="title">
+<option value="">Search on</option>
+<option value="Mr.">Score</option>
+<option value="Mrs.">Date</option>
+</select>
+</div></div>
+
+<div class="col-xs-12 col-sm-6 col-md-6">
+<div class="input-group custom-search-form">
+<input type="text" placeholder="Search" class="form-control">
+<span class="input-group-btn">
+<button style="background:#dadada;" type="button" class="btn btn-default">
+<img src="<?php bloginfo('template_directory'); ?>/images/dash_search.png">
+</button>
+</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-12 removepads">
+<div class="row">
+<div id="no-more-tables">
+<table class="col-sm-12 col-md-12 table-bordered table-striped table-condensed cf tgalign">
+<thead class="cf">
+<tr>
+<th> </th>
+<th>Day</th>
+<th class="numeric">Time</th>
+<th class="numeric">Score</th>
+<th class="numeric">Game</th>
+<th class="numeric">Location</th>
+<th class="numeric">No. Players</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td data-title=" "><input type="checkbox" id="by_email" name="by_email" value="true"></td>
+<td data-title="Day">12-Jun 2014</td>
+<td class="numeric" data-title="Time">14:33</td>
+<td class="numeric" data-title="Score">43</td>
+<td class="numeric" data-title="Game">Game 2</td>
+<td class="numeric" data-title="Location">Scottsdale</td>
+<td class="numeric" data-title="No. Players">2</td>
+</tr>
+<tr>
+<td data-title=" "><input type="checkbox" id="by_email" name="by_email" value="true"></td>
+<td data-title="Day">12-Jun 2014</td>
+<td class="numeric" data-title="Time">14:33</td>
+<td class="numeric" data-title="Score">43</td>
+<td class="numeric" data-title="Game">Game 2</td>
+<td class="numeric" data-title="Location">Scottsdale</td>
+<td class="numeric" data-title="No. Players">2</td>
+</tr>
+<tr>
+<td data-title=" "><input type="checkbox" id="by_email" name="by_email" value="true"></td>
+<td data-title="Day">12-Jun 2014</td>
+<td class="numeric" data-title="Time">14:33</td>
+<td class="numeric" data-title="Score">43</td>
+<td class="numeric" data-title="Game">Game 2</td>
+<td class="numeric" data-title="Location">Scottsdale</td>
+<td class="numeric" data-title="No. Players">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="col-md-12">
+<div style="margin-top:2em;" class="row">
+<ul class="list-inline">
+<li><a href="#"><img src="<?php bloginfo('template_directory'); ?>/images/dash_fb.png"></a></li>
+<li><a href="#"><img src="<?php bloginfo('template_directory'); ?>/images/dash_tweet.png"></a></li>
+<li><a href="#"><img src="<?php bloginfo('template_directory'); ?>/images/dash_pin.png"></a></li>
+<li><a href="#"><img src="<?php bloginfo('template_directory'); ?>/images/dash_linkedin.png"></a></li>
+</ul>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<?php } ?>
+<?php get_footer(); ?>	

@@ -1,0 +1,19 @@
+<?php
+/*
+Template Name: LogOut
+*/
+?>
+<?php get_header(); ?>
+<?php
+$_SESSION['firstname'] = '';
+$_SESSION['lastname'] = '';
+$_SESSION['token'] = '';
+unset($_SESSION['firstname']);
+unset($_SESSION['lastname']);
+unset($_SESSION['token']);
+session_unset();
+?>
+<script type="text/javascript">
+	window.location='<?php echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']; ?>/?page_id=25';
+</script>
+<?php get_footer(); ?>
